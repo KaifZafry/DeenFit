@@ -1,0 +1,94 @@
+/* AdminProductForm.css */
+
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4CAF50;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.image-preview {
+  margin-top: 10px;
+  max-width: 150px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #43a047;
+}
+
+.toast {
+  margin-top: 20px;
+  padding: 12px 15px;
+  border-radius: 6px;
+  background: #e0f7e9;
+  color: #2e7d32;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  .submit-btn {
+    font-size: 15px;
+  }
+}
