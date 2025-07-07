@@ -14,6 +14,8 @@ import About from '../Pages/About';
 import Contact from '../Pages/Contact';
 import ProductDetails from '../Pages/ProductDetails';
 import AllProducts from '../Pages/AllProducts';
+import Cart from '../Pages/Cart';
+import Checkout from '../Pages/Checkout';
 
 
 export default function AppRoutes() {
@@ -34,6 +36,8 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/products" element={<AllProducts />} />
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
     </Routes>
     </AnimatePresence>
     <Footer/>

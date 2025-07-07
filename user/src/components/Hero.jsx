@@ -34,8 +34,8 @@ const Hero = () => {
                         </div>
                     </div>
                     <div class="item2 s-cls radius-20 style-absolute abs-top-center hover-img">
-                        <div class="image img-style">
-                             <img src={cap1}  alt="banner" class="lazyload"/>
+                        <div class="image h-100 img-style">
+                             <img src="/product-7.png"  alt="banner" class="lazyload"/>
                         </div>
                         <div class="content">
                             <div class="box-title">
@@ -48,7 +48,7 @@ const Hero = () => {
                                     <span class="text-transform-none">
                                         Explore Now
                                     </span>
-                                    <GoArrowUpRight />
+                                    <GoArrowUpRight style={{color:'white'}} />
                                 </a>
                             </div>
                         </div>
@@ -59,12 +59,12 @@ const Hero = () => {
                         </div>
                         <div class="content">
                             <div class="box-title">
-                                <div class="text-white display-lg">
+                                <div class="text-black display-lg">
                                     Cotton
                                 </div>
                             </div>
                             <div class="box-btn">
-                                <a href="shop-default.html" class="d-flex align-items-center text-white text-md fw-medium gap-10 link">
+                                <a href="#" class="d-flex text-black align-items-center text-white text-md fw-medium gap-10 link">
                                     <span class="text-transform-none">
                                         Explore Now
                                     </span>
