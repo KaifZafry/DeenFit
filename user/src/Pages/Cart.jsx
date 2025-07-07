@@ -13,7 +13,7 @@ const Cart = () => {
     <>
       <section className="tf-page-title">
         <div className="container">
-          <div className="box-title text-center">
+          <div className="box-title text-center" data-aos="fade-up" data-aos-duration="500">
             <h4 className="title">Shopping Cart</h4>
             <div className="breadcrumb-list">
               <Link className="breadcrumb-item" to="/">
@@ -40,7 +40,7 @@ const Cart = () => {
                   {cartItems.map((item) => (
                     <div
                       className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
-                      key={item.id}
+                     data-aos="fade-up" data-aos-duration="500" key={item.id}
                     >
                       <div className="cart-item-left d-flex gap-3">
                        <div>
@@ -58,7 +58,7 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      <div className="cart-item-right d-flex">
+                      <div className="cart-item-right d-flex" data-aos="fade-up" data-aos-duration="500">
                         
                     <div>
                         <div className="qty-control">
@@ -98,7 +98,7 @@ const Cart = () => {
               )}
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4" data-aos="fade-up" data-aos-duration="500">
             <div className="tf-page-cart-sidebar my-3">
               <form action="" className="cart-box checkout-cart-box">
                 <div className="cart-head">

@@ -47,22 +47,19 @@ const Header = () => {
                       About
                     </Link>
                   </li>
-                  <li className="menu-item">
+                  <li className="menu-item position-relative">
                     <Link to="/products" className="item-link">
                       Products
+                      <MdKeyboardArrowDown />
                     </Link>
+                 
                   </li>
                   <li className="menu-item position-relative">
                     <a href="#" className="item-link">
                       Pages
-                      <MdKeyboardArrowDown />
                     </a>
                   </li>
-                  <li className="menu-item position-relative">
-                    <a href="#" className="item-link">
-                      Product Details
-                    </a>
-                  </li>
+
                 </ul>
               </nav>
             </div>
@@ -111,9 +108,8 @@ const Header = () => {
       </header>
 
       <div
-        className={`offcanvas d-md-none offcanvas-start canvas-mb ${
-          show ? "show" : ""
-        }`}
+        className={`offcanvas d-md-none offcanvas-start canvas-mb ${show ? "show" : ""
+          }`}
       >
         <button
           className="icon-close icon-close-popup"
@@ -150,13 +146,13 @@ const Header = () => {
             <div className="mt-4">
               <p className="mb-1 fw-bold">Need Help?</p>
               <p className="mb-1 small">
-                Address: 123 Yarran st, Punchbowl, NSW 2196, Australia
+                Address: F-104/3, Shaheen Bagh, Okhla , New Delhi India (110025)
               </p>
               <p className="mb-1 small">
-                Email: <b>clientcare@ecom.com</b>
+                Email: <b>support.deenfit@gmail.com</b>
               </p>
               <p className="small">
-                Phone: <b>1.888.838.3022</b>
+                Phone: <b>960824096</b>
               </p>
             </div>
           </div>

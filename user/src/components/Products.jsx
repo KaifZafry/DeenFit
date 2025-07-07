@@ -41,7 +41,7 @@ const productData = [
 const Products = () => {
   return (
     <div className="container-full">
-      <div className="flat-title wow fadeInUp">
+      <div data-aos="fade-up" data-aos-duration="500" className="flat-title wow fadeInUp">
         <h4 className="title font-7">Today’s Picks</h4>
         <p className="desc text-main font-13 fs-16">
           Explore our most popular pieces that customers can't get enough of
@@ -50,7 +50,7 @@ const Products = () => {
 
       <div className="row">
         {productData.map((item) => (
-          <div className="col-md-3 mb-4" key={item.id}>
+          <div className="col-md-3 mb-4" data-aos="fade-up" data-aos-duration="500" key={item.id}>
             <div className="card-product">
               <div className="card-product-wrapper asp-ratio-1">
                 <Link

@@ -7,7 +7,7 @@ const Facilities = () => {
     return (
         <div className='container-full my-5'>
             <div className="row">
-                <div className="col-md-3">
+                <div className="col-md-3" data-aos="fade-up" data-aos-duration="400">
                     <div class="tf-icon-box style-2">
                         <div class="box-icon">
                             <MdLocalShipping style={{fontSize:'25px'}} />
@@ -18,7 +18,7 @@ const Facilities = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3" data-aos="fade-up" data-aos-duration="500">
                     <div class="tf-icon-box style-2">
                         <div class="box-icon">
                             <GoGift  style={{fontSize:'25px'}}/>
@@ -29,7 +29,7 @@ const Facilities = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3" data-aos="fade-up" data-aos-duration="600">
                     <div class="tf-icon-box style-2">
                         <div class="box-icon">
                            <ImLoop2 style={{fontSize:'25px'}} />
@@ -41,7 +41,7 @@ const Facilities = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3" data-aos="fade-up" data-aos-duration="700">
                     <div class="tf-icon-box style-2">
                         <div class="box-icon">
                            <MdOutlineSupportAgent style={{fontSize:'25px'}} />

@@ -12,7 +12,7 @@ const BrandMarquee = () => {
   }
 
   return (
-    <div className="marquee-wrapper2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div data-aos="fade-up" data-aos-duration="500" className="marquee-wrapper2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="marquee-track" ref={marqueeRef}>
         {/* Duplicate content for seamless scroll */}
         {[...Array(2)].map((_, index) => (

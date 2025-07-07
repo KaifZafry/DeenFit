@@ -1,97 +1,104 @@
 import React from 'react'
-import footwearImg from '../assets/images/footwear-1.jpg'
 import capmodel from  '../assets/images/capmodel.png'
-import cap1 from  '../assets/images/cap-1.png'
 import cap2 from  '../assets/images/cap-2.png'
-import footwearImg2 from '../assets/images/footwear-2.jpg'
-import footwearImg3 from '../assets/images/footwear-3.jpg'
-import footwearImg4 from '../assets/images/footwear-4.jpg'
+import banner from '../assets/images/banner.png'
+
 import { GoArrowUpRight } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 
 const Hero = () => {
   return (
     <>
-    <div class="flat-spacing-34 line-top">
-            <div class="container-full">
-                <div class="grid-cls grid-cls-v6 wow fadeInUp">
-                    <div class="item1 s-cls radius-20 style-absolute abs-top-center hover-img">
-                        <div class="image img-style h-100">
-                            <img src={capmodel}  alt="banner" class="lazyload"/>
+    <div className="flat-spacing-34 line-top">
+            <div className="container-full">
+                <div className="grid-cls grid-cls-v6 wow fadeInUp" data-aos="fade-up" data-aos-duration="500">
+                    <div className="item1 s-cls radius-20 style-absolute abs-top-center hover-img">
+                        <div className="image img-style h-100">
+                            <img src={capmodel}  alt="banner" className="lazyload"/>
                         </div>
-                        <div class="content">
-                            <div class="box-title">
-                                <div class="text-white display-lg">
+                        <div className="content">
+                            <div className="box-title">
+                                <div className="text-white display-lg">
                                     New Arrivals
                                 </div>
                             </div>
-                            <div class="box-btn">
-                                <Link to='/products' class="tf-btn btn-white hover-primary">
+                            <div className="box-btn">
+                                <Link to='/products' className="tf-btn btn-white hover-primary">
                                     View Collection
                                     <GoArrowUpRight />
                                 </Link>
                             </div>
                         </div>
                     </div>
-                    <div class="item2 s-cls radius-20 style-absolute abs-top-center hover-img">
-                        <div class="image h-100 img-style">
-                             <img src="/product-7.png"  alt="banner" class="lazyload"/>
+                    <div className="item2 s-cls radius-20 style-absolute abs-top-center hover-img">
+                         <Link to='/products'  className="h-100">
+                         <div className="image h-100 img-style">
+                             <img src="/product-7.png"  alt="banner" className="lazyload"/>
                         </div>
-                        <div class="content">
-                            <div class="box-title">
-                                <div class="text-white display-lg">
-                                premium Cotton
+                        <div className="content">
+                            <div className="box-title">
+                                <div className="text-white display-lg">
+                               Sunnah Line
                                 </div>
                             </div>
-                            <div class="box-btn">
-                                <a href="shop-default.html" class="d-flex align-items-center text-white text-md fw-medium gap-10 link">
-                                    <span class="text-transform-none">
+                            <div className="box-btn">
+                                <a href="shop-default.html" className="d-flex align-items-center text-white text-md fw-medium gap-10 link">
+                                    <span className="text-transform-none">
                                         Explore Now
                                     </span>
                                     <GoArrowUpRight style={{color:'white'}} />
                                 </a>
                             </div>
                         </div>
+                          </Link>
+                        
                     </div>
-                    <div class="item3 s-cls radius-20 style-absolute abs-top-center hover-img">
-                        <div class="image img-style">
-                           <img src={cap2}  alt="banner" class="lazyload"/>
+                    <div className="item3 s-cls radius-20 style-absolute abs-top-center hover-img">
+                        <Link to='/products' className="h-100"> 
+                         <div className="image img-style">
+                           <img src={cap2}  alt="banner" className="lazyload"/>
                         </div>
-                        <div class="content">
-                            <div class="box-title">
-                                <div class="text-black display-lg">
-                                    Cotton
+                        <div className="content">
+                            <div className="box-title">
+                                <div className="text-dark display-lg" >
+                                   DeenFit Original
                                 </div>
                             </div>
-                            <div class="box-btn">
-                                <a href="#" class="d-flex text-black align-items-center text-white text-md fw-medium gap-10 link">
-                                    <span class="text-transform-none">
+                            <div className="box-btn">
+                                <a href="#" className="d-flex text-black align-items-center text-white text-md fw-medium gap-10 link">
+                                    <span className="text-transform-none text-black">
                                         Explore Now
                                     </span>
                                    <GoArrowUpRight />
                                 </a>
                             </div>
                         </div>
+                        
+                        </Link>
+                       
                     </div>
-                    <div class="item4 s-cls radius-20 style-absolute abs-top-center hover-img">
-                        <div class="image img-style">
-                           <img src={footwearImg4}  alt="banner" class="lazyload"/>
+                    <div className="item4 s-cls radius-20 style-absolute abs-top-center hover-img">
+                        <Link to='/products' className="h-100">
+                         <div className="image img-style">
+                           <img src={banner}  alt="banner" className="lazyload"/>
                         </div>
-                        <div class="content">
-                            <div class="box-title">
-                                <div class="text-white display-lg">
-                                    Boots
+                        <div className="content">
+                            <div className="box-title">
+                                <div className="text-white display-lg">
+                                   DeenFit Youth
                                 </div>
                             </div>
-                            <div class="box-btn">
-                                <a href="shop-default.html" class="d-flex align-items-center text-white text-md fw-medium gap-10 link">
-                                    <span class="text-transform-none">
+                            <div className="box-btn">
+                                <a href="shop-default.html" className="d-flex align-items-center text-white text-md fw-medium gap-10 link">
+                                    <span className="text-transform-none">
                                         Explore Now
                                     </span>
-                                    <GoArrowUpRight />
+                                    <GoArrowUpRight className='text-white' />
                                 </a>
                             </div>
                         </div>
+                        </Link>
+                       
                     </div>
                 </div>
             </div>

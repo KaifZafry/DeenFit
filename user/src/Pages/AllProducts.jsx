@@ -99,7 +99,7 @@ const AllProducts = () => {
     <>
       <section className="tf-page-title">
         <div className="container">
-          <div className="box-title text-center">
+          <div className="box-title text-center" data-aos="fade-up" data-aos-duration="500">
             <h4 className="title">Top Collection</h4>
             <div className="breadcrumb-list">
               <Link className="breadcrumb-item" to="/">
@@ -125,7 +125,7 @@ const AllProducts = () => {
       <div className="container-full my-5">
         <div className="row">
           {productData.map((item) => (
-            <div className="col-md-3 mb-4" key={item.id}>
+            <div className="col-md-3 mb-4" data-aos="fade-up" data-aos-duration="500" key={item.id}>
               <div className="card-product">
                 <div className="card-product-wrapper asp-ratio-1">
                   <Link
