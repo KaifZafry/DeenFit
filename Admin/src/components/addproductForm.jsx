@@ -102,7 +102,7 @@ const AddProductForm = () => {
 
       const result = await postRes.json();
 
-      if (result?.status?.toLowerCase() === 'success') {
+      if (result?.status?.toLowerCase() === 'succeed') {
         setMessage('✅ Product added successfully!');
         setForm({
           title: '',
