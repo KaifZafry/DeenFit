@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react'
-import capmodel from '../assets/images/capmodel.png'
-import cap2 from '../assets/images/cap-2.png'
-import banner from '../assets/images/banner.png'
-
 import { GoArrowUpRight } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
@@ -69,7 +65,7 @@ const Hero = () => {
                                 </Link>
                             </div>
                             <div className="item2 s-cls radius-20 style-absolute abs-top-center hover-img">
-                                <Link to='/products' className="h-100">
+                                <Link to={`/products?category=${categories[2]?.category_id}`} className="h-100">
                                     <div className="image h-100 img-style">
                                         <img src={categories[2]?.category_image} alt="banner" className="lazyload" />
                                     </div>
@@ -92,7 +88,7 @@ const Hero = () => {
 
                             </div>
                             <div className="item3 s-cls radius-20 style-absolute abs-top-center hover-img">
-                                <Link to='/products' className="h-100">
+                                <Link to={`/products?category=${categories[3]?.category_id}`} className="h-100">
                                     <div className="image img-style">
                                         <img src={categories[1]?.category_image} alt="banner" className="lazyload" />
                                     </div>
@@ -116,7 +112,7 @@ const Hero = () => {
 
                             </div>
                             <div className="item4 s-cls radius-20 style-absolute abs-top-center hover-img">
-                                <Link to='/products' className="h-100">
+                                <Link to={`/products?category=${categories[4]?.category_id}`} className="h-100">
                                     <div className="image img-style">
                                         <img src={categories[0]?.category_image} alt="banner" className="lazyload" />
                                     </div>

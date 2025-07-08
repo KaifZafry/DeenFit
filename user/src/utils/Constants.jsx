@@ -1,0 +1,1 @@
+export const BASE_IMG_URL= "http://deenfit-001-site1.qtempurl.com/ServiceProduct/";

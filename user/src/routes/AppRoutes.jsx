@@ -16,6 +16,7 @@ import ProductDetails from '../Pages/ProductDetails';
 import AllProducts from '../Pages/AllProducts';
 import Cart from '../Pages/Cart';
 import Checkout from '../Pages/Checkout';
+import ProductList from '../Pages/ProductsWithCategory';
 
 
 export default function AppRoutes() {
