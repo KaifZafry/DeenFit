@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementQty, decrementQty, removeFromCart } from "../redux/CartSlice";
 import { MdDeleteOutline } from "react-icons/md";
+import { BASE_IMG_URL } from "../utils/Constants";
 
 const Cart = () => {
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state?.cart?.cartItems);
   const dispatch = useDispatch();
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -32,68 +33,74 @@ const Cart = () => {
         <div className="row">
           <div className="col-md-8">
             <div className="cart-page py-3">
-             
+
               {cartItems.length === 0 ? (
                 <p>Your cart is empty</p>
               ) : (
                 <div className="cart-items-container">
-                  {cartItems.map((item) => (
-                    <div
-                      className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
-                     data-aos="fade-up" data-aos-duration="500" key={item.id}
-                    >
-                      <div className="cart-item-left d-flex gap-3">
-                       <div>
- <img
-                          src={item.image}
-                          alt={item.name}
-                          width={70}
-                          className="cart-item-image"
-                        />
-                       </div>
-                       
-                        <div className="cart-item-header">
-                          <h4 className="cart-item-name">{item.name}</h4>
-                          <p className="cart-item-variant">White / L</p>
-                        </div>
-                      </div>
-
-                      <div className="cart-item-right d-flex" data-aos="fade-up" data-aos-duration="500">
-                        
-                    <div>
-                        <div className="qty-control">
-                          <button
-                            onClick={() => dispatch(decrementQty(item.id))}
-                          >
-                            -
-                          </button>
-                          <span>{item.quantity}</span>
-                          <button
-                            onClick={() => dispatch(incrementQty(item.id))}
-                          >
-                            +
-                          </button>
-                        </div>
-</div>
-                        <div className="cart-item-controls">
-                          <div className="cart-item-pricing">
-                            <p className="price">₹{item.price.toFixed(2)}</p>
-                            <p className="total">
-                              Total: ₹{(item.price * item.quantity).toFixed(2)}
-                            </p>
+                  {cartItems.map((item) => {
+                    const imageArray = item.product_image?.split(",") || [];
+                    const mainImage = BASE_IMG_URL + imageArray[0];
+                   
+                    return (
+                      <div
+                        className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
+                        data-aos="zoom-in" data-aos-delay='100' data-aos-duration="300" key={item.product_id}
+                      >
+                        <div className="cart-item-left d-flex gap-3">
+                          <div>
+                            <img
+                              src={mainImage}
+                              alt={item.name}
+                              width={70}
+                              className="cart-item-image"
+                            />
                           </div>
-                            <button
-                          className="remove-btn"
-                          onClick={() => dispatch(removeFromCart(item.id))}
-                        >
-                          <MdDeleteOutline />
-                        </button>
+
+                          <div className="cart-item-header">
+                            <h4 className="cart-item-name">{item.product_title}</h4>
+                            <p className="cart-item-variant">White / L</p>
+                          </div>
                         </div>
 
-                      
+                        <div className="cart-item-right d-flex">
+
+                          <div>
+                            <div className="qty-control">
+                              <button
+                                onClick={() => dispatch(decrementQty(item.product_id))}
+                              >
+                                -
+                              </button>
+                              <span>{item.quantity}</span>
+                              <button
+                                onClick={() => dispatch(incrementQty(item.product_id))}
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="cart-item-controls">
+                            <div className="cart-item-pricing">
+                              <p className="price">₹{item.price.toFixed(2)}</p>
+                              <p className="total">
+                                Total: ₹{(item.price * item.quantity).toFixed(2)}
+                              </p>
+                            </div>
+                            <button
+                              className="remove-btn"
+                              onClick={() => dispatch(removeFromCart(item.product_id))}
+                            >
+                              <MdDeleteOutline />
+                            </button>
+                          </div>
+
+
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+
+                  })}
                 </div>
               )}
             </div>
@@ -104,7 +111,7 @@ const Cart = () => {
                 <div className="cart-head">
                   <div id="totalprice" className="total-discount text-xl fw-medium">
                     <span>Total:</span>
-                  <span className="total">Rs {totalPrice.toFixed(2)}</span>
+                    <span className="total">Rs {totalPrice.toFixed(2)}</span>
                   </div>
                   <p className="text-sm text-dark-4">
                     Taxes and shipping calculated at checkout
@@ -127,7 +134,7 @@ const Cart = () => {
                     type="submit"
                     disabled={cartItems.length === 0}
                     className="tf-btn disabled btn-dark2 animate-btn w-100"
-                    
+
                   >
                     Checkout
                   </button>

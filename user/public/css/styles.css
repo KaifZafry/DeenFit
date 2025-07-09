@@ -8541,12 +8541,13 @@ button.animate-btn::after,
 }
 
 header {
-  overflow: hidden;
+  /* overflow: hidden; */
   position: sticky;
   position: -webkit-sticky;
   left: 0;
   right: 0;
   top: 0;
+  height:auto;
   -webkit-transition: 0.2s ease-out;
   -o-transition: 0.2s ease-out;
   transition: 0.2s ease-out;
@@ -15902,7 +15903,6 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 6px;
 }
 .tf-page-cart-sidebar .order-box .order-item .info {

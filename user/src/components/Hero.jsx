@@ -99,7 +99,7 @@ const Hero = () => {
                                             </div>
                                         </div>
                                         <div className="box-btn">
-                                            <p className="d-flex text-black align-items-center text-white text-md fw-medium gap-10 link">
+                                            <p className="d-flex align-items-center text-white text-md fw-medium gap-10 link">
                                                 <span className="text-transform-none text-black">
                                                     Explore Now
                                                 </span>

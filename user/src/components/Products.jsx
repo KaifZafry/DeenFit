@@ -3,21 +3,35 @@ import { CiShoppingCart } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { BASE_IMG_URL } from "../utils/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/CartSlice";
+import { toast } from "react-toastify";
 
 const Products = () => {
   const [products, setAllProducts] = useState([]);
+  const [loading,setLoading]= useState(true)
 
+   const cartItems = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+  const handleAddToCart = (item, e) => {
+    e.preventDefault();
+    const isExisting = cartItems.some(cartItem => cartItem.product_id === item.product_id);
 
-   const handleAddToCart = (item, e) => {
-     e.preventDefault(); // Prevent default <a> behavior
-     dispatch(addToCart(item));
-   };
+    dispatch(addToCart(item));
+    if (isExisting) {
+      toast.info("Quantity increased in cart.");
+    } else {
+      toast.success("Product added to cart.");
+    }
+  };
+
    useEffect(() => {
      const FetchAllProduct = async () => {
        const res = await fetch("/api/Account/getallproducts");
        const data = await res.json();
        setAllProducts(data?.data);
        console.log(data);
+       setLoading(false)
      };
      FetchAllProduct();
    }, []);
@@ -34,6 +48,17 @@ const Products = () => {
           Explore our most popular pieces that customers can't get enough of
         </p>
       </div>
+
+     {loading ? (
+          <div className="grid-cls grid-cls-v6 wow fadeInUp" data-aos="zoom-in" data-aos-duration="500">
+            {Array(4).fill(0).map((_, idx) => (
+              <div
+                key={idx}
+                className="h-[300px] bg-gray-200 rounded-2xl animate-pulse"
+              ></div>
+            ))}
+          </div>
+        ) : (
 
       <div className="row">
         {products.slice(0, 4).map((item) => {
@@ -111,6 +136,7 @@ const Products = () => {
           );
         })}
       </div>
+        )}
     </div>
   );
 };

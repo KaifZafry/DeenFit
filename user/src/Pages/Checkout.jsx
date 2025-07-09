@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_IMG_URL } from "../utils/Constants";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -384,8 +385,8 @@ const Checkout = () => {
                       <li className="order-item">
                         <figure className="img-product">
                           <img
-                            src={item.image}
-                            alt={item.image}
+                            src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
+                            alt={item.product_title}
                             width={30}
                           />
                           <span className="quantity">{item.quantity}</span>
@@ -393,12 +394,12 @@ const Checkout = () => {
                         <div className="content">
                           <div className="info">
                             <p className="name text-sm fw-medium">
-                             {item.name}
+                             {item.product_title}
                             </p>
                             <span className="variant">White / L</span>
                           </div>
                           <span className="price text-sm fw-medium">
-                           {item.price}
+                           ₹{item.price}
                           </span>
                         </div>
                       </li>

@@ -14,9 +14,16 @@ import AppRoutes from './routes/AppRoutes';
 
 
 function App() {
-useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
+
+
+  useEffect(() => {
+  AOS.init({
+    duration: 500,
+    offset:100,
+    once: true, // animates only once
+  });
+  AOS.refresh(); // re-initialize for dynamically added items
+}, []);
 
   return (
     <>
