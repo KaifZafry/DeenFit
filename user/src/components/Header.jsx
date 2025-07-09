@@ -10,6 +10,11 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+   const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const totalItems = cartItems.length;
@@ -54,17 +59,26 @@ const Header = () => {
 
                     <ul className="absolute group-hover:block hidden left-0 bg-white top-16 w-[200px] text-start">
                       <li>
-                        <Link to="/products?category=2" className="block w-100 px-4 text-start py-2 hover:bg-gray-200 hover:text-orange-300">
-                         Sunnah Lines
+                        <Link
+                          to="/products?category=2"
+                          className="block w-100 px-4 text-start py-2 hover:bg-gray-200 hover:text-orange-300"
+                        >
+                          Sunnah Lines
                         </Link>
                       </li>
                       <li>
-                        <Link to="/products?category=3" className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300">
+                        <Link
+                          to="/products?category=3"
+                          className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
+                        >
                           Deenfit Original
                         </Link>
                       </li>
                       <li>
-                        <Link to="/products?category=4" className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300">
+                        <Link
+                          to="/products?category=4"
+                          className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
+                        >
                           Deenfit Youth
                         </Link>
                       </li>
@@ -75,7 +89,6 @@ const Header = () => {
                       Pages
                     </a>
                   </li>
-
                 </ul>
               </nav>
             </div>
@@ -124,8 +137,9 @@ const Header = () => {
       </header>
 
       <div
-        className={`offcanvas d-md-none offcanvas-start canvas-mb ${show ? "show" : ""
-          }`}
+        className={`offcanvas d-md-none offcanvas-start canvas-mb ${
+          show ? "show" : ""
+        }`}
       >
         <button
           className="icon-close icon-close-popup"
@@ -139,44 +153,70 @@ const Header = () => {
             {/* Top Menu */}
             <ul className="nav-ul-mb">
               <li className="nav-mb-item">
-                <Link to="/" className="flex justify-between items-center" onClick={() => setShow(false)}>
+                <Link
+                  to="/"
+                  className=" d-flex py-3 text-lg flex w-full justify-between items-center"
+                  onClick={() => setShow(false)}
+                >
                   <span>Home</span>
-                  <span className="plus-icon">+</span>
                 </Link>
               </li>
               <li className="nav-mb-item">
-                <Link to="/about" className="flex justify-between items-center" onClick={() => setShow(false)}>
+                <Link
+                  to="/about"
+                  className="d-flex py-3 text-lg flex w-full justify-between items-center"
+                  onClick={() => setShow(false)}
+                >
                   <span>About</span>
-                  <span className="plus-icon">+</span>
                 </Link>
               </li>
-              <li className="menu-item relative group">
-                <span className="item-link cursor-pointer flex items-center">
-                  Products <MdKeyboardArrowDown className="ml-1" />
-                </span>
+              <li className="menu-item relative">
+                <span
+                  onClick={toggleDropdown}
+                  className="item-link cursor-pointer flex items-center justify-between w-full py-3 "
+                >
+                  Products <span className="plus-icon">+</span> 
+                                  </span>
 
-                <ul className="absolute left-0 top-full mt-2 w-40 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <li>
-                    <Link to="/products?category=1" className="block px-4 py-2 hover:bg-gray-100">
-                      Cotton
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/products?category=2" className="block px-4 py-2 hover:bg-gray-100">
-                      Winter
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/products?category=3" className="block px-4 py-2 hover:bg-gray-100">
-                      Silk
-                    </Link>
-                  </li>
-                </ul>
+                {isOpen && (
+                  <ul className="mt-2 w-full shadow-lg rounded-lg z-50">
+                    <li>
+                      <Link
+                        to="/products?category=2"
+                        onClick={() => setIsOpen(false)}
+                        className="block px-4 py-2 border-bottom border-b hover:bg-gray-100"
+                      >
+                        Sunnah Lines
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/products?category=3"
+                        onClick={() => setIsOpen(false)}
+                        className="block border-bottom px-4 py-2 hover:bg-gray-100"
+                      >
+                        Deenfit Original
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/products?category=4"
+                        onClick={() => setIsOpen(false)}
+                        className="block border-bottom px-4 py-2 hover:bg-gray-100"
+                      >
+                        Deenfit Youth
+                      </Link>
+                    </li>
+                  </ul>
+                )}
               </li>
               <li className="nav-mb-item">
-                <Link to="#" className="flex justify-between items-center" onClick={() => setShow(false)}>
+                <Link
+                  to="#"
+                  className="d-flex py-3 text-lg flex w-full justify-between items-center"
+                  onClick={() => setShow(false)}
+                >
                   <span>Pages</span>
-                  <span className="plus-icon">+</span>
                 </Link>
               </li>
             </ul>

@@ -58,7 +58,9 @@ const Cart = () => {
                           </div>
 
                           <div className="cart-item-header">
+                            <Link to={`/product/${item.product_id}`}>
                             <h4 className="cart-item-name">{item.product_title}</h4>
+                            </Link>
                             <p className="cart-item-variant">White / L</p>
                           </div>
                         </div>
@@ -119,7 +121,7 @@ const Cart = () => {
                 </div>
                 <div className="check-agree">
                   <input type="checkbox" className="tf-check" id="check-agree" />
-                  <label for="check-agree" className="label text-dark-4">
+                  <label htmlFor="check-agree" className="label text-dark-4">
                     I agree with{" "}
                     <a
                       href="term-and-condition.html"

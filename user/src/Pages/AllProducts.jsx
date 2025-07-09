@@ -161,11 +161,11 @@ useEffect(() => {
                       </a>
                       <p className="price-wrap fw-medium mt-1">
                         <span className="price-new text-xl text-primary">
-                          ${item.selling_price.toFixed(2)}
+                          ₹{item.selling_price.toFixed(2)}
                         </span>
                         {item.price && (
                           <span className="price-old ms-2">
-                            ${item.price.toFixed(2)}
+                            ₹{item.price.toFixed(2)}
                           </span>
                         )}
                       </p>

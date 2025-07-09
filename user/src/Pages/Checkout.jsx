@@ -1,15 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_IMG_URL } from "../utils/Constants";
+import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
+ const location = useLocation();
+  const buyNowProduct = location.state?.buyNow ? location.state.product : null;
+
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+
+  const itemsToShow = buyNowProduct
+    ? [{ ...buyNowProduct, quantity: 1 }]
+    : cartItems;
+
+  const totalPrice = itemsToShow.reduce(
+    (acc, item) => acc + item.selling_price * item.quantity,
     0
   );
-
   return (
     <>
       <section className="tf-page-title">
@@ -381,12 +388,12 @@ const Checkout = () => {
                 <form action="thank-you.html" className="cart-box order-box">
                   <div className="title text-lg fw-medium">In your cart</div>
                   <ul className="list-order-product">
-                    {cartItems.map((item) => (
+                    {itemsToShow.map((item) => (
                       <li className="order-item">
                         <figure className="img-product">
                           <img
-                            src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
-                            alt={item.product_title}
+                           src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
+                    alt={item.product_title}
                             width={30}
                           />
                           <span className="quantity">{item.quantity}</span>

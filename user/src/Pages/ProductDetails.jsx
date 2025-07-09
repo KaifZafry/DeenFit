@@ -1,35 +1,84 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa6";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementQty, decrementQty } from "../redux/CartSlice";
 import { addToCart } from "../redux/CartSlice";
-
-const images = [
-  "/women-black-1.jpg",
-  "/women-black-2.jpg",
-  "/women-black-3.jpg",
-  "/women-black-4.jpg",
-  "/women-black-5.jpg",
-];
+import { BASE_IMG_URL } from "../utils/Constants";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
+  const { id } = useParams(); // from URL: /product/:id
   const dispatch = useDispatch();
-  const [currentImage, setCurrentImage] = useState(images[0]);
+ const cartItems = useSelector((state) => state.cart.cartItems);
+  const [product, setProduct] = useState(null);
+  const [currentImage, setCurrentImage] = useState("");
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(
+          "http://deenfit-001-site1.qtempurl.com/api/Account/getallproducts"
+        );
+        const data = await res.json();
+
+        const found = data.data.find(
+          (item) => item.product_id === parseInt(id)
+        );
+
+        if (found) {
+          const images = found.product_image
+            .split(",")
+            .map((img) => BASE_IMG_URL + img);
+          setProduct({ ...found, images });
+          setCurrentImage(images[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  // Watch for state update
+  useEffect(() => {
+    if (product) {
+      console.log("Product loaded:", product);
+    }
+  }, [product]);
+
+  const handleAddToCart = (item, e) => {
+    e.preventDefault();
+    const isExisting = cartItems.some(
+      (cartItem) => cartItem.product_id === item.product_id
+    );
+
+    dispatch(addToCart(item));
+    if (isExisting) {
+      toast.info("Quantity increased in cart.");
+    } else {
+      toast.success("Product added to cart.");
+    }
+  };
+
   return (
     <>
       <div className="breadcrumb-sec">
         <div className="container">
           <div className="breadcrumb-wrap">
             <div className="breadcrumb-list">
-              <a className="breadcrumb-item" href="index.html">
+              <Link className="breadcrumb-item" to="/">
                 Home
-              </a>
+              </Link>
               <div className="breadcrumb-item dot">
                 <span></span>
               </div>
-              <div className="breadcrumb-item current">Linen Blend Pants</div>
+              <div className="breadcrumb-item current">
+                {product?.product_title}
+              </div>
             </div>
           </div>
         </div>
@@ -45,7 +94,7 @@ const ProductDetails = () => {
                 <div className="product-image-section d-flex flex-md-row flex-col">
                   {/* Thumbnail List */}
                   <div className="thumbnail-list">
-                    {images.map((img, index) => (
+                    {product?.images.map((img, index) => (
                       <img
                         key={index}
                         src={img}
@@ -69,7 +118,6 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-md-6">
                 <div className="tf-zoom-main"></div>
                 <div className="tf-product-info-wrap other-image-zoom">
@@ -77,24 +125,26 @@ const ProductDetails = () => {
                     <div className="tf-product-heading">
                       <span className="brand-product">KOTON</span>
                       <h4 className="product-name fw-medium">
-                        Linen Blend Pants
+                        {product?.product_title}
                       </h4>
-                      <div className="product-rate">
-                        <div className="list-star">
-                          <FaStar />
-                          <FaStar />
-                          <FaStar />
-                          <FaStar />
-                          <FaStar />
-                        </div>
-                        <span className="count-review">(5 reviews)</span>
+                      <div className="rating flex gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <FaStar
+                            key={i}
+                            color={i < product?.rating ? "#ffc107" : "#e4e5e9"}
+                          />
+                        ))}
                       </div>
                       <div className="product-price">
                         <div className="display-sm price-new price-on-sale">
-                          $60.00
+                          ₹{product?.selling_price}
                         </div>
-                        <div className="display-sm price-old">$80.00</div>
-                        <span className="badge-sale">20% Off</span>
+                        <div className="display-sm price-old">
+                          ₹ {product?.price}
+                        </div>
+                        <span className="badge-sale">
+                          ₹{product?.discount} discount
+                        </span>
                       </div>
                       <div className="product-stock">
                         <span className="stock in-stock">In Stock</span>
@@ -175,80 +225,48 @@ const ProductDetails = () => {
                               XL
                             </span>
                           </div>
-                          <div className="wg-quantity">
-                            <button className="btn-quantity btn-decrease">
+                          {/* <div className="qty-control">
+                            <button
+                              onClick={() =>
+                                dispatch(decrementQty(product.product_id))
+                              }
+                            >
                               -
                             </button>
-                            <input
-                              className="quantity-product"
-                              type="text"
-                              name="number"
-                              value="1"
-                            />
-                            <button className="btn-quantity btn-increase">
+                            <span>{product.quantity}</span>
+                            <button
+                              onClick={() =>
+                                dispatch(incrementQty(product.product_id))
+                              }
+                            >
                               +
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
                     <div className="tf-product-total-quantity">
                       <div className="group-btn">
-                        <a
-                          href="#quickadd"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            dispatch(addToCart(item));
-                          }}
-                          data-bs-toggle="offcanvas"
-                          className="tf-btn animate-btn btn-add-to-cart"
+                        <button
+                          onClick={(e) => handleAddToCart(product, e)}
+                          className="tf-btn btn-secondary animate-btn"
                         >
-                          Add to cart
-                        </a>
-                        <a
-                          href="checkout.html"
+                          Add to Cart
+                        </button>
+                        <Link
+                          to="/checkout"
+                          state={{ product, buyNow: true }}
                           className="tf-btn btn-primary animate-btn"
                         >
                           Buy it now
-                        </a>
+                        </Link>
                       </div>
 
-                      <a
-                        href="checkout.html"
-                        className="more-choose-payment link"
-                      >
+                      <Link to="/checkout" className="more-choose-payment link">
                         More payment options
-                      </a>
+                      </Link>
                     </div>
-                    <div className="tf-product-extra-link">
-                      <a
-                        href="javascript:void(0);"
-                        className="product-extra-icon link btn-add-wishlist"
-                      >
-                        <i className="icon add icon-heart"></i>
-                        <span className="add">Add to wishlist</span>
-                        <i className="icon added icon-trash"></i>
-                        <span className="added">Remove from wishlist</span>
-                      </a>
 
-                      <a
-                        href="#shareSocial"
-                        data-bs-toggle="modal"
-                        className="product-extra-icon link"
-                      >
-                        <i className="icon icon-share"></i>Share
-                      </a>
-                    </div>
-                    <ul className="tf-product-cate-sku text-md">
-                      <li className="item-cate-sku">
-                        <span className="label">SKU:</span>
-                        <span className="value">AD1FSSE0YR</span>
-                      </li>
-                      <li className="item-cate-sku">
-                        <span className="label">Categories:</span>
-                        <span className="value">Clothes, Top</span>
-                      </li>
-                    </ul>
                     <div className="tf-product-trust-seal text-center">
                       <p className="text-md text-dark-2 text-seal fw-medium">
                         Guarantee Safe Checkout:
@@ -273,9 +291,7 @@ const ProductDetails = () => {
                         <div className="icon icon-car2"></div>
                         <p className="text-md">
                           Estimated delivery time:{" "}
-                          <span className="fw-medium">
-                            3-5 days international
-                          </span>
+                          <span className="fw-medium">5-7 Business days</span>
                         </p>
                       </div>
                       <div className="product-delivery">
@@ -283,7 +299,7 @@ const ProductDetails = () => {
                         <p className="text-md">
                           Free shipping on{" "}
                           <span className="fw-medium">
-                            all orders over $150
+                            all orders over ₹699
                           </span>
                         </p>
                       </div>

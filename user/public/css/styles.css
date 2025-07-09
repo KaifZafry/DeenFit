@@ -23270,3 +23270,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     visibility: visible;
     transform: translateX(0px) translateY(0px);
 }
+
+.border-bottom{
+  width:100%;
+  border-bottom:1px solid ;
+}
