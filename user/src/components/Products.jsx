@@ -47,6 +47,7 @@ const Products = () => {
         <p className="desc text-main font-13 fs-16">
           Explore our most popular pieces that customers can't get enough of
         </p>
+        <Link to='/products'>View All</Link>
       </div>
 
      {loading ? (
@@ -69,7 +70,7 @@ const Products = () => {
           return (
             <div
               key={item.product_id}
-              className="col-md-3 mb-4"
+              className="col-md-3 col-6 mb-4"
               data-aos="fade-up"
               data-aos-duration="500"
             >

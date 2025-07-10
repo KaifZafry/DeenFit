@@ -22101,9 +22101,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   .tf-group-filter {
     gap: 6px;
   }
-  .brand-item {
+  /* .brand-item {
     max-width: 200px;
-  }
+  } */
   .mx_40 {
     margin-left: 15px;
     margin-right: 15px;

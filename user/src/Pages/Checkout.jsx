@@ -406,7 +406,7 @@ const Checkout = () => {
                             <span className="variant">White / L</span>
                           </div>
                           <span className="price text-sm fw-medium">
-                           ₹{item.price}
+                           ₹{item.selling_price}
                           </span>
                         </div>
                       </li>

@@ -4,6 +4,7 @@ import Products from "../components/Products";
 import BrandMarquee from "../components/MarqueeText";
 import CategorySection from "../components/CategorySection";
 import Facilities from "../components/Facilities";
+import BannerSection from "../components/BannerSection";
 // import ScrollVelocity from "../components/ScrollText";
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
       /> */}
        <BrandMarquee/>
         <CategorySection/>
+        <BannerSection/>
         <Facilities/>
     </div>
   );

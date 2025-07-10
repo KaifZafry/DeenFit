@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa6";
 import InnerImageZoom from "react-inner-image-zoom";
@@ -12,9 +12,59 @@ import { toast } from "react-toastify";
 const ProductDetails = () => {
   const { id } = useParams(); // from URL: /product/:id
   const dispatch = useDispatch();
- const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const [product, setProduct] = useState(null);
-  const [currentImage, setCurrentImage] = useState("");
+  // const [currentImage, setCurrentImage] = useState("");
+
+  const [currentImage, setCurrentImage] = useState(product?.images?.[0] || "");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
+
+  const minSwipeDistance = 50; // Adjust this threshold as needed
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.changedTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(distance) > minSwipeDistance) {
+      if (distance > 0) {
+        // swipe left
+        goToNextImage();
+      } else {
+        // swipe right
+        goToPrevImage();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  const goToNextImage = () => {
+    if (currentIndex < product.images.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      setCurrentImage(product.images[nextIndex]);
+    }
+  };
+
+  const goToPrevImage = () => {
+    if (currentIndex > 0) {
+      const prevIndex = currentIndex - 1;
+      setCurrentIndex(prevIndex);
+      setCurrentImage(product.images[prevIndex]);
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -99,9 +149,8 @@ const ProductDetails = () => {
                         key={index}
                         src={img}
                         alt={`thumb-${index}`}
-                        className={`thumbnail ${
-                          currentImage === img ? "active" : ""
-                        }`}
+                        className={`thumbnail ${currentImage === img ? "active" : ""
+                          }`}
                         onClick={() => setCurrentImage(img)}
                       />
                     ))}
@@ -109,12 +158,18 @@ const ProductDetails = () => {
 
                   {/* Main Image with Zoom */}
                   <div className="main-image">
-                    <InnerImageZoom
-                      src={currentImage}
-                      zoomSrc={currentImage}
-                      zoomType="hover"
-                      zoomScale={1.5}
-                    />
+                    <div
+                      onTouchStart={handleTouchStart}
+                      onTouchMove={handleTouchMove}
+                      onTouchEnd={handleTouchEnd}
+                    >
+                      <InnerImageZoom
+                        src={currentImage}
+                        zoomSrc={currentImage}
+                        zoomType="hover"
+                        zoomScale={1.5}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

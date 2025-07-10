@@ -76,6 +76,10 @@ useEffect(() => {
               <div className="breadcrumb-item dot">
                 <span></span>
               </div>
+              <a className="breadcrumb-item">
+                {products[0].category_title}
+                {/* {products[0].category_title} */}
+              </a>
             </div>
             <p className="desc text-md text-main">
               Our most popular and best selling Products
