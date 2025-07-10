@@ -4,7 +4,7 @@ import { BASE_IMG_URL } from "../utils/Constants";
 import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
- const location = useLocation();
+  const location = useLocation();
   const buyNowProduct = location.state?.buyNow ? location.state.product : null;
 
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -17,6 +17,42 @@ const Checkout = () => {
     (acc, item) => acc + item.selling_price * item.quantity,
     0
   );
+
+  const openRazorpayCheckout = async () => {
+    const dummyData = {
+      orderId: "order_LtYjTzv8D9fJWa", // you can hardcode this for now
+      amount: 29900, // in paise (₹299.00)
+      currency: "INR",
+    };
+
+    const options = {
+      key: "rzptest_1234567890abcdef", // 🧪 Test Key ID
+      amount: dummyData.amount,
+      currency: dummyData.currency,
+      name: "DeenFit",
+      description: "Cap Purchase",
+      order_id: dummyData.orderId,
+      handler: function (response) {
+        console.log("✅ Payment Success:", response);
+        alert("Payment Successful!\n" + JSON.stringify(response, null, 2));
+      },
+      prefill: {
+        name: "Test User",
+        email: "test@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Test Razorpay Address",
+      },
+      theme: {
+        color: "#0f172a",
+      },
+    };
+
+    const razor = new window.Razorpay(options);
+    razor.open();
+  };
+
   return (
     <>
       <section className="tf-page-title">
@@ -392,8 +428,8 @@ const Checkout = () => {
                       <li className="order-item">
                         <figure className="img-product">
                           <img
-                           src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
-                    alt={item.product_title}
+                            src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
+                            alt={item.product_title}
                             width={30}
                           />
                           <span className="quantity">{item.quantity}</span>
@@ -401,12 +437,12 @@ const Checkout = () => {
                         <div className="content">
                           <div className="info">
                             <p className="name text-sm fw-medium">
-                             {item.product_title}
+                              {item.product_title}
                             </p>
                             <span className="variant">White / L</span>
                           </div>
                           <span className="price text-sm fw-medium">
-                           ₹{item.selling_price}
+                            ₹{item.selling_price}
                           </span>
                         </div>
                       </li>
@@ -440,11 +476,14 @@ const Checkout = () => {
                   </div>
                   <div className="btn-order">
                     <button
+                    onClick={openRazorpayCheckout}
                       type="submit"
                       className="tf-btn btn-dark2 animate-btn w-100 text-transform-none"
                     >
                       Place order
                     </button>
+                  
+
                   </div>
                 </form>
               </div>

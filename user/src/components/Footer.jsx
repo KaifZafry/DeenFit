@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 const Footer = () => {
+    const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = (sectionId) => {
+    setOpenSection(openSection === sectionId ? null : sectionId);
+  };
   return (
     <footer id="footer"  className="footer-default xl-pb-70">
             <div  className="footer-top">
@@ -41,11 +46,11 @@ const Footer = () => {
             <div  className="footer-body">
                 <div  className="container">
                     <div  className="row-footer">
-                        <div  className="footer-col-block s1">
-                            <div  className="footer-heading footer-heading-mobile text-xl fw-medium ">
+                        <div  className={`footer-col-block s1 ${openSection === "s1" ? "open" : ""}`}>
+                            <div  onClick={() => toggleSection("s1")} className="footer-heading footer-heading-mobile text-xl fw-medium ">
                                 Business Contact
                             </div>
-                            <div  className="tf-collapse-content">
+                            <div  className={`tf-collapse-content ${openSection === "s1" ? "d-block" : "d-none"} d-md-block`}>
                                 <div  className="footer-contact">
                                     <ul  className="footer-info">
                                         <li  className="item">
@@ -98,11 +103,11 @@ const Footer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div  className="footer-inner-wrap footer-col-block s2">
-                            <div  className="footer-heading footer-heading-mobile text-xl fw-medium ">
+                        <div  className={`footer-col-block s2 ${openSection === "s2" ? "open" : ""} `}>
+                            <div  onClick={() => toggleSection("s2")}  className="footer-heading footer-heading-mobile text-xl fw-medium ">
                                 Subscribe Newsletter
                             </div>
-                            <div  className="tf-collapse-content">
+                            <div  className={`tf-collapse-content ${openSection === "s2" ? "d-block" : "d-none"} d-md-block`}>
                                 <div  className="footer-newsletter">
                                     <p  className="">
                                         We invite you to register to read the latest news, offers and events about
@@ -110,22 +115,7 @@ const Footer = () => {
                                     </p>
                                     <div  className="sib-form">
                                         <div id="sib-form-container"  className="sib-form-container">
-                                            {/* <div id="error-message"  className="sib-form-message-panel">
-                                                <div
-                                                     className="sib-form-message-panel__text sib-form-message-panel__text--center">
-                                                    <span  className="sib-form-message-panel__inner-text">Your subscription
-                                                        could not be saved. Please try again.
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div id="success-message"  className="sib-form-message-panel">
-                                                <div
-                                                     className="sib-form-message-panel__text sib-form-message-panel__text--center">
-                                                    <span  className="sib-form-message-panel__inner-text">Your subscription
-                                                        has been successful.
-                                                    </span>
-                                                </div>
-                                            </div> */}
+                                           
                                             <div id="sib-container"
                                                  className="sib-container--large sib-container--vertical">
                                                 <form id="sib-form" method="POST"  className="form-newsletter"
@@ -221,11 +211,11 @@ const Footer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div  className="footer-inner-wrap s3">
+                        <div  className={`footer-col-block s3 ${openSection === "s3" ? "open" : ""}`}>
                             <div  className="footer-col-block inner-col">
-                                <div  className="footer-heading footer-heading-mobile text-xl fw-medium ">About Us
+                                <div  onClick={() => toggleSection("s3")}  className="footer-heading footer-heading-mobile text-xl fw-medium ">About Us
                                 </div>
-                                <div  className="tf-collapse-content">
+                                <div  className={`tf-collapse-content ${openSection === "s3" ? "d-block" : "d-none"} d-md-block`}>
                                     <ul  className="footer-menu-list">
                                         <li>
                                             <Link  className="" to="/about" >About Us</Link>
@@ -244,7 +234,7 @@ const Footer = () => {
                             </div>
                             <div  className="footer-col-block inner-col">
                                 <div  className="footer-heading footer-heading-mobile text-xl fw-medium">Resource</div>
-                                <div  className="tf-collapse-content">
+                                <div  className={`tf-collapse-content  ${openSection === "s3" ? "d-block" : "d-none"} d-md-block`}>
                                     <ul  className="footer-menu-list">
                                         <li>
                                             <a  className="" href="#">Privacy Policies</a>
