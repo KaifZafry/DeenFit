@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FiX, FiUpload, FiTrash2 } from 'react-icons/fi';
 
 const AddProductForm = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const productToEdit = location.state?.product;
+  const isEditMode = !!productToEdit;
+  console.log(productToEdit)
+
+  // Form state
   const [form, setForm] = useState({
     title: '',
     price: '',
@@ -9,17 +18,18 @@ const AddProductForm = () => {
     quantity: '',
     description: '',
     rating: '',
-    cid: '',
+    cid: ''
   });
 
+  // Image states
   const [imageFiles, setImageFiles] = useState([]);
-  const [imageBase64List, setImageBase64List] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState({ text: '', type: '' });
 
-  const IMAGE_BASE_URL = 'http://deenfit-001-site1.qtempurl.com/ServiceProduct/';
-
+  // Initialize form
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -30,109 +40,186 @@ const AddProductForm = () => {
         console.error('Category fetch error:', err);
       }
     };
+
     fetchCategories();
-  }, []);
 
-  // 🔁 Convert multiple files to base64
-  const handleImageChange = (e) => {
-  const files = Array.from(e.target.files);
-  setImageFiles(files);
-
-  const readers = files.map(file => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result;
-        const base64 = result.split(',')[1]; // ⬅️ remove prefix
-        resolve(base64);
-      };
-      reader.readAsDataURL(file);
-    });
-  });
-
-  Promise.all(readers).then(setImageBase64List);
-};
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    setLoading(true);
-
-    try {
-      // Step 1: Upload images
-      const uploadRes = await fetch('/api/Account/uploadfile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          docBase64List: imageBase64List,
-        }),
+    if (productToEdit) {
+      setForm({
+        title: productToEdit.title || '',
+        price: productToEdit.price || '',
+        discount: productToEdit.discount || '',
+        selling_price: productToEdit.selling_price || '',
+        quantity: productToEdit.quantity || '',
+        description: productToEdit.description || '',
+        rating: productToEdit.rating || '',
+        cid: productToEdit.cid || ''
       });
 
-      const uploadData = await uploadRes.json();
-      console.log(uploadData)
+      if (productToEdit.image) {
+        const images = productToEdit.image.split(',');
+        setExistingImages(images);
+      }
+    }
+  }, [productToEdit]);
 
-      if (!uploadData.requestnumber) throw new Error('Upload failed');
+  // Handle multiple image uploads
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImageFiles = [...imageFiles, ...files];
+    setImageFiles(newImageFiles);
 
-      
+    const newPreviews = files.map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    });
 
-      const imageString = uploadData.requestnumber;
+    Promise.all(newPreviews).then(results => {
+      setImagePreviews(prev => [...prev, ...results]);
+    });
+  };
 
-      // Step 3: Post product
+  // Remove individual image
+  const removeImage = (index, isExisting) => {
+    if (isExisting) {
+      setExistingImages(existingImages.filter((_, i) => i !== index));
+    } else {
+      const updatedFiles = [...imageFiles];
+      const updatedPreviews = [...imagePreviews];
+      updatedFiles.splice(index, 1);
+      updatedPreviews.splice(index, 1);
+      setImageFiles(updatedFiles);
+      setImagePreviews(updatedPreviews);
+    }
+  };
+
+  // Clear all new images
+  const clearAllNewImages = () => {
+    setImageFiles([]);
+    setImagePreviews([]);
+  };
+
+  // Form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ text: '', type: '' });
+
+    try {
+      let finalImageString = existingImages.join(',');
+
+      // Upload new images if any
+      if (imagePreviews.length > 0) {
+        const base64List = imagePreviews.map(img => img.split(',')[1]);
+        const uploadRes = await fetch('/api/Account/uploadfile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ docBase64List: base64List }),
+        });
+
+        const uploadData = await uploadRes.json();
+        if (!uploadData.requestnumber) throw new Error('Image upload failed');
+        
+        // Combine existing and new images
+        finalImageString = existingImages.length > 0 
+          ? `${existingImages.join(',')},${uploadData.requestnumber}`
+          : uploadData.requestnumber;
+      }
+
+      // Prepare product data
       const productData = {
         ...form,
-        image: imageString,
+        image: finalImageString,
         price: parseFloat(form.price),
         discount: parseFloat(form.discount),
         selling_price: parseFloat(form.selling_price),
         quantity: parseInt(form.quantity),
         rating: parseFloat(form.rating),
         cid: parseInt(form.cid),
+        ...(isEditMode && { id: productToEdit.id }),
       };
 
-      const postRes = await fetch('/api/Account/addproduct', {
-        method: 'POST',
+      // API endpoint
+      const endpoint = isEditMode
+        ? `/api/Account/updateproduct/${productToEdit.id}`
+        : '/api/Account/addproduct';
+
+      const method = isEditMode ? 'PUT' : 'POST';
+
+      // Submit product
+      const res = await fetch(endpoint, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(productData),
       });
 
-      const result = await postRes.json();
+      const result = await res.json();
 
       if (result?.status?.toLowerCase() === 'succeed') {
-        setMessage('✅ Product added successfully!');
-        setForm({
-          title: '',
-          price: '',
-          discount: '',
-          selling_price: '',
-          quantity: '',
-          description: '',
-          rating: '',
-          cid: '',
+        setMessage({
+          text: `Product ${isEditMode ? 'updated' : 'added'} successfully!`,
+          type: 'success'
         });
-        setImageFiles([]);
-        setImageBase64List([]);
+        
+        if (!isEditMode) {
+          // Reset form for new products
+          resetForm();
+        }
+        
+        // Redirect after 2 seconds
+        setTimeout(() => navigate('/products'), 2000);
       } else {
-        setMessage('❌ Failed to add product');
+        throw new Error(result?.message || 'Operation failed');
       }
     } catch (err) {
+      setMessage({
+        text: err.message || `Failed to ${isEditMode ? 'update' : 'add'} product`,
+        type: 'error'
+      });
       console.error(err);
-      setMessage('⚠️ Error uploading product');
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">🧢 Add Product</h2>
+  const resetForm = () => {
+    setForm({
+      title: '',
+      price: '',
+      discount: '',
+      selling_price: '',
+      quantity: '',
+      description: '',
+      rating: '',
+      cid: ''
+    });
+    setImageFiles([]);
+    setImagePreviews([]);
+    setExistingImages([]);
+  };
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title" className="w-full p-2 border rounded" required />
+  // Form field handler
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        {isEditMode ? '✏️ Edit Product' : '🧢 Add New Product'}
+      </h2>
+
+      {message.text && (
+        <div className={`mb-4 p-3 rounded ${message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          {message.text}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+       <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title" className="w-full p-2 border rounded" required />
         <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" className="w-full p-2 border rounded" />
         <div className="grid grid-cols-2 gap-4">
           <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price" className="p-2 border rounded" />
@@ -150,23 +237,134 @@ const AddProductForm = () => {
           </select>
         </div>
 
-        <input type="file" accept="image/*" multiple onChange={handleImageChange} className="w-full p-2 border rounded" />
+        {/* Enhanced Image Upload Section */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Product Images (Multiple allowed)
+          </label>
+          
+          {/* Upload Area */}
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <FiUpload className="w-10 h-10 text-gray-400" />
+              <div className="flex text-sm text-gray-600">
+                <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                  <span>Upload files</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageChange}
+                    className="sr-only"
+                  />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs text-gray-500">
+                PNG, JPG, JPEG up to 5MB each
+              </p>
+            </div>
+          </div>
 
-        <div className="flex flex-wrap gap-2 mt-2">
-          {imageBase64List.map((img, idx) => (
-            <img key={idx} src={img} alt={`preview-${idx}`} className="w-20 h-20 object-cover rounded" />
-          ))}
+          {/* Image Previews */}
+          <div className="mt-4">
+            {/* Existing Images (for edit mode) */}
+            {existingImages.length > 0 && (
+              <div className="mb-6">
+                <h4 className="text-sm font-medium text-gray-700 mb-3">
+                  Current Product Images
+                </h4>
+                <div className="flex flex-wrap gap-3">
+                  {existingImages.map((img, index) => (
+                    <div key={`existing-${index}`} className="relative group">
+                      <img
+                        src={`data:image/jpeg;base64,${img}`}
+                        alt={`Product ${index}`}
+                        className="w-24 h-24 object-cover rounded-md border"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index, true)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Remove image"
+                      >
+                        <FiX className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Newly Added Images */}
+            {imagePreviews.length > 0 && (
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="text-sm font-medium text-gray-700">
+                    Newly Added Images ({imagePreviews.length})
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={clearAllNewImages}
+                    className="text-sm text-red-600 hover:text-red-800 flex items-center"
+                  >
+                    <FiTrash2 className="mr-1" /> Clear All
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {imagePreviews.map((preview, index) => (
+                    <div key={`new-${index}`} className="relative group">
+                      <img
+                        src={preview}
+                        alt={`Preview ${index}`}
+                        className="w-24 h-24 object-cover rounded-md border"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index, false)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Remove image"
+                      >
+                        <FiX className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
-        >
-          {loading ? 'Uploading...' : 'Add Product'}
-        </button>
-
-        {message && <p className="text-center text-sm mt-3 text-red-500">{message}</p>}
+        {/* Form Actions */}
+        <div className="flex justify-end space-x-4 pt-4">
+          <button
+            type="button"
+            onClick={() => navigate('/products')}
+            disabled={loading}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            {loading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : isEditMode ? (
+              'Update Product'
+            ) : (
+              'Add Product'
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );

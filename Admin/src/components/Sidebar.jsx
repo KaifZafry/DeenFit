@@ -22,7 +22,7 @@ const Sidebar = () => {
       <div className="flex flex-col flex-grow p-4 overflow-auto">
         <nav className="flex-1 space-y-2">
           <SidebarItem icon={<FiHome />} text="Dashboard" route="/" active />
-          <SidebarItem icon={<FiUsers />} text="Users" />
+          <SidebarItem icon={<FiUsers />} text="Products" route='/products' />
           <SidebarItem icon={<FiShoppingCart />} text="Add Products" route="/addproduct" />
           <SidebarItem icon={<FiPieChart />} text="Analytics" />
           <SidebarItem icon={<FiMail />} text="Messages" />
