@@ -7,9 +7,12 @@ import AdminDashboard from './Pages/AdminDashboard';
 import ProductListPage from './Pages/products';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
+    <>
     <BrowserRouter> {/* 👈 Router should wrap EVERYTHING */}
       <div className="flex h-screen bg-gray-100">
         <Sidebar /> {/* 👈 Sidebar appears on all routes */}
@@ -20,12 +23,17 @@ const App = () => {
           <Routes> {/* 👈 Routes container for page content */}
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/addcategory" element={<AddCategoryForm />} />
-            <Route path="/addproduct" element={<AddProductForm />} />
+           
+            <Route path="/products/add" element={<AddProductForm />} />
+            <Route path="/products/edit/:id" element={<AddProductForm />} />
             <Route path="/products" element={<ProductListPage />} />
           </Routes>
         </div>
       </div>
     </BrowserRouter>
+
+     <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 };
 

@@ -43,7 +43,7 @@ const ProductListPage = () => {
   const handleDelete = async (product_id) => {
     try {
       const response = await fetch(`api/Account/deleteproduct/${product_id}`, {
-        method: "DELETE",
+        method: "POST",
       });
 
       if (!response.ok) {
@@ -86,7 +86,7 @@ const ProductListPage = () => {
     return <div className="text-center py-8 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container overflow-y-scroll h-auto mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Product Management</h1>
         <button
@@ -97,7 +97,8 @@ const ProductListPage = () => {
         </button>
       </div>
 
-      {/* Products Table */}
+    <div className="flex flex-col-reverse">
+{/* Products Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -176,7 +177,7 @@ const ProductListPage = () => {
 
       {/* Add/Edit Product Form Modal */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="  h-auto bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl">
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
@@ -198,6 +199,8 @@ const ProductListPage = () => {
           </div>
         </div>
       )}
+    </div>
+      
     </div>
   );
 };
