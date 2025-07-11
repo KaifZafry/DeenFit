@@ -46,8 +46,6 @@ const AddCategoryForm = () => {
             console.log("Full Upload Response:", uploadResponse.data);
             console.log("Uploading file:", imageFile?.name, imageFile?.size);
 
-
-
             if (!imageUrl) {
                 setMessage('❌ Failed to upload image.');
                 setLoading(false);

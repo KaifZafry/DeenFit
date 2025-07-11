@@ -58,16 +58,10 @@ const ProductListPage = () => {
     }
   };
 
-  // Update product
-  const handleUpdate = (product) => {
-    setEditingProduct(product);
-    setShowAddForm(true);
-    const navigate = useNavigate();
-
-    navigate("/addproduct", {
-      state: { product: productToEdit },
-    });
-  };
+ const handleUpdate = (product) => {
+  setEditingProduct(product);  // Prefill the form
+  setShowAddForm(true);        // Show the modal
+};
 
   // Close form and refresh products
   const handleFormClose = () => {
