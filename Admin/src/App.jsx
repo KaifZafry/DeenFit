@@ -9,6 +9,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Category from './Pages/Category';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Routes> {/* 👈 Routes container for page content */}
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/addcategory" element={<AddCategoryForm />} />
+            <Route path="/category" element={<Category />} />
            
             <Route path="/products/add" element={<AddProductForm />} />
             <Route path="/products/edit/:id" element={<AddProductForm />} />

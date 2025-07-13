@@ -227,7 +227,7 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif !important;
+ font-family: "Assistant", sans-serif !important;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -1270,7 +1270,7 @@ video {
 }
 
 .bg-dark-green-7 {
-  background-color: #0b915a !important;
+  background-color: #98785b !important;
 }
 
 .bg-dark-green-8 {
@@ -2256,8 +2256,8 @@ a:focus, a:hover {
 }
 
 .flat-spacing-34 {
-  padding-top: 40px;
-  padding-bottom: 124px;
+  /* padding-top: 40px; */
+  padding-bottom: 40px;
 }
 
 .flat-spacing-35 {
@@ -7700,10 +7700,10 @@ button.animate-btn::after,
   background: linear-gradient(to left, #591399, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::before {
-  background: linear-gradient(to right, #0b915a, transparent);
+  background: linear-gradient(to right, #98785b, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::after {
-  background: linear-gradient(to left, #0b915a, transparent);
+  background: linear-gradient(to left, #98785b, transparent);
 }
 .tf-topbar.bg-dark-green-8 .overflow-hidden::before {
   background: linear-gradient(to right, #246B64, transparent);
@@ -7787,7 +7787,7 @@ button.animate-btn::after,
   justify-content: center;
 }
 .header-default .box-nav-menu .item-link {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 21px;
   font-weight: 500;
   display: flex;
@@ -8553,7 +8553,8 @@ header {
   transition: 0.2s ease-out;
   z-index: 888;
   background-color: var(--white);
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
+  font-family: "Assistant", sans-serif;
 }
 header.header-bg {
   background-color: var(--white);
@@ -11937,7 +11938,6 @@ header.header-bg {
   aspect-ratio: 0.7037037037;
   position: relative;
   border-radius: 16px;
-  overflow: hidden;
   z-index: 20;
 }
 .card-product .card-product-wrapper img {
@@ -11955,8 +11955,8 @@ header.header-bg {
   display: block;
   z-index: 1;
   opacity: 1;
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
+  /* -webkit-transform: scale(1.05);
+  transform: scale(1.05); */
 }
 .card-product .product-img {
   display: flex;
@@ -19003,9 +19003,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     height: 45px;
   }
   .card-product .card-product-info {
-    padding-top: 18px;
-    gap: 10px;
-    padding-bottom: 20px;
+            padding-top: 8px;
+        gap: 0px;
+        padding-bottom: 0px;
   }
   .card-product .card-product-info.pt-35 {
     padding-top: 35px;
@@ -21160,9 +21160,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     height: 36px;
     font-size: 14px;
   }
-  .banner-lookbook {
+  /* .banner-lookbook {
     height: 500px;
-  }
+  } */
   .banner-container-wrap {
     margin-bottom: 60px;
   }
@@ -21987,8 +21987,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   .flat-spacing-35,
   .flat-spacing-33,
   .flat-spacing-3 {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .flat-spacing-9,
   .flat-spacing-4 {
@@ -23274,4 +23274,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .border-bottom{
   width:100%;
   border-bottom:1px solid ;
+}
+.category .rounded-full{
+  border-radius:50%;
+  overflow:hidden;
+  height:100px;
 }

@@ -114,7 +114,7 @@ const Products = () => {
                   </ul>
                 </div>
 
-                <div className="card-product-info text-center mt-2">
+                <div className="card-product-info">
                   <a
                     href={`/product/${item.product_id}`}
                     className="name-product link fw-medium text-md"
@@ -122,11 +122,11 @@ const Products = () => {
                     {item.product_title}
                   </a>
                   <p className="price-wrap fw-medium mt-1">
-                    <span className="price-new text-xl text-primary">
-                      ${item.selling_price.toFixed(2)}
+                    <span className="text-xl text-black">
+                      ₹{item.selling_price.toFixed(2)}
                     </span>
                     {item.price && (
-                      <span className="price-old ms-2">
+                      <span className="price-old text-xs ms-2">
                         ${item.price.toFixed(2)}
                       </span>
                     )}

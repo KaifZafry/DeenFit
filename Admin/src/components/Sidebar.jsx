@@ -9,6 +9,7 @@ import {
   FiMail,
   FiCalendar,
   FiLogOut,
+  FiUserPlus,
 } from "react-icons/fi";
 import SidebarItem from "./SidebarItem";
 
@@ -22,8 +23,8 @@ const Sidebar = () => {
       <div className="flex flex-col flex-grow p-4 overflow-auto">
         <nav className="flex-1 space-y-2">
           <SidebarItem icon={<FiHome />} text="Dashboard" route="/" active />
-          <SidebarItem icon={<FiUsers />} text="Products" route='/products' />
-          <SidebarItem icon={<FiShoppingCart />} text="Add Category" route="/addcategory" />
+          <SidebarItem icon={<FiShoppingCart />} text="Manage Products" route='/products' />
+          <SidebarItem icon={<FiUserPlus />} text="Manage Category" route="/category" />
           <SidebarItem icon={<FiPieChart />} text="Analytics" />
           <SidebarItem icon={<FiMail />} text="Messages" />
           <SidebarItem icon={<FiCalendar />} text="Calendar" />

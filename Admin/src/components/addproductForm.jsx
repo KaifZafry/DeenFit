@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiX, FiUpload, FiTrash2 } from 'react-icons/fi';
+import { BASE_IMG_URL } from '../../../user/src/utils/Constants';
 
 const AddProductForm = ({ productData, onClose }) => {
   const navigate = useNavigate();
   const productToEdit = productData;
+  console.log(productToEdit)
   const isEditMode = !!productToEdit;
 
   // Form state
@@ -53,10 +55,11 @@ const AddProductForm = ({ productData, onClose }) => {
         cid: productToEdit.category_id || ''
       });
 
-      if (productToEdit.image) {
-        const images = productToEdit.image.split(',');
+      if (productToEdit?.product_image) {
+        const images = productToEdit?.product_image.split(',');
         setExistingImages(images);
       }
+      
     }
   }, [productToEdit]);
 
@@ -97,6 +100,7 @@ const AddProductForm = ({ productData, onClose }) => {
       setImagePreviews(updatedPreviews);
     }
   };
+
 
  const handleSubmit = async (e) => {
   e.preventDefault();
@@ -139,7 +143,7 @@ const AddProductForm = ({ productData, onClose }) => {
 
     // Prepare the product data with proper type conversions
     const productData = {
-      id: isEditMode ? productToEdit.product_id : 0, // id must be present, even if 0 when adding
+     
   title: form.title,
   description: form.description,
   price: parseFloat(form.price) || 0,
@@ -157,10 +161,11 @@ const AddProductForm = ({ productData, onClose }) => {
       productData.selling_price = productData.price * (1 - (productData.discount / 100));
     }
 
-    // Determine API endpoint and method
-    const endpoint = isEditMode
-      ? `/api/Account/updateproduct/${productToEdit.product_id}`
-      : '/api/Account/addproduct';
+  
+
+    const endpoint = isEditMode 
+  ? '/api/Account/updateproduct' 
+  : '/api/Account/addproduct';   
 
     const method = 'POST'; // Typically both add and update use POST
 
@@ -216,6 +221,9 @@ const AddProductForm = ({ productData, onClose }) => {
     setLoading(false);
   }
 };
+
+console.log(`finalaimagestring- ${imagePreviews}`)
+console.log(`existingimages- ${existingImages}`)
 
 
   const handleChange = (e) => {
@@ -385,9 +393,11 @@ const AddProductForm = ({ productData, onClose }) => {
             {(existingImages.length > 0 || imagePreviews.length > 0) && (
               <div className="flex flex-wrap gap-3">
                 {existingImages.map((img, index) => (
+                  
                   <div key={`existing-${index}`} className="relative group">
+                    
                     <img
-                      src={`data:image/jpeg;base64,${img}`}
+                      src={`${BASE_IMG_URL}${img}`}
                       alt={`Product ${index}`}
                       className="w-24 h-24 object-cover rounded-md border"
                     />

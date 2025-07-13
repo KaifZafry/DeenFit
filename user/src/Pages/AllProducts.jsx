@@ -155,7 +155,7 @@ useEffect(() => {
                       </ul>
                     </div>
 
-                    <div className="card-product-info text-center mt-2">
+                    <div className="card-product-info">
                       <a
                         href={`/product/${item.id}`}
                         className="name-product link fw-medium text-md"
