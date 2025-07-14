@@ -10,6 +10,7 @@ const Category = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
 
+
   const FetchCategory= async()=>{
     const response= await fetch('/api/account/getcategory')
     if (!response.ok) {
@@ -17,7 +18,6 @@ const Category = () => {
       }
 
       const data= await response.json();
-      console.log(data)
       setCategories(data?.data)
   }
 

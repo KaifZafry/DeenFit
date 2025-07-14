@@ -193,7 +193,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: inherit;
+  font-family: 'poppins', sans-serif;
   font-size: 100%;
   font-style: inherit;
   font-weight: inherit;
@@ -227,7 +227,8 @@ html {
 }
 
 body {
- font-family: "Assistant", sans-serif !important;
+ /* font-family: "Assistant", sans-serif !important; */
+ font-family: "poppins", sans-serif !important;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -8553,8 +8554,8 @@ header {
   transition: 0.2s ease-out;
   z-index: 888;
   background-color: var(--white);
-  /* font-family: "Poppins", sans-serif; */
-  font-family: "Assistant", sans-serif;
+  font-family: "Poppins", sans-serif;
+  /* font-family: "Assistant", sans-serif; */
 }
 header.header-bg {
   background-color: var(--white);

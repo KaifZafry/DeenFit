@@ -35,7 +35,12 @@ const Cart = () => {
             <div className="cart-page py-3">
 
               {cartItems.length === 0 ? (
+                <div className="text-center">
                 <p>Your cart is empty</p>
+                <Link to='/products'>
+                <button className="p-2 px-8 bg-black rounded text-white">Continue Shopping</button> 
+                </Link>
+                </div>
               ) : (
                 <div className="cart-items-container">
                   {cartItems.map((item) => {
