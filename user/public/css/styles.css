@@ -23114,21 +23114,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   gap: 20px;
 }
 
-@media screen and (max-width:768px) {
-  .product-image-section {
-  flex-direction: column-reverse;
 
-}
-.cart-item-card{
-  flex-direction: column;
-}
-.thumbnail-list {
-   
-    flex-direction: row !important;
-    gap: 10px;
-    overflow-x: scroll;
-}
-}
 
 .thumbnail-list {
   display: flex;
@@ -23280,4 +23266,34 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   border-radius:50%;
   overflow:hidden;
   height:100px;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+@media screen and (max-width:768px) {
+  .product-image-section {
+  flex-direction: column-reverse;
+
+}
+.category .rounded-full{
+  
+  height:60px;
+}
+
+.cart-item-card{
+  flex-direction: column;
+}
+.thumbnail-list {
+   
+    flex-direction: row !important;
+    gap: 10px;
+    overflow-x: scroll;
+}
 }

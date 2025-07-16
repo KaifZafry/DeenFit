@@ -18,7 +18,7 @@ const BrandMarquee = () => {
         {[...Array(2)].map((_, index) => (
           <div className="marquee-group2" key={index}>
             <div className="brand-item">
-              <p className="display-2xl fw-semibold text-grey-7">Free Shipping</p>
+              <p className="display-2xl fw-semibold text-grey-7">Free Shipping </p>
             </div>
             <div className="brand-item">
               <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
@@ -26,7 +26,7 @@ const BrandMarquee = () => {
               </svg>
             </div>
             <div className="brand-item">
-              <p className="display-2xl fw-semibold text-clip-2">Shop Now, Pay Later</p>
+              <p className="display-2xl fw-semibold text-clip-2">Cash On Delivery</p>
             </div>
             <div className="brand-item">
               <svg width="42" height="42" viewBox="0 0 42 42" fill="none">

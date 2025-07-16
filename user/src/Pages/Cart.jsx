@@ -35,18 +35,27 @@ const Cart = () => {
             <div className="cart-page py-3">
 
               {cartItems.length === 0 ? (
-                <div className="text-center">
-                <p>Your cart is empty</p>
-                <Link to='/products'>
-                <button className="p-2 px-8 bg-black rounded text-white">Continue Shopping</button> 
-                </Link>
+                <div className="flex flex-col items-center justify-center text-center py-12">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
+                    alt="Empty Cart"
+                    className="w-48 h-48 mb-6 opacity-80"
+                  />
+                  <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
+                  <p className="text-gray-500">Looks like you haven't added anything yet.</p>
+                  <Link
+                    to="/products"
+                    className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                  >
+                    Continue Shopping
+                  </Link>
                 </div>
               ) : (
                 <div className="cart-items-container">
                   {cartItems.map((item) => {
                     const imageArray = item.product_image?.split(",") || [];
                     const mainImage = BASE_IMG_URL + imageArray[0];
-                   
+
                     return (
                       <div
                         className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
@@ -64,7 +73,7 @@ const Cart = () => {
 
                           <div className="cart-item-header">
                             <Link to={`/product/${item.product_id}`}>
-                            <h4 className="cart-item-name">{item.product_title}</h4>
+                              <h4 className="cart-item-name">{item.product_title}</h4>
                             </Link>
                             <p className="cart-item-variant">White / L</p>
                           </div>

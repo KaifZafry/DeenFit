@@ -37,18 +37,18 @@ const Hero = () => {
 
           {loading ? (
             <div
-              className="grid-cls content-center grid-cls-v6 wow fadeInUp"
+              className="row wow fadeInUp"
               data-aos="zoom-in"
               data-aos-duration="500"
             >
               {Array(5)
                 .fill(0)
                 .map((_, idx) => (
-                  <div key={idx}>
+                  <div className="col-2" key={idx}>
                   <div
                   style={{borderRadius:'100%'}}
                     
-                    className="h-[200px] w-[200px] bg-gray-200 m-auto  rounded-full animate-pulse"
+                    className="h-[100%] w-[100%] bg-gray-200 m-auto  rounded-full animate-pulse"
                   ></div>
                   <div className="w-1/2 my-2 mx-auto rounded-2xl h-8 bg-gray-200 animate-pulse"> </div>
                   </div>
@@ -56,18 +56,18 @@ const Hero = () => {
                 ))}
             </div>
           ) : (
-            <div className="row justify-center">
+            <div className="row overflow-x-scroll no-scrollbar flex-nowrap justify-center">
             {categories.map((category) => {
               console.log(category)
               return (
                 <div
                 key={category.category_id}
-                  className="col-2 mb-5"
+                  className="col-2"
                   data-aos="fade-up"
                   data-aos-duration="500"
                 >
                   <div className="card-product flex items-center flex-col category">
-                    <div className="card-product-wrapper rounded-full asp-ratio-1">
+                    <div className="card-product-wrapper hover-img rounded-full asp-ratio-1">
                       <Link to={`/products?category=${category?.category_id}`} className="image img-style h-100 d-block">
                         <img
                           className="img-product"
@@ -80,7 +80,7 @@ const Hero = () => {
 
                     <div className="card-product-info text-center">
                       <p
-                        className="name-product font-bold mb-0 link fw-lg text-md"
+                        className="name-product font-bold mb-0 link fw-lg text-sm"
                       >
                        {category?.category_title}
                       </p>

@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './CartSlice';
 
+import wishlistReducer from './WishListSlice'
+
 // Save cart state to localStorage on every update
 const saveToLocalStorage = (state) => {
   try {
@@ -14,6 +16,7 @@ const saveToLocalStorage = (state) => {
 const store = configureStore({
   reducer: {
     cart: cartReducer,
+    wishlist: wishlistReducer,
   },
 });
 

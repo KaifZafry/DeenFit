@@ -11,13 +11,15 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [show, setShow] = useState(false);
    const [isOpen, setIsOpen] = useState(false);
-
+   
+   const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
   const totalItems = cartItems.length;
+
+  const wishlistCount = useSelector((state) => state.wishlist.wishlistItems.length);
   return (
     <>
       <header id="header" className="header-default">
@@ -113,10 +115,10 @@ const Header = () => {
                   </a>
                 </li>
                 <li className="nav-wishlist">
-                  <a href="wish-list.html" className="nav-icon-item">
+                  <Link to="/wishlist" className="nav-icon-item">
                     <FaRegHeart />
-                    <span className="count-box">0</span>
-                  </a>
+                    <span className="count-box">{wishlistCount}</span>
+                  </Link>
                 </li>
                 <li className="nav-cart">
                   <div id="cart-icon" className="cart-icon-fixed">
