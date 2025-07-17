@@ -1,10 +1,40 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const About = () => {
   return (
     <>
+
+ <section className="tf-page-title">
+        <div className="container-full">
+          <div
+            className=" text-center"
+            data-aos="fade-up"
+            data-aos-duration="500"
+          >
+            <h4 className="title mb-3"> About Us</h4>
+            <div className="breadcrumb-list">
+              <Link className="breadcrumb-item" to="/">
+                Home
+              </Link>
+              <div className="breadcrumb-item dot">
+                <span></span>
+              </div>
+              <Link className="breadcrumb-item" href="/about">
+                About
+              </Link>
+              <div className="breadcrumb-item dot">
+                <span></span>
+              </div>
+             
+            </div>
+         
+          </div>
+        </div>
+      </section>
+
 <section className="flat-spacing-3 pb-0">
-            <div className="container">
+            <div className="container-full">
                 <div className="flat-title-2 d-xl-flex justify-content-xl-between">
                     <div className="box-title" data-aos="fade-up" data-aos-duration="500">
                         <p className="display-lg-2 fw-medium">
@@ -33,10 +63,10 @@ const About = () => {
         </section>
 
         <section className="flat-spacing-1">
-            <div className="container">
-                <div className="flat-title text-center" data-aos="fade-up" data-aos-duration="500">
+            <div className="container-full">
+                <div className="flat-title mb-4 text-center" data-aos="fade-up" data-aos-duration="500">
                     <p className="display-md-2 fw-medium">
-                        Why Choose Vineta
+                        Why Choose Deenfit
                     </p>
                     <p className="text-md text-main">
                         Our products are crafted with innovation and an eye for the latest trends. We push the
@@ -53,7 +83,7 @@ const About = () => {
                                     Ethics &amp; Responsibility
                                 </h6>
                                 <p className="text-md text-main">
-                                    At Vineta, we are dedicated to upholding the highest ethical standards in
+                                    At Deenfit, we are dedicated to upholding the highest ethical standards in
                                     production.
                                     We ensure mindful manufacturing through regular audits, training, and a strong focus
                                     on responsible sourcing.
@@ -64,7 +94,7 @@ const About = () => {
                                     Style Meets Durability
                                 </h6>
                                 <p className="text-md text-main">
-                                    From classic tailoring to casual staples, our Vineta collections embrace the latest
+                                    From classic tailoring to casual staples, our Deenfit collections embrace the latest
                                     trends while prioritizing comfort and long-lasting quality.
                                 </p>
                             </li>

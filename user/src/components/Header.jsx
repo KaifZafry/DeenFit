@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <>
       <header id="header" className="header-default">
-        <div className="container">
+        <div className="container-full">
           <div className="row wrapper-header align-items-center">
             <div className="col-md-4 col-3 d-xl-none">
               <a
@@ -225,12 +225,12 @@ const Header = () => {
 
             {/* Icons */}
             <div className="group-icon mt-4 d-flex gap-2">
-              <button className="btn btn-light w-50">
+              <Link to="/wishlist"  onClick={() => setIsOpen(false)} className="btn btn-light w-50">
                 <i className="bi bi-heart me-1"></i> Wishlist
-              </button>
-              <button className="btn btn-light w-50">
+              </Link>
+              <Link to='/'  onClick={() => setIsOpen(false)} className="btn btn-light w-50">
                 <i className="bi bi-person me-1"></i> Login
-              </button>
+              </Link>
             </div>
 
             {/* Contact Info */}
@@ -243,7 +243,7 @@ const Header = () => {
                 Email: <b>support.deenfit@gmail.com</b>
               </p>
               <p className="small">
-                Phone: <b>960824096</b>
+                Phone: <b>+91 960824096</b>
               </p>
             </div>
           </div>
