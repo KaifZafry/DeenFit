@@ -3,7 +3,7 @@ import React from 'react'
 const Topbar = () => {
   return (
     <div className="tf-topbar bg-dark-green-7 topbar-bg">
-            <div className="container">
+            <div className="container-full">
                 <div className="row justify-content-center">
                     <div className="col-xl-6">
                         <div className="topbar-wraper">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_IMG_URL } from "../utils/Constants";
 import { useLocation } from "react-router-dom";
@@ -8,6 +8,7 @@ const Checkout = () => {
   const buyNowProduct = location.state?.buyNow ? location.state.product : null;
 
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const userID = useSelector((state) => state.auth?.userID); // assuming userID is stored here
 
   const itemsToShow = buyNowProduct
     ? [{ ...buyNowProduct, quantity: 1 }]
@@ -18,49 +19,72 @@ const Checkout = () => {
     0
   );
 
-  const openRazorpayCheckout = async () => {
-    const dummyData = {
-      orderId: "order_LtYjTzv8D9fJWa", // you can hardcode this for now
-      amount: 29900, // in paise (₹299.00)
-      currency: "INR",
+  const [address, setAddress] = useState({
+    street: "",
+    apartment: "",
+    city: "",
+    state: "",
+    pin: "",
+    country: "India",
+  });
+
+  const handleAddressChange = (e) => {
+    setAddress({ ...address, [e.target.name]: e.target.value });
+  };
+
+  const openRazorpayCheckout = async (e) => {
+    e.preventDefault();
+
+    const form = document.getElementById("checkout-form");
+
+    const customerName = form.customerName.value;
+    const phone = form.phone.value;
+    const paymentMethod = form.paymentMethod.value;
+
+    const shippingAddress = `${address.street}, ${address.apartment ? address.apartment + ", " : ""}${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
+
+    const orderPayload = {
+      userID: userID || 0, // make sure this is not missing
+      customerName,
+      phone,
+      shippingAddress,
+      paymentMethod,
+      orderItems: itemsToShow.map((item) => ({
+        productID: item.product_id,
+        productName: item.product_title,
+        quantity: item.quantity,
+        price: item.selling_price,
+      })),
     };
 
-    const options = {
-      key: "rzptest_1234567890abcdef", // 🧪 Test Key ID
-      amount: dummyData.amount,
-      currency: dummyData.currency,
-      name: "DeenFit",
-      description: "Cap Purchase",
-      order_id: dummyData.orderId,
-      handler: function (response) {
-        console.log("✅ Payment Success:", response);
-        alert("Payment Successful!\n" + JSON.stringify(response, null, 2));
-      },
-      prefill: {
-        name: "Test User",
-        email: "test@example.com",
-        contact: "9999999999",
-      },
-      notes: {
-        address: "Test Razorpay Address",
-      },
-      theme: {
-        color: "#0f172a",
-      },
-    };
+    try {
+      const res = await fetch("/api/Account/placeorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
 
-    const razor = new window.Razorpay(options);
-    razor.open();
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        alert("✅ Order Placed Successfully!");
+      } else {
+        alert("❌ Failed to place order.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Something went wrong.");
+    }
   };
 
   return (
     <>
       <section className="tf-page-title">
-        <div className="container">
+        <div className="container-full">
           <div className="box-title text-center">
             <h4 className="title">Checkout</h4>
             <div className="breadcrumb-list">
-              <a className="breadcrumb-item" href="index.html">
+              <a className="breadcrumb-item" href="/">
                 Home
               </a>
               <div className="breadcrumb-item dot">
@@ -73,359 +97,104 @@ const Checkout = () => {
       </section>
 
       <div className="flat-spacing-13">
-        <div className="container">
+        <div className="container-full">
           <div className="row">
+            {/* Left Side: Form */}
             <div className="col-xl-8">
-              <form className="tf-checkout-cart-main">
-                <div className="box-ip-checkout">
-                  <div className="title text-lg fw-medium">Checkout</div>
-                  <div className="grid-2 mb_16">
-                    <div className="tf-field style-2 style-3">
-                      <input
-                        className="tf-field-input tf-input"
-                        id="firstname"
-                        placeholder=" "
-                        type="text"
-                        name="firstname"
-                      />
-                      <label className="tf-field-label" for="firstname">
-                        First name
-                      </label>
-                    </div>
-                    <div className="tf-field style-2 style-3">
-                      <input
-                        className="tf-field-input tf-input"
-                        id="lastname"
-                        placeholder=" "
-                        type="text"
-                        name="lastname"
-                      />
-                      <label className="tf-field-label" for="lastname">
-                        Last name
-                      </label>
-                    </div>
+              <div className="checkout-form border border-gray-100 bg-white p-3 rounded shadow-sm">
+                <h4 className="mb-4 font-semibold">Customer Information</h4>
+                <form id="checkout-form">
+                  <div className="mb-4">
+                    <label className="block mb-1 font-medium">Name</label>
+                    <input
+                      type="text"
+                      name="customerName"
+                      required
+                      placeholder="Enter your name"
+                      className="w-full border border-gray-300 p-2 rounded"
+                    />
                   </div>
-                  <fieldset className="tf-field style-2 style-3 mb_16">
+
+                  <div className="mb-4">
+                    <label className="block mb-1 font-medium">Phone</label>
                     <input
-                      className="tf-field-input tf-input"
-                      id="country"
-                      type="text"
-                      name="country"
-                      placeholder=" "
-                    />
-                    <label className="tf-field-label" for="country">
-                      Country
-                    </label>
-                  </fieldset>
-                  <fieldset className="tf-field style-2 style-3 mb_16">
-                    <input
-                      className="tf-field-input tf-input"
-                      id="address"
-                      type="text"
-                      name="address"
-                      placeholder=""
-                    />
-                    <label className="tf-field-label" for="address">
-                      Address
-                    </label>
-                  </fieldset>
-                  <fieldset className="tf-field style-2 style-3 mb_16">
-                    <input
-                      type="text"
-                      className="tf-field-input tf-input"
-                      name="apartment"
-                      placeholder=""
-                    />
-                    <label className="tf-field-label" for="apartment">
-                      Apartment, suite, etc (optional)
-                    </label>
-                  </fieldset>
-                  <div className="grid-3 mb_16">
-                    <fieldset className="tf-field style-2 style-3">
-                      <input
-                        className="tf-field-input tf-input"
-                        id="city"
-                        type="text"
-                        name="city"
-                        placeholder=""
-                      />
-                      <label className="tf-field-label" for="city">
-                        City
-                      </label>
-                    </fieldset>
-                    <div className="tf-select select-square">
-                      <select name="State" id="state">
-                        <option value="">State</option>
-                        <option value="alabama">Alabama</option>
-                        <option value="alaska">Alaska</option>
-                        <option value="california">California</option>
-                        <option value="hawaii">Hawaii</option>
-                        <option value="texas">Texas</option>
-                        <option value="georgia">Georgia</option>
-                      </select>
-                    </div>
-                    <fieldset className="tf-field style-2 style-3">
-                      <input
-                        className="tf-field-input tf-input"
-                        id="code"
-                        type="text"
-                        name="zipcode"
-                        placeholder=""
-                      />
-                      <label className="tf-field-label" for="code">
-                        Zipcode/Postal
-                      </label>
-                    </fieldset>
-                  </div>
-                  <fieldset className="tf-field style-2 style-3 mb_16">
-                    <input
-                      className="tf-field-input tf-input"
-                      id="phone"
-                      type="text"
+                      type="tel"
                       name="phone"
-                      placeholder=""
+                      required
+                      placeholder="Enter phone number"
+                      className="w-full border border-gray-300 p-2 rounded"
                     />
-                    <label className="tf-field-label" for="phone">
-                      Phone
-                    </label>
-                  </fieldset>
-                </div>
-                <div className="box-ip-contact">
-                  <div className="title">
-                    <div className="text-lg fw-medium">Contact Information</div>
-                    <a
-                      href="#login"
-                      data-bs-toggle="offcanvas"
-                      className="text-sm link"
-                    >
-                      Log in
-                    </a>
                   </div>
-                  <fieldset className="tf-field style-2 style-3">
+
+                  <div className="mb-4">
+                    <label className="block mb-1 font-medium">Shipping Address</label>
                     <input
-                      className="tf-field-input tf-input"
-                      id="email/phone"
-                      placeholder=" "
                       type="text"
-                      name="email/phone"
+                      name="street"
+                      placeholder="House number and street name"
+                      className="w-full p-2 border rounded"
+                      onChange={handleAddressChange}
+                      required
                     />
-                    <label className="tf-field-label" for="email/phone">
-                      Email or phone number
-                    </label>
-                  </fieldset>
-                </div>
-                <div className="box-ip-shipping">
-                  <div className="title text-lg fw-medium">Shipping Method</div>
-                  <fieldset className="mb_16">
-                    <label for="freeship" className="check-ship">
-                      <input
-                        type="radio"
-                        id="freeship"
-                        className="tf-check-rounded"
-                        name="checkshipping"
-                      />
-                      <span className="text text-sm">
-                        <span>
-                          Free Shipping (Estimate in 7/10 - 10/10/2025)
-                        </span>
-                        <span className="price">$00.00</span>
-                      </span>
-                    </label>
-                  </fieldset>
-                  <fieldset>
-                    <label for="expship" className="check-ship">
-                      <input
-                        type="radio"
-                        id="expship"
-                        className="tf-check-rounded"
-                        name="checkshipping"
-                        checked=""
-                      />
-                      <span className="text text-sm">
-                        <span>
-                          Express Shipping (Estimate in 4/10 - 5/10/2025)
-                        </span>
-                        <span className="price">$10.00</span>
-                      </span>
-                    </label>
-                  </fieldset>
-                </div>
-                <div className="box-ip-payment">
-                  <div className="title">
-                    <div className="text-lg fw-medium mb_4">Payment</div>
-                    <p className="text-sm text-main">
-                      All transactions are secure and encrypted.
-                    </p>
-                  </div>
-                  <fieldset className="mb_12">
-                    <label for="bank-transfer" className="check-payment">
-                      <input
-                        type="checkbox"
-                        id="bank-transfer"
-                        className="tf-check-rounded"
-                        name="bank-transfer"
-                      />
-                      <span className="text-payment text-sm">
-                        Direct bank transfer
-                      </span>
-                    </label>
-                  </fieldset>
-                  <p className="mb_16 text-main">
-                    Make your payment directly into our bank account. Please use
-                    your Order ID as the payment reference.Your order will not
-                    be shipped until the funds have cleared in our account.
-                  </p>
-                  <div className="payment-method-box" id="payment-method-box">
-                    <div className="payment-item mb_16">
-                      <label
-                        for="delivery"
-                        className="payment-header collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#delivery-payment"
-                        aria-controls="delivery-payment"
-                      >
-                        <input
-                          type="radio"
-                          name="payment-method"
-                          className="tf-check-rounded"
-                          id="delivery"
-                        />
-                        <span className="pay-title text-sm">
-                          Cash on delivery
-                        </span>
-                      </label>
-                      <div
-                        id="delivery-payment"
-                        className="collapse"
-                        data-bs-parent="#payment-method-box"
-                      ></div>
-                    </div>
-                    <div className="payment-item mb_16">
-                      <label
-                        for="credit-card"
-                        className="payment-header"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#credit-card-payment"
-                        aria-controls="credit-card-payment"
-                      >
-                        <input
-                          type="radio"
-                          name="payment-method"
-                          className="tf-check-rounded"
-                          id="credit-card"
-                          checked=""
-                        />
-                        <span className="pay-title text-sm">Credit Card</span>
-                      </label>
-                      <div
-                        id="credit-card-payment"
-                        className="collapse show"
-                        data-bs-parent="#payment-method-box"
-                      >
-                        <div className="payment-body">
-                          <fieldset className="ip-card mb_16">
-                            <input
-                              type="text"
-                              className="style-2"
-                              placeholder="Card number"
-                            />
-                            <img
-                              className="card-logo"
-                              width="41"
-                              height="12"
-                              src="images/payment/visa-2.png"
-                              alt="card"
-                            />
-                          </fieldset>
-                          <div className="grid-2 mb_16">
-                            <input
-                              type="text"
-                              className="style-2"
-                              placeholder="Expiration date (MM/YY)"
-                            />
-                            <input
-                              type="text"
-                              className="style-2"
-                              placeholder="Sercurity code"
-                            />
-                          </div>
-                          <fieldset className="mb_16">
-                            <input
-                              type="text"
-                              className="style-2"
-                              placeholder="Name on card"
-                            />
-                          </fieldset>
-                          <div className="cb-ship">
-                            <input
-                              type="checkbox"
-                              checked=""
-                              className="tf-check"
-                              id="checkShip"
-                            />
-                            <label
-                              for="checkShip"
-                              className="text-sm text-main"
-                            >
-                              Use shipping address as billing address
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="payment-item paypal-payment mb_16">
-                      <label
-                        for="paypal"
-                        className="payment-header collapsed"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#paypal-payment"
-                        aria-controls="paypal-payment"
-                      >
-                        <input
-                          type="radio"
-                          name="payment-method"
-                          className="tf-check-rounded"
-                          id="paypal"
-                        />
-                        <span className="pay-title text-sm">
-                          PayPal
-                          <img
-                            className="card-logo"
-                            width="78"
-                            height="20"
-                            src="/card/PayPal.png"
-                            alt="apple"
-                          />
-                        </span>
-                      </label>
-                      <div
-                        id="paypal-payment"
-                        className="collapse"
-                        data-bs-parent="#payment-method-box"
-                      ></div>
-                    </div>
-                  </div>
-                  <p className="text-dark-6 text-sm">
-                    Your personal data will be used to process your order,
-                    support your experience throughout this website, and for
-                    other purposes described in our{" "}
-                    <a
-                      href="privacy-policy.html"
-                      className="fw-medium text-decoration-underline link text-sm"
+                    <input
+                      type="text"
+                      name="apartment"
+                      placeholder="Apartment, suite, unit, etc. (optional)"
+                      className="w-full p-2 border rounded mt-2"
+                      onChange={handleAddressChange}
+                    />
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="Town / City"
+                      className="w-full p-2 border rounded mt-2"
+                      onChange={handleAddressChange}
+                      required
+                    />
+                    <select
+                      name="state"
+                      className="w-full p-2 border rounded mt-2"
+                      onChange={handleAddressChange}
+                      required
                     >
-                      privacy policy.
-                    </a>
-                  </p>
-                </div>
-              </form>
+                      <option value="">Select State</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    </select>
+                    <input
+                      type="text"
+                      name="pin"
+                      placeholder="PIN Code"
+                      className="w-full p-2 border rounded mt-2"
+                      onChange={handleAddressChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block mb-1 font-medium">Payment Method</label>
+                    <select
+                      name="paymentMethod"
+                      className="w-full border border-gray-300 p-2 rounded"
+                    >
+                      <option value="UPI">UPI</option>
+                      <option value="COD">Cash on Delivery</option>
+                      <option value="Card">Credit/Debit Card</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
             </div>
+
+            {/* Right Side: Cart */}
             <div className="col-xl-4">
               <div className="tf-page-cart-sidebar">
-                <form action="thank-you.html" className="cart-box order-box">
+                <form className="cart-box order-box">
                   <div className="title text-lg fw-medium">In your cart</div>
                   <ul className="list-order-product">
                     {itemsToShow.map((item) => (
-                      <li className="order-item">
+                      <li key={item.product_id} className="order-item">
                         <figure className="img-product">
                           <img
                             src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
@@ -448,42 +217,41 @@ const Checkout = () => {
                       </li>
                     ))}
                   </ul>
+
                   <ul className="list-total">
-                    <li className="total-item text-sm d-flex justify-content-between">
+                    <li className="total-item d-flex justify-between text-sm">
                       <span>Subtotal:</span>
-                      <span className="price-sub fw-medium">
-                        {totalPrice.toFixed(2)}
+                      <span className="fw-medium">
+                        ₹{totalPrice.toFixed(2)}
                       </span>
                     </li>
-                    <li className="total-item text-sm d-flex justify-content-between">
+                    <li className="total-item d-flex justify-between text-sm">
                       <span>Discount:</span>
-                      <span className="price-discount fw-medium">
-                        00
-                      </span>
+                      <span className="fw-medium">00</span>
                     </li>
-                    <li className="total-item text-sm d-flex justify-content-between">
+                    <li className="total-item d-flex justify-between text-sm">
                       <span>Shipping:</span>
-                      <span className="price-ship fw-medium">00</span>
+                      <span className="fw-medium">00</span>
                     </li>
-                    <li className="total-item text-sm d-flex justify-content-between">
+                    <li className="total-item d-flex justify-between text-sm">
                       <span>Tax:</span>
-                      <span className="price-tax fw-medium">00</span>
+                      <span className="fw-medium">00</span>
                     </li>
                   </ul>
-                  <div className="subtotal text-lg fw-medium d-flex justify-content-between">
-                    <span>Subtotal:</span>
-                    <span className="total-price-order"> {totalPrice.toFixed(2)}</span>
+
+                  <div className="subtotal d-flex justify-between text-lg fw-medium mt-3">
+                    <span>Total:</span>
+                    <span className="total-price-order">₹{totalPrice.toFixed(2)}</span>
                   </div>
-                  <div className="btn-order">
+
+                  <div className="btn-order mt-4">
                     <button
-                    onClick={openRazorpayCheckout}
+                      onClick={openRazorpayCheckout}
                       type="submit"
                       className="tf-btn btn-dark2 animate-btn w-100 text-transform-none"
                     >
                       Place order
                     </button>
-                  
-
                   </div>
                 </form>
               </div>

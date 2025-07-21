@@ -56,9 +56,9 @@ useEffect(() => {
   return (
     <>
       <section className="tf-page-title">
-        <div className="container">
+        <div className="container-full">
           <div
-            className="box-title text-center"
+            className="box-title w-full text-center"
             data-aos="fade-up"
             data-aos-duration="500"
           >

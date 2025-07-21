@@ -117,7 +117,7 @@ const ProductDetails = () => {
   return (
     <>
       <div className="breadcrumb-sec">
-        <div className="container">
+        <div className="container-full">
           <div className="breadcrumb-wrap">
             <div className="breadcrumb-list">
               <Link className="breadcrumb-item" to="/">

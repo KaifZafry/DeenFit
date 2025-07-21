@@ -19,6 +19,7 @@ import Cart from '../Pages/Cart';
 import Checkout from '../Pages/Checkout';
 import ProductList from '../Pages/ProductsWithCategory';
 import WishlistPage from '../Pages/Wishlist';
+import AccountPage from '../Pages/AccountPage';
 
 
 export default function AppRoutes() {
@@ -42,6 +43,7 @@ export default function AppRoutes() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={2000} />
       </AnimatePresence>

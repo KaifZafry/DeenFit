@@ -13,7 +13,7 @@ const Cart = () => {
   return (
     <>
       <section className="tf-page-title">
-        <div className="container">
+        <div className="container-full">
           <div className="box-title text-center" data-aos="fade-up" data-aos-duration="500">
             <h4 className="title">Shopping Cart</h4>
             <div className="breadcrumb-list">

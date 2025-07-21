@@ -10,15 +10,16 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [show, setShow] = useState(false);
-   const [isOpen, setIsOpen] = useState(false);
-   
-   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalItems = cartItems.length;
-
+  // const user = useSelector((state) => state.auth.user);
+    const user = 'zafry';
   const wishlistCount = useSelector((state) => state.wishlist.wishlistItems.length);
   return (
     <>
@@ -106,13 +107,22 @@ const Header = () => {
                   </a>
                 </li>
                 <li className="nav-account">
-                  <a
-                    href="#login"
-                    data-bs-toggle="offcanvas"
-                    className="nav-icon-item"
-                  >
-                    <LuUserRound />
-                  </a>
+                  {user ? (
+                    // ✅ Show My Account or Logout if user is logged in
+                    <Link to="/account" className="nav-icon-item">
+                      <LuUserRound />
+                      
+                    </Link>
+                  ) : (
+                    // 🚪 Show Login icon if not logged in
+                    <a
+                      href="#login"
+                      data-bs-toggle="offcanvas"
+                      className="nav-icon-item"
+                    >
+                      <LuUserRound />
+                    </a>
+                  )}
                 </li>
                 <li className="nav-wishlist">
                   <Link to="/wishlist" className="nav-icon-item">
@@ -139,9 +149,8 @@ const Header = () => {
       </header>
 
       <div
-        className={`offcanvas d-md-none offcanvas-start canvas-mb ${
-          show ? "show" : ""
-        }`}
+        className={`offcanvas d-md-none offcanvas-start canvas-mb ${show ? "show" : ""
+          }`}
       >
         <button
           className="icon-close icon-close-popup"
@@ -177,8 +186,8 @@ const Header = () => {
                   onClick={toggleDropdown}
                   className="item-link cursor-pointer flex items-center justify-between w-full py-3 "
                 >
-                  Products <span className="plus-icon">+</span> 
-                                  </span>
+                  Products <span className="plus-icon">+</span>
+                </span>
 
                 {isOpen && (
                   <ul className="mt-2 w-full shadow-lg rounded-lg z-50">
@@ -225,10 +234,10 @@ const Header = () => {
 
             {/* Icons */}
             <div className="group-icon mt-4 d-flex gap-2">
-              <Link to="/wishlist"  onClick={() => setIsOpen(false)} className="btn btn-light w-50">
+              <Link to="/wishlist" onClick={() => setIsOpen(false)} className="btn btn-light w-50">
                 <i className="bi bi-heart me-1"></i> Wishlist
               </Link>
-              <Link to='/'  onClick={() => setIsOpen(false)} className="btn btn-light w-50">
+              <Link to='/' onClick={() => setIsOpen(false)} className="btn btn-light w-50">
                 <i className="bi bi-person me-1"></i> Login
               </Link>
             </div>

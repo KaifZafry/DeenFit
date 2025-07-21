@@ -474,14 +474,14 @@ select {
   opacity: 1;
 }
 
-button {
+/* button {
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: var(--dark);
-  border: 1px solid var(--dark);
+   background-color: var(--dark); 
+   border: 1px solid var(--dark); 
   padding: 3px 15px;
   border-radius: 99px;
   display: inline-flex;
@@ -491,7 +491,7 @@ button {
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
-}
+} */
 button .icon {
   font-size: 22px;
 }
@@ -15868,7 +15868,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .tf-page-cart-sidebar .order-box .order-item {
   display: flex;
   gap: 10px;
-  align-items: center;
+  margin-top: 10px !important;
 }
 .tf-page-cart-sidebar .order-box .order-item:not(:last-child) {
   margin-bottom: 16px;
@@ -15880,7 +15880,6 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 .tf-page-cart-sidebar .order-box .order-item .img-product img {
   width: 100%;
-  height: 100%;
   object-fit: cover;
   border-radius: 4px;
 }
@@ -16820,7 +16819,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .tf-page-title .box-title {
   display: grid;
   gap: 12px;
-  max-width: 560px;
+  /* max-width: 560px; */
   margin: auto;
 }
 .tf-page-title .breadcrumb-list {
@@ -23296,4 +23295,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     gap: 10px;
     overflow-x: scroll;
 }
+}
+.account-aside{
+      border-right: 1px solid #d1d1d1;
 }

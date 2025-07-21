@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer id="footer"  className="footer-default xl-pb-70">
             <div  className="footer-top">
-                <div  className="container">
+                <div  className="container-full">
                     <div  className="footer-top-wrap">
                         <div  className="footer-logo">
                             <Link to='/' >
@@ -44,7 +44,7 @@ const Footer = () => {
                 </div>
             </div>
             <div  className="footer-body">
-                <div  className="container">
+                <div  className="container-full">
                     <div  className="row-footer">
                         <div  className={`footer-col-block s1 ${openSection === "s1" ? "open" : ""}`}>
                             <div  onClick={() => toggleSection("s1")} className="footer-heading footer-heading-mobile text-xl fw-medium ">
@@ -257,7 +257,7 @@ const Footer = () => {
                 </div>
             </div>
             <div  className="footer-bottom">
-                <div  className="container">
+                <div  className="container-full">
                     <div  className="footer-bottom-wrap">
                         <p  className="text-dark ">Copyright © 2025 by <span  className="fw-medium">Deenfit.</span> All
                             Rights
