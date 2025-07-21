@@ -241,65 +241,14 @@ const ProductDetails = () => {
                           <span className="text-primary fw-medium">
                             HURRY UP!
                           </span>{" "}
-                          Only <span className="count">4</span> items left!
+                          Only <span className="count">{product?.quantity}</span> items left!
                         </div>
                         <div className="progress-sold">
                           <div className="value"></div>
                         </div>
                       </div>
                     </div>
-                    <div className="tf-product-variant">
-                      <div className="variant-picker-item variant-size">
-                        <div className="variant-picker-label">
-                          <div>
-                            Size:
-                            <span className="variant-picker-label-value value-currentSize">
-                              Small
-                            </span>
-                          </div>
-                          <a
-                            href="#sizeGuide"
-                            data-bs-toggle="modal"
-                            className="size-guide link"
-                          >
-                            Size Guide
-                          </a>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                          <div className="variant-picker-values">
-                            <span className="size-btn active" data-size="small">
-                              S
-                            </span>
-                            <span className="size-btn" data-size="medium">
-                              M
-                            </span>
-                            <span className="size-btn" data-size="large">
-                              L
-                            </span>
-                            <span className="size-btn" data-size="extra large">
-                              XL
-                            </span>
-                          </div>
-                          {/* <div className="qty-control">
-                            <button
-                              onClick={() =>
-                                dispatch(decrementQty(product.product_id))
-                              }
-                            >
-                              -
-                            </button>
-                            <span>{product.quantity}</span>
-                            <button
-                              onClick={() =>
-                                dispatch(incrementQty(product.product_id))
-                              }
-                            >
-                              +
-                            </button>
-                          </div> */}
-                        </div>
-                      </div>
-                    </div>
+                  
                     <div className="tf-product-total-quantity">
                       <div className="group-btn">
                         <button
@@ -317,13 +266,13 @@ const ProductDetails = () => {
                         </Link>
                       </div>
 
-                      <Link to="/checkout" className="more-choose-payment link">
+                      <Link to="/checkout" className="more-choose-payment mt-2 link">
                         More payment options
                       </Link>
                     </div>
 
                     <div className="tf-product-trust-seal text-center">
-                      <p className="text-md text-dark-2 text-seal fw-medium">
+                      <p className="text-md text-dark-2 mb-2 text-seal fw-medium">
                         Guarantee Safe Checkout:
                       </p>
                       <ul className="list-card">

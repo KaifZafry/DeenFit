@@ -11,51 +11,51 @@ const Topbar = () => {
                                 <div className="topbar-center marquee-wrapper">
                                     <div className="initial-child-container">
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
                                         <div className="marquee-child-item">
-                                            WINTER SALE 75% OFF. Ends in: &nbsp;
+                                            EARLY BIRD SALE 20% OFF. Ends in: &nbsp;
                                             <div className="js-countdown d-flex justify-content-center" data-timer="900610" data-labels=" DAYS : , HOURS : , MINUTES : , SECONDS"></div>
                                         </div>
         

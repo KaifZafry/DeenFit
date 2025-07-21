@@ -37,7 +37,7 @@ const Hero = () => {
 
           {loading ? (
             <div
-              className="row wow fadeInUp"
+              className="row wow justify-center fadeInUp"
               data-aos="zoom-in"
               data-aos-duration="500"
             >
@@ -48,7 +48,7 @@ const Hero = () => {
                   <div
                   style={{borderRadius:'100%'}}
                     
-                    className="h-[100%] w-[100%] bg-gray-200 m-auto  rounded-full animate-pulse"
+                    className="h-[100px] w-[100px] bg-gray-200 m-auto  rounded-full animate-pulse"
                   ></div>
                   <div className="w-1/2 my-2 mx-auto rounded-2xl h-8 bg-gray-200 animate-pulse"> </div>
                   </div>

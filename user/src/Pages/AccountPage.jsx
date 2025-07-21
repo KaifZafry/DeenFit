@@ -10,8 +10,9 @@ const AccountPage = () => {
  // const user = useSelector((state) => state.auth.user);
   const user= "kaif"
   const [orders, setOrders] = useState([]);
+  const [orderdetails, setOrderdetails] = useState();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("orders");
+  const [activeTab, setActiveTab] = useState("dashboard");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const AccountPage = () => {
         console.log(json?.orderItems)
         setLoading(false)
         setOrders(json?.orderItems || []);
+        setOrderdetails(json)
       } catch (error) {
         console.error("Failed to fetch orders", error);
       } finally {
@@ -137,28 +139,28 @@ const AccountPage = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <h4 className="font-semibold">
-                            Order #{order?.orderItemID} - {new Date(order.orderDate).toLocaleDateString()}
+                            Order #{order?.orderItemID} - {new Date(orderdetails?.statusHistory?.updatedAt).toLocaleDateString()}
                           </h4>
                           <p className="text-sm text-gray-500">
                             Status: <span className={`inline-block px-2 py-1 text-xs rounded font-medium ${
-                              order.currentStatus === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
-                              order.currentStatus === 'Processing' ? 'bg-blue-100 text-blue-700' :
-                              order.currentStatus === 'Shipped' ? 'bg-indigo-100 text-indigo-700' :
-                              order.currentStatus === 'Delivered' ? 'bg-green-100 text-green-700' :
-                              order.currentStatus === 'Cancelled' ? 'bg-red-100 text-red-700' :
+                              orderdetails?.statusHistory?.statusName === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                              orderdetails?.statusHistory?.statusName === 'Processing' ? 'bg-blue-100 text-blue-700' :
+                              orderdetails?.statusHistory?.statusName === 'Shipped' ? 'bg-indigo-100 text-indigo-700' :
+                              orderdetails?.statusHistory?.statusName === 'Delivered' ? 'bg-green-100 text-green-700' :
+                              orderdetails?.statusHistory?.statusName === 'Cancelled' ? 'bg-red-100 text-red-700' :
                               'bg-gray-100 text-gray-600'
-                            }`}>{order.currentStatus}</span>
+                            }`}>{orderdetails?.statusHistory?.statusName}</span>
                           </p>
                         </div>
                         <div className="text-right">
-                          <p>Total: ₹{order.totalAmount}</p>
+                          <p>Total: ₹{orderdetails.totalAmount}</p>
                           <p className="text-xs text-gray-400">
-                            {order.paymentMethod}
+                            {orderdetails.paymentMethod}
                           </p>
                         </div>
                       </div>
                       <div className="mt-2 border-t pt-2">
-                        {order.orderItems?.map((item) => (
+                        {orders.map((item) => (
                           <div key={item.orderItemID} className="text-sm mb-1">
                             {item.productName} × {item.quantity} = ₹{item.subtotal}
                           </div>
@@ -181,15 +183,15 @@ const AccountPage = () => {
           {activeTab === "details" && (
             <div>
               <h3 className="text-xl font-semibold mb-4">Account details</h3>
-              <p><strong>Phone:</strong> {user.phone}</p>
-              <p><strong>Name:</strong> {user.customerName || "Not Provided"}</p>
+              <p><strong>Phone:</strong> {orderdetails?.phone}</p>
+              <p><strong>Name:</strong> {orderdetails?.customerName || "Not Provided"}</p>
             </div>
           )}
 
           {activeTab === "dashboard" && (
             <div>
               <h3 className="text-xl font-semibold mb-4">Dashboard</h3>
-              <p>Welcome back, {user.customerName || user.phone} 👋</p>
+              <p>Welcome back, {orderdetails?.customerName || orderdetails?.phone} 👋</p>
             </div>
           )}
         </section>

@@ -45,7 +45,7 @@ const Cart = () => {
                   <p className="text-gray-500">Looks like you haven't added anything yet.</p>
                   <Link
                     to="/products"
-                    className="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                    className="mt-4  inline-block bg-black text-white px-4 py-2  hover:bg-gray-900 transition"
                   >
                     Continue Shopping
                   </Link>
@@ -133,7 +133,7 @@ const Cart = () => {
                     Taxes and shipping calculated at checkout
                   </p>
                 </div>
-                <div className="check-agree">
+                <div className="check-agree my-2">
                   <input type="checkbox" className="tf-check" id="check-agree" />
                   <label htmlFor="check-agree" className="label text-dark-4">
                     I agree with{" "}
@@ -145,7 +145,7 @@ const Cart = () => {
                     </a>
                   </label>
                 </div>
-                <Link to='/checkout' className="checkout-btn">
+                <Link to='/checkout' className="checkout-btn my-2">
                   <button
                     type="submit"
                     disabled={cartItems.length === 0}

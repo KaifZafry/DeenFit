@@ -595,7 +595,7 @@ h4,
 
 h5,
 .display-sm {
-  font-size: 30px;
+  font-size: 17px;
   line-height: 38px;
 }
 
@@ -1271,7 +1271,7 @@ video {
 }
 
 .bg-dark-green-7 {
-  background-color: #98785b !important;
+  background-color: #000 !important;
 }
 
 .bg-dark-green-8 {
@@ -1614,9 +1614,7 @@ a:focus, a:hover {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.link:hover {
-  color: var(--primary) !important;
-}
+
 
 .grid-2 {
   display: grid;
@@ -2704,8 +2702,7 @@ a:focus, a:hover {
   background-color: var(--dark);
   border: 1px solid var(--dark);
   color: var(--white);
-  padding: 13px 32px;
-  border-radius: 99px;
+  padding: 8px 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -7701,10 +7698,10 @@ button.animate-btn::after,
   background: linear-gradient(to left, #591399, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::before {
-  background: linear-gradient(to right, #98785b, transparent);
+  background: linear-gradient(to right, #000, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::after {
-  background: linear-gradient(to left, #98785b, transparent);
+  background: linear-gradient(to left, #000, transparent);
 }
 .tf-topbar.bg-dark-green-8 .overflow-hidden::before {
   background: linear-gradient(to right, #246B64, transparent);
@@ -7713,10 +7710,10 @@ button.animate-btn::after,
   background: linear-gradient(to left, #246B64, transparent);
 }
 .tf-topbar.bg-brown-18 .overflow-hidden::before {
-  background: linear-gradient(to right, #995413, transparent);
+  background: linear-gradient(to right, #000, transparent);
 }
 .tf-topbar.bg-brown-18 .overflow-hidden::after {
-  background: linear-gradient(to left, #995413, transparent);
+  background: linear-gradient(to left, #000, transparent);
 }
 .tf-topbar .js-countdown .countdown__value {
   min-width: 17px;
@@ -10791,9 +10788,7 @@ header.header-bg {
   gap: 12px;
   font-weight: 500;
 }
-.tf-product-info-wrap .product-price .price-new {
-  color: var(--primary);
-}
+
 .tf-product-info-wrap .product-price .price-old {
   color: var(--rgba-dark);
   text-decoration: line-through;
@@ -11933,7 +11928,6 @@ header.header-bg {
 }
 .card-product .price-wrap .price-new {
   margin-right: 2px;
-  color: #ff6f61 !important;
 }
 .card-product .card-product-wrapper {
   aspect-ratio: 0.7037037037;

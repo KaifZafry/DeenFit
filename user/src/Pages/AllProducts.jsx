@@ -158,16 +158,16 @@ useEffect(() => {
                     <div className="card-product-info">
                       <a
                         href={`/product/${item.id}`}
-                        className="name-product link fw-medium text-md"
+                        className="name-product link fw-medium text-sm"
                       >
                         {item.product_title}
                       </a>
                       <p className="price-wrap fw-medium mt-1">
-                        <span className="price-new text-xl text-primary">
+                        <span className="price-new text-sm">
                           ₹{item.selling_price.toFixed(2)}
                         </span>
                         {item.price && (
-                          <span className="price-old ms-2">
+                          <span className="price-old text-xs ms-2">
                             ₹{item.price.toFixed(2)}
                           </span>
                         )}
