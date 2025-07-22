@@ -44,7 +44,7 @@ const Checkout = () => {
     const shippingAddress = `${address.street}, ${address.apartment ? address.apartment + ", " : ""}${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
 
     const orderPayload = {
-      userID: userID || 0, // make sure this is not missing
+      userID: userID || 4, // make sure this is not missing
       customerName,
       phone,
       shippingAddress,

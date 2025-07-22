@@ -3,18 +3,21 @@ import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { BASE_IMG_URL } from "../utils/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategories } from '../redux/categorySlice';
 
 const Hero = () => {
-  const [categories, setCategories] = useState([]);
+  //const [categories, setCategories] = useState([]);
+  const categories = useSelector((state) => state.category.list);
   const [loading, setLoading] = useState(true);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await fetch("/api/Account/getcategory");
         const json = await res.json();
         console.log(json?.data);
-        setCategories(json?.data);
+        dispatch(setCategories(json?.data));
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {

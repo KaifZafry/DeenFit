@@ -7,11 +7,13 @@ import { LuUserRound } from "react-icons/lu";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import LoginPopup from "./Login";
 
 const Header = () => {
+   const [showLogin, setShowLogin] = useState(false);
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+const categories = useSelector((state) => state.category.list);
   const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -19,7 +21,8 @@ const Header = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalItems = cartItems.length;
   // const user = useSelector((state) => state.auth.user);
-    const user = 'zafry';
+    const user = '';
+   
   const wishlistCount = useSelector((state) => state.wishlist.wishlistItems.length);
   return (
     <>
@@ -61,30 +64,19 @@ const Header = () => {
                     </span>
 
                     <ul className="absolute group-hover:block hidden left-0 bg-white top-16 w-[200px] text-start">
-                      <li>
+                     
+                     {categories.map((category)=>(
+                       <li key={category?.id}>
                         <Link
-                          to="/products?category=2"
-                          className="block w-100 px-4 text-start py-2 hover:bg-gray-200 hover:text-orange-300"
-                        >
-                          Sunnah Lines
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/products?category=3"
+                          to={`/products?category=${category.category_id}`}
                           className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
                         >
-                          Deenfit Original
+                          {category?.category_title}
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          to="/products?category=4"
-                          className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
-                        >
-                          Deenfit Youth
-                        </Link>
-                      </li>
+                     ))}
+                     
+                     
                     </ul>
                   </li>
                   <li className="menu-item position-relative">
@@ -117,10 +109,13 @@ const Header = () => {
                     // 🚪 Show Login icon if not logged in
                     <a
                       href="#login"
+                      onClick={() => setShowLogin(true)}
+                     
                       data-bs-toggle="offcanvas"
                       className="nav-icon-item"
                     >
                       <LuUserRound />
+                        {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
                     </a>
                   )}
                 </li>
