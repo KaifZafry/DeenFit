@@ -7,10 +7,8 @@ import { LuUserRound } from "react-icons/lu";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import LoginPopup from "./Login";
 
 const Header = () => {
-   const [showLogin, setShowLogin] = useState(false);
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 const categories = useSelector((state) => state.category.list);
@@ -21,12 +19,12 @@ const categories = useSelector((state) => state.category.list);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalItems = cartItems.length;
   // const user = useSelector((state) => state.auth.user);
-    const user = '';
-   
+    
+   const userId = localStorage.getItem("userId");
   const wishlistCount = useSelector((state) => state.wishlist.wishlistItems.length);
   return (
     <>
-      <header id="header" className="header-default">
+      <header id="header" className="header-default shadow-md">
         <div className="container-full">
           <div className="row wrapper-header align-items-center">
             <div className="col-md-4 col-3 d-xl-none">
@@ -66,7 +64,7 @@ const categories = useSelector((state) => state.category.list);
                     <ul className="absolute group-hover:block hidden left-0 bg-white top-16 w-[200px] text-start">
                      
                      {categories.map((category)=>(
-                       <li key={category?.id}>
+                       <li key={category?.category_id}>
                         <Link
                           to={`/products?category=${category.category_id}`}
                           className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
@@ -99,7 +97,7 @@ const categories = useSelector((state) => state.category.list);
                   </a>
                 </li>
                 <li className="nav-account">
-                  {user ? (
+                  {userId ? (
                     // ✅ Show My Account or Logout if user is logged in
                     <Link to="/account" className="nav-icon-item">
                       <LuUserRound />
@@ -107,16 +105,13 @@ const categories = useSelector((state) => state.category.list);
                     </Link>
                   ) : (
                     // 🚪 Show Login icon if not logged in
-                    <a
-                      href="#login"
-                      onClick={() => setShowLogin(true)}
-                     
+                    <Link
+                      to="/register"                     
                       data-bs-toggle="offcanvas"
                       className="nav-icon-item"
                     >
                       <LuUserRound />
-                        {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
-                    </a>
+                    </Link>
                   )}
                 </li>
                 <li className="nav-wishlist">

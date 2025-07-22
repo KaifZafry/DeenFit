@@ -8,8 +8,8 @@ const Checkout = () => {
   const buyNowProduct = location.state?.buyNow ? location.state.product : null;
 
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const userID = useSelector((state) => state.auth?.userID); // assuming userID is stored here
-
+ 
+  const userId = localStorage.getItem("userId");
   const itemsToShow = buyNowProduct
     ? [{ ...buyNowProduct, quantity: 1 }]
     : cartItems;
@@ -44,7 +44,7 @@ const Checkout = () => {
     const shippingAddress = `${address.street}, ${address.apartment ? address.apartment + ", " : ""}${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
 
     const orderPayload = {
-      userID: userID || 4, // make sure this is not missing
+      userID: userId, // make sure this is not missing
       customerName,
       phone,
       shippingAddress,

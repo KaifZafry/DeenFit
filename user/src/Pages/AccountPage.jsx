@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const AccountPage = () => {
  // const user = useSelector((state) => state.auth.user);
-  const user= "kaif"
+  const userId = localStorage.getItem("userId");
   const [orders, setOrders] = useState([]);
   const [orderdetails, setOrderdetails] = useState();
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ const AccountPage = () => {
     const fetchOrders = async () => {
      
       try {
-        const res = await fetch(`/api/Account/getAllorderbyuserID/3`);
+        const res = await fetch(`/api/Account/getAllorderbyuserID/${userId}`);
         const json = await res.json();
         console.log(json?.orderItems)
         setLoading(false)
@@ -32,7 +32,7 @@ const AccountPage = () => {
       }
     };
     fetchOrders();
-  }, [user]);
+  }, [userId]);
 
   useEffect(()=>{
     console.log(orders)
@@ -42,7 +42,7 @@ const AccountPage = () => {
     window.location.href = "/";
   };
 
-  if (!user) {
+  if (!userId) {
     return (
       <div className="container py-8 text-center">
         <h2 className="text-xl font-semibold">Please log in to view your account.</h2>

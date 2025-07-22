@@ -9,8 +9,6 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../components/Scrolltop';
 import { AnimatePresence } from 'framer-motion';
 import Home from '../Pages/Home';
-import Login from '../Pages/Login';
-import SignUp from '../Pages/SignUp';
 import About from '../Pages/About';
 import Contact from '../Pages/Contact';
 import ProductDetails from '../Pages/ProductDetails';
@@ -20,6 +18,8 @@ import Checkout from '../Pages/Checkout';
 import ProductList from '../Pages/ProductsWithCategory';
 import WishlistPage from '../Pages/Wishlist';
 import AccountPage from '../Pages/AccountPage';
+import Register from '../components/Register';
+import Login from '../components/Login';
 
 
 export default function AppRoutes() {
@@ -34,8 +34,6 @@ export default function AppRoutes() {
         <Routes>
 
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/products" element={<AllProducts />} />
@@ -43,6 +41,8 @@ export default function AppRoutes() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/account" element={<AccountPage />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={2000} />
