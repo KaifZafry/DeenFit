@@ -37,10 +37,14 @@ const AccountPage = () => {
   useEffect(()=>{
     console.log(orders)
   },[orders])
+ 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/";
-  };
+  localStorage.removeItem("userId");
+  localStorage.removeItem("isLoggedIn");
+  toast.success("You're Logged out")
+  navigate('/')
+};
+
 
   if (!userId) {
     return (

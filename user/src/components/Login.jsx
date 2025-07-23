@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const handleLogin = async () => {
     if (!email) return alert("Please enter your email.");
 
@@ -22,14 +23,14 @@ const Login = () => {
         localStorage.setItem("userId", result.userId);
         localStorage.setItem("isLoggedIn", "true");
 
-        alert("Login successful!");
-        window.location.href = "/"; // Redirect after login
+        toast.success("Login Successful");
+        navigate("/");
       } else {
-        alert(result.message || "Login failed. Please try again.");
+        toast.error(result.message || "Login failed. Please try again.");
       }
     } catch (err) {
       console.error(err);
-      alert("An error occurred during login.");
+      toast.error("An error occurred during login.");
     }
   };
 

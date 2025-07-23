@@ -67,7 +67,7 @@ const categories = useSelector((state) => state.category.list);
                        <li key={category?.category_id}>
                         <Link
                           to={`/products?category=${category.category_id}`}
-                          className="block w-100 text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
+                          className="block w-100 text-black text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
                         >
                           {category?.category_title}
                         </Link>

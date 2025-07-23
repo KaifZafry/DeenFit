@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_IMG_URL } from "../utils/Constants";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const location = useLocation();
   const buyNowProduct = location.state?.buyNow ? location.state.product : null;
-
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
- 
+const navigate= useNavigate();
   const userId = localStorage.getItem("userId");
   const itemsToShow = buyNowProduct
     ? [{ ...buyNowProduct, quantity: 1 }]
@@ -34,14 +35,17 @@ const Checkout = () => {
 
   const openRazorpayCheckout = async (e) => {
     e.preventDefault();
-
+    if (isPlacingOrder) return;
+    setIsPlacingOrder(true);
     const form = document.getElementById("checkout-form");
 
     const customerName = form.customerName.value;
     const phone = form.phone.value;
     const paymentMethod = form.paymentMethod.value;
 
-    const shippingAddress = `${address.street}, ${address.apartment ? address.apartment + ", " : ""}${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
+    const shippingAddress = `${address.street}, ${
+      address.apartment ? address.apartment + ", " : ""
+    }${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
 
     const orderPayload = {
       userID: userId, // make sure this is not missing
@@ -67,13 +71,14 @@ const Checkout = () => {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
-        alert("✅ Order Placed Successfully!");
+        toast.success("✅ Order Placed Successfully!");
+        navigate("/order-success", { state: { orderId: data.orderID } });
       } else {
         alert("❌ Failed to place order.");
       }
     } catch (err) {
       console.error(err);
-      alert("⚠️ Something went wrong.");
+      toast.error("⚠️ Something went wrong.");
     }
   };
 
@@ -127,7 +132,9 @@ const Checkout = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="block mb-1 font-medium">Shipping Address</label>
+                    <label className="block mb-1 font-medium">
+                      Shipping Address
+                    </label>
                     <input
                       type="text"
                       name="street"
@@ -173,7 +180,9 @@ const Checkout = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="block mb-1 font-medium">Payment Method</label>
+                    <label className="block mb-1 font-medium">
+                      Payment Method
+                    </label>
                     <select
                       name="paymentMethod"
                       className="w-full border border-gray-300 p-2 rounded"
@@ -197,7 +206,9 @@ const Checkout = () => {
                       <li key={item.product_id} className="order-item">
                         <figure className="img-product">
                           <img
-                            src={BASE_IMG_URL + item?.product_image?.split(",")[0]}
+                            src={
+                              BASE_IMG_URL + item?.product_image?.split(",")[0]
+                            }
                             alt={item.product_title}
                             width={30}
                           />
@@ -241,16 +252,22 @@ const Checkout = () => {
 
                   <div className="subtotal d-flex justify-between text-lg fw-medium mt-3">
                     <span>Total:</span>
-                    <span className="total-price-order">₹{totalPrice.toFixed(2)}</span>
+                    <span className="total-price-order">
+                      ₹{totalPrice.toFixed(2)}
+                    </span>
                   </div>
 
                   <div className="btn-order mt-4">
                     <button
                       onClick={openRazorpayCheckout}
-                      type="submit"
-                      className="tf-btn btn-dark2 animate-btn w-100 text-transform-none"
+                      disabled={isPlacingOrder}
+                      className={`w-full py-2 rounded-md ${
+                        isPlacingOrder
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-green-600 hover:bg-green-700"
+                      } text-white`}
                     >
-                      Place order
+                      {isPlacingOrder ? "Placing Order..." : "Place Order"}
                     </button>
                   </div>
                 </form>

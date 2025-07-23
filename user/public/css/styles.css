@@ -1595,7 +1595,9 @@ a {
   text-decoration: none;
   cursor: pointer;
   display: inline-block;
-  color: black !important;
+}
+.cart-item-name{
+  color:black;
 }
 a:focus, a:hover {
   -webkit-transition: all 0.3s ease-in-out;

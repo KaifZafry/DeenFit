@@ -1,6 +1,7 @@
 // pages/Register.jsx
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -11,7 +12,10 @@ const Register = () => {
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpExpireTime, setOtpExpireTime] = useState(null);
   const [timer, setTimer] = useState(90);
+const [isSending, setIsSending] = useState(false); // new state
+const [canResend, setCanResend] = useState(true); // for resend later
 
+const navigate= useNavigate();
   useEffect(() => {
     let interval;
     if (otpExpireTime && Date.now() < otpExpireTime) {
@@ -34,6 +38,9 @@ const Register = () => {
 
   const sendOtp = async () => {
     if (!name || !email) return alert("Please enter name and email.");
+    if (isSending || !canResend) return;
+
+    setIsSending(true);
     const otpCode = generateOtp();
     const subject = "Your DeenFit OTP Code";
     const body = `Dear ${name},\n\nYour OTP code is: ${otpCode}\nIt will expire in 90 seconds.`;
@@ -48,53 +55,55 @@ const Register = () => {
       const result = await res.text();
       if (res.ok && result.toLowerCase().includes("otp sent")) {
         setStep(2);
+        setCanResend(false);
+        setTimeout(() => setCanResend(true), 90000); // Enable resend after 90s
       } else {
-        alert("Failed to send OTP.");
+        toast.warn("Failed to send OTP.");
       }
     } catch (err) {
       console.error(err);
-      alert("Error sending OTP.");
+      toast.error("Error sending OTP.");
+    } finally {
+      setIsSending(false); // Allow resend after 90s only
     }
   };
-
   const verifyOtp = async () => {
-  if (Date.now() > otpExpireTime) {
-    alert("OTP expired. Please try again.");
-    return;
-  }
-
-  if (otp === generatedOtp) {
-    try {
-      const res = await fetch("/api/Account/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: name,
-          email: email,
-          mobile: mobile, // must collect this in input
-        }),
-      });
-
-      const result = await res.json();
-      console.log("Register API response:", result);
-
-      if (res.ok && result.userId) {
-        localStorage.setItem("userId", result.userId);
-        localStorage.setItem("isLoggedIn", "true");
-        alert("Registration successful!");
-        window.location.href = "/";
-      } else {
-        alert(result.message || "Registration failed.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error during registration.");
+    if (Date.now() > otpExpireTime) {
+      toast.error("OTP expired. Please try again.");
+      return;
     }
-  } else {
-    alert("Invalid OTP");
-  }
-};
 
+    if (otp === generatedOtp) {
+      try {
+        const res = await fetch("/api/Account/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName: name,
+            email: email,
+            mobile: mobile, // must collect this in input
+          }),
+        });
+
+        const result = await res.json();
+        console.log("Register API response:", result);
+
+        if (res.ok && result.userId) {
+          localStorage.setItem("userId", result.userId);
+          localStorage.setItem("isLoggedIn", "true");
+          toast.success("Registeration successful!");
+          navigate('/')
+        } else {
+          toast.warn(result.message || "Registration failed.");
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Error during registration.");
+      }
+    } else {
+      toast.error("Invalid OTP");
+    }
+  };
 
   return (
     <div className="min-h-[80vh] bg-white flex-col flex items-center justify-center px-4">
@@ -113,12 +122,12 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <input
-  type="text"
-  placeholder="Your Mobile"
-  className="w-full border rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  value={mobile}
-  onChange={(e) => setMobile(e.target.value)}
-/>
+              type="text"
+              placeholder="Your Mobile"
+              className="w-full border rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+            />
 
             <input
               type="email"
@@ -129,13 +138,23 @@ const Register = () => {
             />
             <button
               onClick={sendOtp}
-              className="w-full bg-black mt-4 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-200"
+              disabled={isSending || !canResend}
+              className={`w-full text-white py-2 rounded-md 
+    ${
+      isSending || !canResend
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-blue-600 hover:bg-blue-700"
+    }`}
             >
-              Send OTP
+              {isSending
+                ? "Sending..."
+                : canResend
+                ? "Send OTP"
+                : "Please wait..."}
             </button>
           </div>
         ) : (
-          <>
+          <div className="mx-4">
             <input
               type="text"
               placeholder="Enter 6-digit OTP"
@@ -149,15 +168,20 @@ const Register = () => {
             </p>
             <button
               onClick={verifyOtp}
-              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-200"
+              className="w-full bg-green-600 mb-4 text-white py-2 rounded-md hover:bg-green-700 transition duration-200"
             >
               Verify & Register
             </button>
-          </>
+          </div>
         )}
       </div>
       <div className="w-full max-w-xl">
-        <p className="text-start my-4">Already Registered? <Link className="text-blue-500" to="/login">Login Now</Link></p>
+        <p className="text-start my-4">
+          Already Registered?{" "}
+          <Link className="text-blue-500" to="/login">
+            Login Now
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ import WishlistPage from '../Pages/Wishlist';
 import AccountPage from '../Pages/AccountPage';
 import Register from '../components/Register';
 import Login from '../components/Login';
+import ThankYouPage from '../Pages/Thankyou';
 
 
 export default function AppRoutes() {
@@ -43,6 +44,7 @@ export default function AppRoutes() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/order-success" element={<ThankYouPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Routes>
         <ToastContainer position="top-center" autoClose={2000} />
