@@ -138,7 +138,7 @@ const Products = () => {
                   <div className="card-product-info">
                     <a
                       href={`/product/${item.product_id}`}
-                      className="name-product link fw-medium text-sm"
+                      className="name-product text-black link fw-medium text-sm"
                     >
                       {item.product_title}
                     </a>

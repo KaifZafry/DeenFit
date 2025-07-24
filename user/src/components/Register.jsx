@@ -92,7 +92,10 @@ const navigate= useNavigate();
           localStorage.setItem("userId", result.userId);
           localStorage.setItem("isLoggedIn", "true");
           toast.success("Registeration successful!");
-          navigate('/')
+          
+          const redirectTo = localStorage.getItem("redirectTo") || "/";
+          navigate(redirectTo);
+
         } else {
           toast.warn(result.message || "Registration failed.");
         }

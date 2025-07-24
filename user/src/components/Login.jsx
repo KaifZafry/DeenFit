@@ -24,7 +24,9 @@ const Login = () => {
         localStorage.setItem("isLoggedIn", "true");
 
         toast.success("Login Successful");
-        navigate("/");
+        //navigate("/");
+        const redirectTo = localStorage.getItem("redirectTo") || "/";
+          navigate(redirectTo);
       } else {
         toast.error(result.message || "Login failed. Please try again.");
       }

@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_IMG_URL } from "../utils/Constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { clearCart } from "../redux/CartSlice";
 
 const Checkout = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const buyNowProduct = location.state?.buyNow ? location.state.product : null;
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -33,54 +35,67 @@ const navigate= useNavigate();
     setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
-  const openRazorpayCheckout = async (e) => {
-    e.preventDefault();
-    if (isPlacingOrder) return;
-    setIsPlacingOrder(true);
-    const form = document.getElementById("checkout-form");
+ const openRazorpayCheckout = async (e) => {
+  e.preventDefault();
 
-    const customerName = form.customerName.value;
-    const phone = form.phone.value;
-    const paymentMethod = form.paymentMethod.value;
+  // 👇 Check if user is logged in
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    // Save current page for redirection after login
+    localStorage.setItem("redirectTo", "/checkout");
+    navigate("/login");
+    return;
+  }
 
-    const shippingAddress = `${address.street}, ${
-      address.apartment ? address.apartment + ", " : ""
-    }${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
+  if (isPlacingOrder) return;
+  setIsPlacingOrder(true);
 
-    const orderPayload = {
-      userID: userId, // make sure this is not missing
-      customerName,
-      phone,
-      shippingAddress,
-      paymentMethod,
-      orderItems: itemsToShow.map((item) => ({
-        productID: item.product_id,
-        productName: item.product_title,
-        quantity: item.quantity,
-        price: item.selling_price,
-      })),
-    };
+  const form = document.getElementById("checkout-form");
 
-    try {
-      const res = await fetch("/api/Account/placeorder", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderPayload),
-      });
+  const customerName = form.customerName.value;
+  const phone = form.phone.value;
+  const paymentMethod = form.paymentMethod.value;
 
-      if (res.ok) {
-        const data = await res.json();
-        console.log(data);
-        toast.success("✅ Order Placed Successfully!");
-        navigate("/order-success", { state: { orderId: data.orderID } });
-      } else {
-        alert("❌ Failed to place order.");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("⚠️ Something went wrong.");
-    }
+  const shippingAddress = `${address.street}, ${
+    address.apartment ? address.apartment + ", " : ""
+  }${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
+
+  const orderPayload = {
+    userID: userId, // ✅ still included
+    customerName,
+    phone,
+    shippingAddress,
+    paymentMethod,
+    orderItems: itemsToShow.map((item) => ({
+      productID: item.product_id,
+      productName: item.product_title,
+      quantity: item.quantity,
+      price: item.selling_price,
+    })),
   };
+
+  try {
+    const res = await fetch("/api/Account/placeorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderPayload),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      
+      toast.success("✅ Order Placed Successfully!");
+      dispatch(clearCart());
+      navigate("/order-success", { state: { orderId: data.orderID } });
+    } else {
+      alert("❌ Failed to place order.");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("⚠️ Something went wrong.");
+  }
+};
+
 
   return (
     <>

@@ -27,8 +27,12 @@ const cartSlice = createSlice({
     decrementQty: (state, action) => {
       const item = state.cartItems.find(i => i.product_id === action.payload);
       if (item && item.quantity > 1) item.quantity -= 1;
-    }
+    },
+    clearCart: (state) => {
+  state.cartItems = [];
+  localStorage.removeItem('cart'); // 🧹 clear from localStorage also
+},
   },
 });
-export const { addToCart, removeFromCart, incrementQty, decrementQty } = cartSlice.actions;
+export const { addToCart, removeFromCart, incrementQty, decrementQty,clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
