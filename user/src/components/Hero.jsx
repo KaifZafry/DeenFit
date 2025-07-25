@@ -5,9 +5,28 @@ import { useState } from "react";
 import { BASE_IMG_URL } from "../utils/Constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from '../redux/categorySlice';
-import { FaArrowRightLong } from "react-icons/fa6";
+import Slider from "react-slick";
 import { motion } from "framer-motion";
 const Hero = () => {
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    speed: 800,
+    autoplaySpeed: 3000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+  };
+
+  const banners = [
+    
+    "/banner2.png",
+    "/banner3.png",
+    "/banner4.png",
+    "/banner5.png",
+  ];
   //const [categories, setCategories] = useState([]);
   const categories = useSelector((state) => state.category.list);
   const [loading, setLoading] = useState(true);
@@ -32,42 +51,18 @@ const Hero = () => {
   return (
     <>
       <div className="flat-spacing-34 line-top">
-        <div className="image mb-5 img-style h-full container-full bg-gray-100">
-          <section className="min-h-[80vh] flex items-center justify-center  px-6 py-12">
-      <div className="max-w-6xl h-[80vh] w-full grid md:grid-cols-2 gap-8 items-center">
-        {/* Text Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="space-y-6"
-        >
-          <h1 className="text-4xl mb-4 md:text-5xl font-bold text-gray-800">
-            Stay Modest. Stay Stylish.
-          </h1>
-          <p className="text-lg text-gray-600">
-            Discover premium Islamic caps crafted for modern style and comfort.
-          </p>
-          <button className="text-base flex items-center gap-2 px-6 py-3 rounded-2xl">
-            Shop Now <FaArrowRightLong />
-          </button>
-        </motion.div>
-
-        {/* Image or 3D Cap */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center"
-        >
-          <img
-            src="/product-3.png"
-            alt="DeenFit Cap"
-            className="w-1/2 max-w-sm rounded-2xl shadow-xl"
-          />
-        </motion.div>
-      </div>
-    </section>
+        <div className="image mb-5 img-style h-full bg-gray-100">
+         <Slider {...settings}>
+        {banners.map((src, index) => (
+          <div key={index}>
+            <img
+              src={src}
+              alt={`banner-${index + 1}`}
+              className="w-full h-[400px] md:h-[600px] object-cover"
+            />
+          </div>
+        ))}
+      </Slider>
         </div>
         <div className="container-full">
           <h2 className="text-center my-5 title font-7 uppercase">Featured Categories</h2>
