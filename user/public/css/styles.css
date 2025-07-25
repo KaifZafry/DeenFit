@@ -1585,6 +1585,9 @@ video {
 .bg-gradient-8 {
   background: linear-gradient(90deg, #FFECD4 0%, #E5E1FF 100%);
 }
+.slick-slide {
+  transition: opacity 0.6s ease-in-out;
+}
 
 a {
   -webkit-transition: all 0.3s ease-in-out;
@@ -21926,7 +21929,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   .banner-about {
     height: 300px;
   }
-  #header .nav-icon .nav-account,
+  #header .nav-icon .nav-search,
   #header .nav-icon .nav-wishlist,
   #header .nav-icon .nav-compare {
     display: none;

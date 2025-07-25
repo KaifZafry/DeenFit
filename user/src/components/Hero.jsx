@@ -10,22 +10,23 @@ import { motion } from "framer-motion";
 const Hero = () => {
 
   const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    speed: 800,
-    autoplaySpeed: 3000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
+    dots: false,
+  infinite: true,
+  autoplay: true,
+  speed: 800,
+  fade: true, // ✅ This enables fade transition
+  autoplaySpeed: 3000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
   };
 
   const banners = [
-    
-    "/banner2.png",
-    "/banner3.png",
+     "/banner3.png",
     "/banner4.png",
     "/banner5.png",
+    "/banner2.png",
+   
   ];
   //const [categories, setCategories] = useState([]);
   const categories = useSelector((state) => state.category.list);

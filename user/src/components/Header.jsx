@@ -87,15 +87,7 @@ const categories = useSelector((state) => state.category.list);
             </div>
             <div className="col-xl-2 col-md-4 col-3">
               <ul className="nav-icon d-flex justify-content-end align-items-center">
-                <li className="nav-search">
-                  <a
-                    href="#search"
-                    data-bs-toggle="modal"
-                    className="nav-icon-item"
-                  >
-                    <IoSearch />
-                  </a>
-                </li>
+               
                 <li className="nav-account">
                   {userId ? (
                     // ✅ Show My Account or Logout if user is logged in
@@ -113,6 +105,15 @@ const categories = useSelector((state) => state.category.list);
                       <LuUserRound />
                     </Link>
                   )}
+                </li>
+                 <li className="nav-search">
+                  <a
+                    href="#search"
+                    data-bs-toggle="modal"
+                    className="nav-icon-item"
+                  >
+                    <IoSearch />
+                  </a>
                 </li>
                 <li className="nav-wishlist">
                   <Link to="/wishlist" className="nav-icon-item">
