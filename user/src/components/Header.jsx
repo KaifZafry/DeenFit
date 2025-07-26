@@ -25,8 +25,8 @@ const categories = useSelector((state) => state.category.list);
   return (
     <>
       <header id="header" className="header-default shadow-md">
-        <div className="container-full">
-          <div className="row wrapper-header align-items-center">
+        <div className="container-full ">
+          <div className="row wrapper-header px-2 align-items-center">
             <div className="col-md-4 col-3 d-xl-none">
               <a
                 href="#mobileMenu"
@@ -38,14 +38,10 @@ const categories = useSelector((state) => state.category.list);
                 <CgMenuLeftAlt />
               </a>
             </div>
-            <div className="col-xl-2 col-md-4 col-6">
-              <Link to="/" className="logo-header">
-                <img src="/logo.png" alt="logo" className="logo" />
-              </Link>
-            </div>
-            <div className="col-xl-8 d-none d-xl-block">
+            
+            <div className="col-xl-5 d-none d-xl-block">
               <nav className="box-navigation text-center">
-                <ul className="box-nav-menu">
+                <ul className="box-nav-menu justify-start">
                   <li className="menu-item">
                     <Link to="/" className="item-link">
                       Home
@@ -77,15 +73,16 @@ const categories = useSelector((state) => state.category.list);
                      
                     </ul>
                   </li>
-                  <li className="menu-item position-relative">
-                    <a href="#" className="item-link">
-                      Pages
-                    </a>
-                  </li>
+                  
                 </ul>
               </nav>
             </div>
-            <div className="col-xl-2 col-md-4 col-3">
+            <div className="col-xl-2 col-md-4 col-6">
+              <Link to="/" className="logo-header">
+                <img src="/logo.png" alt="logo" className="logo" />
+              </Link>
+            </div>
+            <div className="col-xl-5 col-md-4 col-3">
               <ul className="nav-icon d-flex justify-content-end align-items-center">
                
                 <li className="nav-account">
@@ -172,7 +169,7 @@ const categories = useSelector((state) => state.category.list);
                   <span>About</span>
                 </Link>
               </li>
-              <li className="menu-item relative">
+              <li className="menu-item nav-mb-item relative">
                 <span
                   onClick={toggleDropdown}
                   className="item-link cursor-pointer flex items-center justify-between w-full py-3 "
@@ -181,46 +178,24 @@ const categories = useSelector((state) => state.category.list);
                 </span>
 
                 {isOpen && (
-                  <ul className="mt-2 w-full shadow-lg rounded-lg z-50">
-                    <li>
-                      <Link
-                        to="/products?category=2"
-                        onClick={() => setIsOpen(false)}
-                        className="block px-4 py-2 border-bottom border-b hover:bg-gray-100"
-                      >
-                        Sunnah Lines
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/products?category=3"
-                        onClick={() => setIsOpen(false)}
-                        className="block border-bottom px-4 py-2 hover:bg-gray-100"
-                      >
-                        Deenfit Original
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/products?category=4"
-                        onClick={() => setIsOpen(false)}
-                        className="block border-bottom px-4 py-2 hover:bg-gray-100"
-                      >
-                        Deenfit Youth
-                      </Link>
-                    </li>
+                  
+                  <ul className="mt-2 w-full  rounded-lg z-50">
+                     {categories.map((category)=>(
+                       <li key={category?.category_id}>
+                        <Link
+                        onClick={() => setShow(false)}
+                          to={`/products?category=${category.category_id}`}
+                          className="block px-4 py-2 border-bottom border-b hover:bg-gray-100"
+                        >
+                          {category?.category_title}
+                        </Link>
+                      </li>
+                     ))}
+                   
                   </ul>
                 )}
               </li>
-              <li className="nav-mb-item">
-                <Link
-                  to="#"
-                  className="d-flex py-3 text-lg flex w-full justify-between items-center"
-                  onClick={() => setShow(false)}
-                >
-                  <span>Pages</span>
-                </Link>
-              </li>
+             
             </ul>
 
             {/* Icons */}

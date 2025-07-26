@@ -193,7 +193,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: 'poppins', sans-serif;
+  font-family: "Assistant", sans-serif;
   font-size: 100%;
   font-style: inherit;
   font-weight: inherit;
@@ -228,7 +228,7 @@ html {
 
 body {
  /* font-family: "Assistant", sans-serif !important; */
- font-family: "poppins", sans-serif !important;
+ font-family: "Assistant", sans-serif !important;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -316,7 +316,7 @@ li {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0px 15px;
+  padding: 0px 8px;
 }
 
 .slider-layout-right {
@@ -357,7 +357,7 @@ input[type=url],
 input[type=search],
 input[type=tel],
 input[type=color] {
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   border: 1px solid var(--line);
   outline: 0;
   -webkit-box-shadow: none;
@@ -710,7 +710,7 @@ h6,
 }
 
 .font-main {
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
 }
 
 .font-2 {
@@ -734,7 +734,7 @@ h6,
 }
 
 .font-7 {
- font-family: 'Poppins';
+ font-family: "Assistant";
     font-weight: 800;
     font-size: 1.7rem;
 }
@@ -2458,7 +2458,7 @@ a:focus, a:hover {
 /* sib-form */
 .sib-form {
   padding: 0 !important;
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Assistant", sans-serif !important;
   position: relative;
 }
 .sib-form .tf-btn {
@@ -2494,7 +2494,7 @@ a:focus, a:hover {
 }
 
 .sib-form .sib-form-container .input {
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   border: 1px solid var(--line);
   outline: 0;
   -webkit-box-shadow: none;
@@ -7787,7 +7787,6 @@ button.animate-btn::after,
   gap: 32px;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 .header-default .box-nav-menu .item-link {
   font-size: 16px;
@@ -7871,7 +7870,7 @@ button.animate-btn::after,
   color: var(--primary);
 }
 .header-default .nav-icon .nav-icon-item .count-box {
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   position: absolute;
   height: 16px;
   width: 16px;
@@ -8556,7 +8555,7 @@ header {
   transition: 0.2s ease-out;
   z-index: 888;
   background-color: var(--white);
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   /* font-family: "Assistant", sans-serif; */
 }
 header.header-bg {
@@ -8568,7 +8567,7 @@ header.header-bg {
   width: 100% !important;
   max-width: min(90%, 320px);
   border-right: 0 !important;
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
 }
 .canvas-mb .mb-canvas-content {
   padding-top: 60px;
@@ -8707,6 +8706,16 @@ header.header-bg {
 
 .nav-ul-mb .nav-mb-item {
   padding: 2px 0px;
+}
+.nav-ul-mb .nav-mb-item a, .nav-ul-mb .nav-mb-item span {
+          font-size: 22px !important;
+        line-height: 26px !important;
+        color: black !important;
+        font-weight: 600 !important;
+}
+.nav-ul-mb .nav-mb-item a.block{
+  font-size: 18px !important;
+  font-weight: 500 !important;
 }
 .nav-ul-mb .nav-mb-item:not(:last-child) {
   border-bottom: 1px solid var(--line);
@@ -8858,7 +8867,7 @@ header.header-bg {
  ------------------------------------------------------------------------------ */
 /*--------- Abstracts variable ---------- */
 .footer-default {
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -10225,7 +10234,7 @@ header.header-bg {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
 }
 .cls-video img {
   width: 100%;
@@ -11808,7 +11817,7 @@ header.header-bg {
   border-radius: 50%;
   background-color: var(--dark);
   color: var(--white);
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 14px;
@@ -16973,7 +16982,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   top: 50%;
   transform: translate(50%, -50%);
   right: -14px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Assistant", sans-serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 30px;
@@ -19742,8 +19751,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   }
   .banner-why-shop,
   .container-full {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
   .sidebar-filter .canvas-body {
     padding: 0;
@@ -23263,7 +23272,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 .category .rounded-full{
   border-radius:50%;
   overflow:hidden;
-  height:100px;
+  height:120px;
 }
 
 /* Hide scrollbar */

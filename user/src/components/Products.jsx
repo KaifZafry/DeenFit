@@ -142,8 +142,8 @@ const Products = () => {
                     >
                       {item.product_title}
                     </a>
-                    <p className="price-wrap fw-medium mt-1">
-                      <span className="text-sm text-black">
+                    <p className="price-wrap fw-large mt-1">
+                      <span className="text-md text-black font-bold">
                         ₹{item.selling_price.toFixed(2)}
                       </span>
                       {item.price && (

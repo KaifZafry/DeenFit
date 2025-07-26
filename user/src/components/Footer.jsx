@@ -8,10 +8,10 @@ const Footer = () => {
     setOpenSection(openSection === sectionId ? null : sectionId);
   };
   return (
-    <footer id="footer"  className="footer-default xl-pb-70">
+    <footer id="footer"  className="footer-default xl-pb-70 px-3">
             <div  className="footer-top">
-                <div  className="container-full">
-                    <div  className="footer-top-wrap">
+                <div  className="container-full ">
+                    <div  className="footer-top-wrap ">
                         <div  className="footer-logo">
                             <Link to='/' >
                                 <img src="/logo.png"  className="logo" alt="logo"/>
