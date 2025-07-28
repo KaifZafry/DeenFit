@@ -237,7 +237,7 @@ const ProductDetails = () => {
                         </span>
                       </div>
                       <div className="product-progress-sale">
-                        <div className="title-hurry-up">
+                        <div className="title-hurry-up mb-3">
                           <span className="text-primary fw-medium">
                             HURRY UP!
                           </span>{" "}

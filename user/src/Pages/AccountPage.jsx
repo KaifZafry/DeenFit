@@ -5,6 +5,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { MdAccountBox, MdDashboard } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AccountPage = () => {
  // const user = useSelector((state) => state.auth.user);
@@ -61,7 +62,7 @@ const AccountPage = () => {
           </p>
           <Link
             to="/login"
-            className="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-200"
+            className="inline-block px-5 my-3 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-200"
           >
             Log In
           </Link>

@@ -2,6 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./Register.css"; 
+import { MdMarkEmailRead, MdTimer } from "react-icons/md";
+import { SiGnuprivacyguard } from "react-icons/si";
+import { IoPersonAdd } from "react-icons/io5";
+import { FaMobileRetro } from "react-icons/fa6";
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -12,10 +17,12 @@ const Register = () => {
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpExpireTime, setOtpExpireTime] = useState(null);
   const [timer, setTimer] = useState(90);
-const [isSending, setIsSending] = useState(false); // new state
-const [canResend, setCanResend] = useState(true); // for resend later
+  const [isSending, setIsSending] = useState(false);
+  const [canResend, setCanResend] = useState(true);
+  const [errors, setErrors] = useState({});
 
-const navigate= useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
     let interval;
     if (otpExpireTime && Date.now() < otpExpireTime) {
@@ -28,6 +35,31 @@ const navigate= useNavigate();
     return () => clearInterval(interval);
   }, [otpExpireTime]);
 
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!name.trim()) {
+      newErrors.name = "Full name is required";
+    } else if (name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    if (!mobile.trim()) {
+      newErrors.mobile = "Mobile number is required";
+    } else if (!/^\d{10}$/.test(mobile.trim())) {
+      newErrors.mobile = "Please enter a valid 10-digit mobile number";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email address is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const generateOtp = () => {
     const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedOtp(newOtp);
@@ -37,7 +69,7 @@ const navigate= useNavigate();
   };
 
   const sendOtp = async () => {
-    if (!name || !email) return alert("Please enter name and email.");
+    if (!validateForm()) return;
     if (isSending || !canResend) return;
 
     setIsSending(true);
@@ -56,7 +88,8 @@ const navigate= useNavigate();
       if (res.ok && result.toLowerCase().includes("otp sent")) {
         setStep(2);
         setCanResend(false);
-        setTimeout(() => setCanResend(true), 90000); // Enable resend after 90s
+        setTimeout(() => setCanResend(true), 90000);
+        toast.success("OTP sent successfully! Check your email.");
       } else {
         toast.warn("Failed to send OTP.");
       }
@@ -64,10 +97,16 @@ const navigate= useNavigate();
       console.error(err);
       toast.error("Error sending OTP.");
     } finally {
-      setIsSending(false); // Allow resend after 90s only
+      setIsSending(false);
     }
   };
+
   const verifyOtp = async () => {
+    if (!otp.trim()) {
+      toast.error("Please enter the OTP");
+      return;
+    }
+
     if (Date.now() > otpExpireTime) {
       toast.error("OTP expired. Please try again.");
       return;
@@ -81,7 +120,7 @@ const navigate= useNavigate();
           body: JSON.stringify({
             fullName: name,
             email: email,
-            mobile: mobile, // must collect this in input
+            mobile: mobile,
           }),
         });
 
@@ -89,14 +128,22 @@ const navigate= useNavigate();
         console.log("Register API response:", result);
 
         if (res.ok && result.userId) {
-          localStorage.setItem("userId", result.userId);
-          localStorage.setItem("isLoggedIn", "true");
-          toast.success("Registeration successful!");
-          
-          const redirectTo = localStorage.getItem("redirectTo") || "/";
-          navigate(redirectTo);
-
-        } else {
+        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("isLoggedIn", "true");
+        
+        // 🔍 Debug
+        const storedRedirect = localStorage.getItem("redirectTo");
+        console.log("Register - Current redirectTo:", storedRedirect);
+        
+        const redirectTo = storedRedirect || "/";
+        
+        // ✅ Clear after reading
+        localStorage.removeItem("redirectTo");
+        console.log("Register - Redirecting to:", redirectTo);
+        
+        toast.success("Registration successful!");
+        navigate(redirectTo);
+      } else {
           toast.warn(result.message || "Registration failed.");
         }
       } catch (err) {
@@ -108,83 +155,171 @@ const navigate= useNavigate();
     }
   };
 
+  const resendOtp = () => {
+    if (canResend && !isSending) {
+      sendOtp();
+    }
+  };
+
+  const formatTimer = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
-    <div className="min-h-[80vh] bg-white flex-col flex items-center justify-center px-4">
-      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-xl">
-        <h2 className="text-2xl font-bold my-4 text-center text-indigo-700 mb-6">
-          DeenFit Registration
-        </h2>
+    <div className="register-page">
+      {/* Animated background shapes */}
+      <div className="bg-shapes">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+
+      <div className="register-container">
+        {/* Progress indicator */}
+        <div className="progress-indicator">
+          <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>
+            <div className="step-number">1</div>
+            <span>Details</span>
+          </div>
+          <div className="progress-line"></div>
+          <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>
+            <div className="step-number">2</div>
+            <span>Verify</span>
+          </div>
+        </div>
+
+        <div className="logo">
+          <h1>Join DeenFit</h1>
+          <p>Create your account and start your journey</p>
+        </div>
 
         {step === 1 ? (
-          <div className="m-3">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full border border-gray-300  rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Your Mobile"
-              className="w-full border rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-            />
+          <div className="step-content">
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={errors.name ? 'error' : ''}
+                />
+                <div className="input-icon"><IoPersonAdd /></div>
+              </div>
+              {errors.name && <div className="error-message">{errors.name}</div>}
+            </div>
 
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="form-group">
+              <label htmlFor="mobile">Mobile Number</label>
+              <div className="input-wrapper">
+                <input
+                  type="tel"
+                  id="mobile"
+                  placeholder="Enter your mobile number"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  className={errors.mobile ? 'error' : ''}
+                />
+                <div className="input-icon"><FaMobileRetro /></div>
+              </div>
+              {errors.mobile && <div className="error-message">{errors.mobile}</div>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <div className="input-wrapper">
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={errors.email ? 'error' : ''}
+                />
+                <div className="input-icon"><MdMarkEmailRead /></div>
+              </div>
+              {errors.email && <div className="error-message">{errors.email}</div>}
+            </div>
+
             <button
               onClick={sendOtp}
               disabled={isSending || !canResend}
-              className={`w-full text-white py-2 rounded-md 
-    ${
-      isSending || !canResend
-        ? "bg-gray-400 cursor-not-allowed"
-        : "bg-blue-600 hover:bg-blue-700"
-    }`}
+              className={`btn-primary ${isSending || !canResend ? 'loading' : ''}`}
             >
-              {isSending
-                ? "Sending..."
-                : canResend
-                ? "Send OTP"
-                : "Please wait..."}
+              {isSending ? (
+                <>
+                  <span className="spinner"></span>
+                  Sending OTP...
+                </>
+              ) : !canResend ? (
+                "Please wait..."
+              ) : (
+                "Send OTP"
+              )}
             </button>
           </div>
         ) : (
-          <div className="mx-4">
-            <input
-              type="text"
-              placeholder="Enter 6-digit OTP"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
-            <p className="text-sm text-gray-600 mb-4 text-center">
-              OTP expires in:{" "}
-              <span className="font-semibold text-red-500">{timer}s</span>
-            </p>
+          <div className="step-content">
+            <div className="otp-info">
+              <h3>Verify Your Email</h3>
+              <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="otp">Enter OTP</label>
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  id="otp"
+                  placeholder="Enter 6-digit OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  maxLength="6"
+                />
+                <div className="input-icon"><SiGnuprivacyguard /></div>
+              </div>
+            </div>
+
+            <div className="timer-section">
+              <div className="timer-display">
+                <span className="timer-icon"><MdTimer /></span>
+                <span>Code expires in: <strong>{formatTimer(timer)}</strong></span>
+              </div>
+              {timer === 0 && (
+                <button 
+                  onClick={resendOtp}
+                  className="resend-btn"
+                  disabled={isSending}
+                >
+                  Resend OTP
+                </button>
+              )}
+            </div>
+
             <button
               onClick={verifyOtp}
-              className="w-full bg-green-600 mb-4 text-white py-2 rounded-md hover:bg-green-700 transition duration-200"
+              className="btn-primary verify-btn"
+              disabled={!otp.trim() || timer === 0}
             >
-              Verify & Register
+              Verify & Complete Registration
+            </button>
+
+            <button
+              onClick={() => setStep(1)}
+              className="btn-secondary"
+            >
+              ← Back to Details
             </button>
           </div>
         )}
-      </div>
-      <div className="w-full max-w-xl">
-        <p className="text-start my-4">
-          Already Registered?{" "}
-          <Link className="text-blue-500" to="/login">
-            Login Now
-          </Link>
-        </p>
+
+        <div className="login-prompt">
+          Already have an account? <Link to="/login">Sign in here</Link>
+        </div>
       </div>
     </div>
   );

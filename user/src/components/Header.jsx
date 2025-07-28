@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-const categories = useSelector((state) => state.category.list);
+  const categories = useSelector((state) => state.category.list);
   const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -19,9 +19,12 @@ const categories = useSelector((state) => state.category.list);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalItems = cartItems.length;
   // const user = useSelector((state) => state.auth.user);
-    
-   const userId = localStorage.getItem("userId");
-  const wishlistCount = useSelector((state) => state.wishlist.wishlistItems.length);
+
+  const userId = localStorage.getItem("userId");
+
+  const wishlistCount = useSelector(
+    (state) => state.wishlist.wishlistItems.length
+  );
   return (
     <>
       <header id="header" className="header-default shadow-md">
@@ -38,7 +41,7 @@ const categories = useSelector((state) => state.category.list);
                 <CgMenuLeftAlt />
               </a>
             </div>
-            
+
             <div className="col-xl-5 d-none d-xl-block">
               <nav className="box-navigation text-center">
                 <ul className="box-nav-menu justify-start">
@@ -58,22 +61,18 @@ const categories = useSelector((state) => state.category.list);
                     </span>
 
                     <ul className="absolute group-hover:block hidden left-0 bg-white top-16 w-[200px] text-start">
-                     
-                     {categories.map((category)=>(
-                       <li key={category?.category_id}>
-                        <Link
-                          to={`/products?category=${category.category_id}`}
-                          className="block w-100 text-black text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
-                        >
-                          {category?.category_title}
-                        </Link>
-                      </li>
-                     ))}
-                     
-                     
+                      {categories.map((category) => (
+                        <li key={category?.category_id}>
+                          <Link
+                            to={`/products?category=${category.category_id}`}
+                            className="block w-100 text-black text-start px-4 py-2 hover:bg-gray-200 hover:text-orange-300"
+                          >
+                            {category?.category_title}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </li>
-                  
                 </ul>
               </nav>
             </div>
@@ -84,7 +83,6 @@ const categories = useSelector((state) => state.category.list);
             </div>
             <div className="col-xl-5 col-md-4 col-3">
               <ul className="nav-icon d-flex justify-content-end align-items-center">
-               
                 <li className="nav-account">
                   {userId ? (
                     // ✅ Show My Account or Logout if user is logged in
@@ -93,9 +91,8 @@ const categories = useSelector((state) => state.category.list);
                       {console.log(userId)}
                     </Link>
                   ) : (
-                   
                     <Link
-                      to="/register"                     
+                      to="/register"
                       data-bs-toggle="offcanvas"
                       className="nav-icon-item"
                     >
@@ -103,7 +100,7 @@ const categories = useSelector((state) => state.category.list);
                     </Link>
                   )}
                 </li>
-                 <li className="nav-search">
+                <li className="nav-search">
                   <a
                     href="#search"
                     data-bs-toggle="modal"
@@ -137,8 +134,9 @@ const categories = useSelector((state) => state.category.list);
       </header>
 
       <div
-        className={`offcanvas d-md-none offcanvas-start canvas-mb ${show ? "show" : ""
-          }`}
+        className={`offcanvas d-md-none offcanvas-start canvas-mb ${
+          show ? "show" : ""
+        }`}
       >
         <button
           className="icon-close icon-close-popup"
@@ -178,32 +176,37 @@ const categories = useSelector((state) => state.category.list);
                 </span>
 
                 {isOpen && (
-                  
                   <ul className="mt-2 w-full  rounded-lg z-50">
-                     {categories.map((category)=>(
-                       <li key={category?.category_id}>
+                    {categories.map((category) => (
+                      <li key={category?.category_id}>
                         <Link
-                        onClick={() => setShow(false)}
+                          onClick={() => setShow(false)}
                           to={`/products?category=${category.category_id}`}
                           className="block px-4 py-2 border-bottom border-b hover:bg-gray-100"
                         >
                           {category?.category_title}
                         </Link>
                       </li>
-                     ))}
-                   
+                    ))}
                   </ul>
                 )}
               </li>
-             
             </ul>
 
             {/* Icons */}
             <div className="group-icon mt-4 d-flex gap-2">
-              <Link to="/wishlist" onClick={() => setIsOpen(false)} className="btn btn-light w-50">
+              <Link
+                to="/wishlist"
+                onClick={() => setIsOpen(false)}
+                className="btn btn-light w-50"
+              >
                 <i className="bi bi-heart me-1"></i> Wishlist
               </Link>
-              <Link to='/' onClick={() => setIsOpen(false)} className="btn btn-light w-50">
+              <Link
+                to="/"
+                onClick={() => setIsOpen(false)}
+                className="btn btn-light w-50"
+              >
                 <i className="bi bi-person me-1"></i> Login
               </Link>
             </div>
