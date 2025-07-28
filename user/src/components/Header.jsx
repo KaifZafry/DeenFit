@@ -90,10 +90,10 @@ const categories = useSelector((state) => state.category.list);
                     // ✅ Show My Account or Logout if user is logged in
                     <Link to="/account" className="nav-icon-item">
                       <LuUserRound />
-                      
+                      {console.log(userId)}
                     </Link>
                   ) : (
-                    // 🚪 Show Login icon if not logged in
+                   
                     <Link
                       to="/register"                     
                       data-bs-toggle="offcanvas"

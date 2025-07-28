@@ -90,7 +90,7 @@ const Footer = () => {
                                                         fill="#0D0D0D" />
                                                 </svg>
                                             </span>
-                                            <a href="mailto:support@example.com"  className="">support@deenfitgmai.com</a>
+                                            <a href="mailto:support@deenfitgmail.com"  className="">support@deenfitgmail.com</a>
                                         </li>
                                     </ul>
                                     <a href="https://maps.app.goo.gl/Z9NnvFUcxw18faZz9"

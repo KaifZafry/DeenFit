@@ -106,7 +106,7 @@ const Hero = () => {
                         <img
                           className="img-product"
                           src={BASE_IMG_URL+category?.category_image}
-                          alt={`kaif`}
+                          alt={category?.category_title}
                           width={100}
                         />
                       </Link>
@@ -114,7 +114,7 @@ const Hero = () => {
 
                     <div className="card-product-info text-center">
                       <p
-                        className="name-product font-bold mb-0 link fw-lg text-sm"
+                        className="name-product font-extrabold mb-0 link fw-lg text-md"
                       >
                        {category?.category_title}
                       </p>

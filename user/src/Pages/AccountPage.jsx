@@ -46,10 +46,26 @@ const AccountPage = () => {
 };
 
 
-  if (!userId) {
+   if (!userId) {
     return (
-      <div className="container py-8 text-center">
-        <h2 className="text-xl font-semibold">Please log in to view your account.</h2>
+      <div className="flex items-center justify-center h-[80vh] px-4">
+        <div className="max-w-md w-full bg-white shadow-xl rounded-2xl p-8 text-center animate-fade-in">
+          <div className="flex justify-center mb-4">
+            <MdAccountBox className="w-12 h-12 text-blue-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            You're not logged in
+          </h2>
+          <p className="text-gray-500 mb-6">
+            Please log in to view and manage your account.
+          </p>
+          <Link
+            to="/login"
+            className="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-200"
+          >
+            Log In
+          </Link>
+        </div>
       </div>
     );
   }
