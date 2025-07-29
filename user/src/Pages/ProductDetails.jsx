@@ -253,14 +253,14 @@ const ProductDetails = () => {
                       <div className="group-btn">
                         <button
                           onClick={(e) => handleAddToCart(product, e)}
-                          className="tf-btn btn-secondary animate-btn"
+                          className="tf-btn animate-btn"
                         >
                           Add to Cart
                         </button>
                         <Link
                           to="/checkout"
                           state={{ product, buyNow: true }}
-                          className="tf-btn btn-primary animate-btn"
+                          className="tf-btn bg-pink animate-btn"
                         >
                           Buy it now
                         </Link>

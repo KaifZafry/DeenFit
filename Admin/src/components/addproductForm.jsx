@@ -5,6 +5,7 @@ import { BASE_IMG_URL } from '../../../user/src/utils/Constants';
 
 const AddProductForm = ({ productData, onClose }) => {
   const navigate = useNavigate();
+  const [subcategories,setSubcategories]= useState([]);
   const productToEdit = productData;
   console.log(productToEdit)
   const isEditMode = !!productToEdit;
@@ -18,7 +19,8 @@ const AddProductForm = ({ productData, onClose }) => {
     quantity: '',
     description: '',
     rating: '',
-    cid: ''
+    cid: '',
+    scid:''
   });
 
   // Image states
@@ -52,7 +54,8 @@ const AddProductForm = ({ productData, onClose }) => {
         quantity: productToEdit.quantity || '',
         description: productToEdit.description || '',
         rating: productToEdit.rating || '',
-        cid: productToEdit.category_id || ''
+        cid: productToEdit.category_id || '',
+         scid: productToEdit.subCategoryId
       });
 
       if (productToEdit?.product_image) {
@@ -100,6 +103,16 @@ const AddProductForm = ({ productData, onClose }) => {
       setImagePreviews(updatedPreviews);
     }
   };
+
+  useEffect(() => {
+  const fetchCategories = async () => {
+    const res = await fetch("/api/Account/getcategory");
+    const data = await res.json();
+    setCategories(data?.data || []);
+  };
+
+  fetchCategories();
+}, []);
 
 
  const handleSubmit = async (e) => {
@@ -152,6 +165,7 @@ const AddProductForm = ({ productData, onClose }) => {
   quantity: parseInt(form.quantity) || 0,
   rating: parseFloat(form.rating) || 0,
   cid: parseInt(form.cid),
+  scid: parseInt(form.scid),
   image: finalImageString,
       ...(isEditMode && { id: productToEdit.product_id }), // Include ID if in edit mode
     };
@@ -199,7 +213,8 @@ const AddProductForm = ({ productData, onClose }) => {
           quantity: '',
           description: '',
           rating: '',
-          cid: ''
+          cid: '',
+          scid:''
         });
         setImageFiles([]);
         setImagePreviews([]);
@@ -222,14 +237,29 @@ const AddProductForm = ({ productData, onClose }) => {
   }
 };
 
-console.log(`finalaimagestring- ${imagePreviews}`)
-console.log(`existingimages- ${existingImages}`)
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
+ const handleChange = async (e) => {
+  const { name, value } = e.target;
+
+  setForm((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+
+  if (name === "cid") {
+    setForm((prev) => ({ ...prev, scid: "" })); // reset subcategory
+    try {
+      const res = await fetch(`/api/Account/getsubcategory/${value}`);
+      const data = await res.json();
+      setSubcategories(data?.data || []);
+    } catch (err) {
+      console.error("Failed to fetch subcategories:", err);
+      setSubcategories([]);
+    }
+  }
+};
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -295,6 +325,25 @@ console.log(`existingimages- ${existingImages}`)
                 ))}
               </select>
             </div>
+           <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">SubCategory *</label>
+              <select
+                name="scid"
+                value={form.scid}
+                onChange={handleChange}
+                className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                required
+                disabled={!form.cid} // disable until category is selected
+              >
+                <option value="">Select SubCategory</option>
+                {subcategories.map((sub) => (
+                  <option key={sub.subCategoryId} value={sub.subCategoryId}>
+                    {sub.subCategoryTitle}
+                  </option>
+                ))}
+              </select>
+           </div>
+
           </div>
 
           {/* Pricing & Inventory */}

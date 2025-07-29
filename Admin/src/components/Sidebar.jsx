@@ -25,7 +25,7 @@ const Sidebar = () => {
           <SidebarItem icon={<FiHome />} text="Dashboard" route="/" active />
           <SidebarItem icon={<FiShoppingCart />} text="Manage Products" route='/products' />
           <SidebarItem icon={<FiUserPlus />} text="Manage Category" route="/category" />
-          <SidebarItem icon={<FiPieChart />} text="Analytics" />
+          <SidebarItem icon={<FiPieChart />} text="Manage Subcategory" route="/subcategory" />
           <SidebarItem icon={<FiMail />} text="Messages" />
           <SidebarItem icon={<FiCalendar />} text="Calendar" />
           <SidebarItem icon={<FiSettings />} text="Settings" />

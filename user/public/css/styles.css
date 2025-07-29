@@ -8717,6 +8717,10 @@ header.header-bg {
   font-size: 18px !important;
   font-weight: 500 !important;
 }
+.bg-pink{
+  background: #ff6f61 !important;
+  border-color: #ff6f61 !important;
+}
 .nav-ul-mb .nav-mb-item:not(:last-child) {
   border-bottom: 1px solid var(--line);
       display: flex;

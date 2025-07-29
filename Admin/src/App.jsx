@@ -10,6 +10,7 @@ import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Category from './Pages/Category';
+import SubCategory from './Pages/Subcategory';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/products/add" element={<AddProductForm />} />
             <Route path="/products/edit/:id" element={<AddProductForm />} />
             <Route path="/products" element={<ProductListPage />} />
+            <Route path="/subcategory" element={<SubCategory />} />
           </Routes>
         </div>
       </div>
