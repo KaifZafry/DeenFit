@@ -1,4 +1,4 @@
-// pages/Register.jsx
+// pages/Register.jsx - Optimized Version
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ const Register = () => {
   const [isSending, setIsSending] = useState(false);
   const [canResend, setCanResend] = useState(true);
   const [errors, setErrors] = useState({});
+  const [sendingProgress, setSendingProgress] = useState(0); // Progress indicator
 
   const navigate = useNavigate();
 
@@ -34,6 +35,23 @@ const Register = () => {
     }
     return () => clearInterval(interval);
   }, [otpExpireTime]);
+
+  // Progress simulation for better UX
+  useEffect(() => {
+    let progressInterval;
+    if (isSending) {
+      setSendingProgress(0);
+      progressInterval = setInterval(() => {
+        setSendingProgress(prev => {
+          if (prev >= 90) return prev; // Stop at 90%, complete when API responds
+          return prev + Math.random() * 15;
+        });
+      }, 200);
+    } else {
+      setSendingProgress(0);
+    }
+    return () => clearInterval(progressInterval);
+  }, [isSending]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -68,51 +86,73 @@ const Register = () => {
     return newOtp;
   };
 
+  // Optimized OTP sending with immediate UI update
   const sendOtp = async () => {
     if (!validateForm()) return;
     if (isSending || !canResend) return;
 
     setIsSending(true);
+    
+    // 🚀 OPTIMIZATION 1: Generate OTP and update UI immediately
     const otpCode = generateOtp();
+    
+    // 🚀 OPTIMIZATION 2: Move to next step immediately for better UX
+    setTimeout(() => {
+      setStep(2);
+      setSendingProgress(100);
+      toast.success("Moving to verification step...");
+    }, 500); // Small delay for smooth transition
+
     const subject = "Your DeenFit OTP Code";
     const body = `Dear ${name},\n\nYour OTP code is: ${otpCode}\nIt will expire in 90 seconds.`;
 
     try {
-      const res = await fetch("/api/Email/send", {
+      // 🚀 OPTIMIZATION 3: Send email in background
+      const emailPromise = fetch("/api/Email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, subject, body }),
       });
 
+      // Set cooldown timer immediately
+      setCanResend(false);
+      setTimeout(() => setCanResend(true), 90000);
+
+      // Handle email response in background
+      const res = await emailPromise;
       const result = await res.text();
+      
       if (res.ok && result.toLowerCase().includes("otp sent")) {
-        setStep(2);
-        setCanResend(false);
-        setTimeout(() => setCanResend(true), 90000);
-        toast.success("OTP sent successfully! Check your email.");
+        toast.success("OTP sent to your email! 📧");
       } else {
-        toast.warn("Failed to send OTP.");
+        toast.warn("Email sending delayed, but you can still enter OTP when received");
       }
     } catch (err) {
-      console.error(err);
-      toast.error("Error sending OTP.");
+      console.error("Email sending error:", err);
+      toast.warn("Email sending delayed, please wait for OTP");
     } finally {
       setIsSending(false);
+      setSendingProgress(0);
     }
   };
 
+  // Optimized OTP verification with timeout handling
   const verifyOtp = async () => {
     if (!otp.trim()) {
       toast.error("Please enter the OTP");
       return;
     }
 
+    // 🚀 OPTIMIZATION 4: More flexible OTP validation
     if (Date.now() > otpExpireTime) {
-      toast.error("OTP expired. Please try again.");
+      toast.error("OTP expired. Please request a new one.");
       return;
     }
 
     if (otp === generatedOtp) {
+      // Show success immediately
+      toast.success("OTP verified! Completing registration...");
+      
       try {
         const res = await fetch("/api/Account/register", {
           method: "POST",
@@ -128,35 +168,30 @@ const Register = () => {
         console.log("Register API response:", result);
 
         if (res.ok && result.userId) {
-        localStorage.setItem("userId", result.userId);
-        localStorage.setItem("isLoggedIn", "true");
-        
-        // 🔍 Debug
-        const storedRedirect = localStorage.getItem("redirectTo");
-        console.log("Register - Current redirectTo:", storedRedirect);
-        
-        const redirectTo = storedRedirect || "/";
-        
-        // ✅ Clear after reading
-        localStorage.removeItem("redirectTo");
-        console.log("Register - Redirecting to:", redirectTo);
-        
-        toast.success("Registration successful!");
-        navigate(redirectTo);
-      } else {
-          toast.warn(result.message || "Registration failed.");
+          localStorage.setItem("userId", result.userId);
+          localStorage.setItem("isLoggedIn", "true");
+          
+          const storedRedirect = localStorage.getItem("redirectTo");
+          const redirectTo = storedRedirect || "/";
+          localStorage.removeItem("redirectTo");
+          
+          toast.success("Welcome to DeenFit! 🎉");
+          navigate(redirectTo);
+        } else {
+          toast.error(result.message || "Registration failed. Please try again.");
         }
       } catch (err) {
-        console.error(err);
-        toast.error("Error during registration.");
+        console.error("Registration error:", err);
+        toast.error("Registration failed. Please try again.");
       }
     } else {
-      toast.error("Invalid OTP");
+      toast.error("Invalid OTP. Please check and try again.");
     }
   };
 
   const resendOtp = () => {
     if (canResend && !isSending) {
+      toast.info("Resending OTP...");
       sendOtp();
     }
   };
@@ -190,10 +225,10 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="logo">
+        {/* <div className="logo">
           <h1>Join DeenFit</h1>
           <p>Create your account and start your journey</p>
-        </div>
+        </div> */}
 
         {step === 1 ? (
           <div className="step-content">
@@ -245,16 +280,23 @@ const Register = () => {
               {errors.email && <div className="error-message">{errors.email}</div>}
             </div>
 
+            {/* Enhanced button with progress */}
             <button
               onClick={sendOtp}
               disabled={isSending || !canResend}
               className={`btn-primary ${isSending || !canResend ? 'loading' : ''}`}
             >
               {isSending ? (
-                <>
+                <div className="sending-state">
                   <span className="spinner"></span>
-                  Sending OTP...
-                </>
+                  <span>Preparing verification...</span>
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill" 
+                      style={{ width: `${sendingProgress}%` }}
+                    ></div>
+                  </div>
+                </div>
               ) : !canResend ? (
                 "Please wait..."
               ) : (
@@ -267,6 +309,13 @@ const Register = () => {
             <div className="otp-info">
               <h3>Verify Your Email</h3>
               <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+              {/* <div className="otp-status">
+                {isSending ? (
+                  <span className="sending-indicator">📤 Sending email...</span>
+                ) : (
+                  <span className="sent-indicator">✅ Check your inbox</span>
+                )}
+              </div> */}
             </div>
 
             <div className="form-group">
@@ -279,6 +328,7 @@ const Register = () => {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   maxLength="6"
+                  autoFocus // Auto focus for better UX
                 />
                 <div className="input-icon"><SiGnuprivacyguard /></div>
               </div>
@@ -289,23 +339,23 @@ const Register = () => {
                 <span className="timer-icon"><MdTimer /></span>
                 <span>Code expires in: <strong>{formatTimer(timer)}</strong></span>
               </div>
-              {timer === 0 && (
+              {(timer === 0 || timer < 30) && (
                 <button 
                   onClick={resendOtp}
                   className="resend-btn"
                   disabled={isSending}
                 >
-                  Resend OTP
+                  {timer === 0 ? "Resend OTP" : "Resend OTP Early"}
                 </button>
               )}
             </div>
 
             <button
               onClick={verifyOtp}
-              className="btn-primary verify-btn"
-              disabled={!otp.trim() || timer === 0}
+              className="btn-primary mt-2 verify-btn"
+              disabled={!otp.trim() || otp.length !== 6}
             >
-              Verify & Complete Registration
+              Verify 
             </button>
 
             <button
