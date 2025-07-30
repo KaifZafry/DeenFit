@@ -20,7 +20,9 @@ const AddProductForm = ({ productData, onClose }) => {
     description: '',
     rating: '',
     cid: '',
-    scid:''
+    scid:'',
+    color:'',
+    size:''
   });
 
   // Image states
@@ -55,7 +57,9 @@ const AddProductForm = ({ productData, onClose }) => {
         description: productToEdit.description || '',
         rating: productToEdit.rating || '',
         cid: productToEdit.category_id || '',
-         scid: productToEdit.subCategoryId
+         scid: productToEdit.subCategoryId ||'',
+         color: productToEdit.color || '',
+         size: productToEdit.size || ''
       });
 
       if (productToEdit?.product_image) {
@@ -166,6 +170,8 @@ const AddProductForm = ({ productData, onClose }) => {
   rating: parseFloat(form.rating) || 0,
   cid: parseInt(form.cid),
   scid: parseInt(form.scid),
+  color:form.color,
+  size:form.size,
   image: finalImageString,
       ...(isEditMode && { id: productToEdit.product_id }), // Include ID if in edit mode
     };
@@ -214,7 +220,9 @@ const AddProductForm = ({ productData, onClose }) => {
           description: '',
           rating: '',
           cid: '',
-          scid:''
+          scid:'',
+          color:'',
+          size:''
         });
         setImageFiles([]);
         setImagePreviews([]);
@@ -401,6 +409,29 @@ const AddProductForm = ({ productData, onClose }) => {
                   max="5"
                   name="rating"
                   value={form.rating}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                <input
+                  type="text"
+                  name="color"
+                  value={form.color}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Size</label>
+                <input
+                  type="text"
+                  
+                  name="size"
+                  value={form.size}
                   onChange={handleChange}
                   className="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
                 />

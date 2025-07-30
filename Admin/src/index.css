@@ -1,46 +1,12 @@
 @import "tailwindcss";
 
 :root{
-   font-family: 'Futura', sans-serif;
+   font-family: 'Assistant', sans-serif;
   font-weight: 500;
    font-style: normal;
 }
-/* Define the font faces */
-@font-face {
-  font-family: 'Futura';
-  src: url('/fonts/Futura-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: 'Futura';
-  src: url('/fonts/Futura-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
 
-@font-face {
-  font-family: 'Futura';
-  src: url('/fonts/Futura-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-/* Create CSS classes */
-.futura {
-  font-family: 'Futura', sans-serif;
-}
-
-.futura-medium {
-  font-family: 'Futura', sans-serif;
-  font-weight: 500;
-}
-
-.futura-bold {
-  font-family: 'Futura', sans-serif;
-  font-weight: 700;
-}
 
 .form-container {
   max-width: 600px;
