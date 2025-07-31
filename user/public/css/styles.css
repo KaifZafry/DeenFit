@@ -19760,8 +19760,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   }
   .banner-why-shop,
   .container-full {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .sidebar-filter .canvas-body {
     padding: 0;

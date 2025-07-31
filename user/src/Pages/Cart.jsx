@@ -75,7 +75,7 @@ const Cart = () => {
                             <Link to={`/product/${item.product_id}`}>
                               <h4 className="cart-item-name">{item.product_title}</h4>
                             </Link>
-                            <p className="cart-item-variant">White / L</p>
+                            <p className="cart-item-variant">{item?.color}/{item?.size}</p>
                           </div>
                         </div>
 

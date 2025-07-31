@@ -8,12 +8,15 @@ import { incrementQty, decrementQty } from "../redux/CartSlice";
 import { addToCart } from "../redux/CartSlice";
 import { BASE_IMG_URL } from "../utils/Constants";
 import { toast } from "react-toastify";
+import Sizechart from "../components/Sizechart";
 
 const ProductDetails = () => {
   const { id } = useParams(); // from URL: /product/:id
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [product, setProduct] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("M"); // Default can be "Regular" if not a tshirt
+
   // const [currentImage, setCurrentImage] = useState("");
 
   const [currentImage, setCurrentImage] = useState(product?.images?.[0] || "");
@@ -247,8 +250,45 @@ const ProductDetails = () => {
                           <div className="value"></div>
                         </div>
                       </div>
+
+                      {product?.category_id === 1 ? (
+                        <div className="variant-picker-item variant-size mb-4">
+                          <div className="variant-picker-label flex justify-between items-center mb-2">
+                            <div>
+                              Size:
+                              <span className="variant-picker-label-value value-currentSize ml-1 font-semibold">
+                                {selectedSize}
+                              </span>
+                            </div>
+                            <a href="#sizeGuide" className="size-guide text-blue-500 underline">Size Guide</a>
+                            <Sizechart/>
+                          </div>
+                          <div className="variant-picker-values flex gap-2">
+                            {["S", "M", "L", "XL"].map((size) => (
+                              <span
+                                key={size}
+                                className={`size-btn px-3 py-1 border rounded cursor-pointer ${selectedSize === size ? "bg-black text-white" : "bg-white text-black"
+                                  }`}
+                                onClick={() => setSelectedSize(size)}
+                              >
+                                {size}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="variant-picker-item variant-size mb-4">
+                          <div className="variant-picker-label">
+                            <div>
+                              Size:
+                              <span className="variant-picker-label-value value-currentSize ml-1 font-semibold">Regular</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                     </div>
-                  
+
                     <div className="tf-product-total-quantity">
                       <div className="group-btn">
                         <button

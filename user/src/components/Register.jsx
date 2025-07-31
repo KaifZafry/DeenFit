@@ -104,14 +104,29 @@ const Register = () => {
     }, 500); // Small delay for smooth transition
 
     const subject = "Your DeenFit OTP Code";
-    const body = `Dear ${name},\n\nYour OTP code is: ${otpCode}\nIt will expire in 90 seconds.`;
+    const body = `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; border: 1px solid #eee; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="https://deenfit.store/logo.png" alt="DeenFit Logo" style="height: 60px;" />
+    </div>
+    <h2 style="color: #222;">Your OTP Code</h2>
+    <p>Dear <strong>${name}</strong>,</p>
+    <p>Use the following OTP to complete your authentication:</p>
+    <div style="font-size: 28px; font-weight: bold; color: #0c6cf2; background: #fff; padding: 15px 30px; display: inline-block; border-radius: 8px; border: 1px dashed #ccc;">
+      ${otpCode}
+    </div>
+    <p style="margin-top: 20px;">This code is valid for <strong>90 seconds</strong>. Please do not share it with anyone.</p>
+    <p style="font-size: 14px; color: #888; margin-top: 40px;">— Team DeenFit</p>
+  </div>
+`;
+
 
     try {
       // 🚀 OPTIMIZATION 3: Send email in background
       const emailPromise = fetch("/api/Email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, subject, body }),
+        body: JSON.stringify({ email, subject, body, isHtml: true }),
       });
 
       // Set cooldown timer immediately
