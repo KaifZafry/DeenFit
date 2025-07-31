@@ -1598,6 +1598,7 @@ a {
   text-decoration: none;
   cursor: pointer;
   display: inline-block;
+  color:#000 !important;
 }
 .cart-item-name{
   color:black;
@@ -23193,6 +23194,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width:100%;
 }
 
 .cart-item-header {
@@ -23315,4 +23317,8 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 }
 .account-aside{
       border-right: 1px solid #d1d1d1;
+}
+.care-list, .care-list li{
+  list-style: disc;
+  margin-left: 0.5rem !important;
 }

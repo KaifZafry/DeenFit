@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { incrementQty, decrementQty, removeFromCart } from "../redux/CartSlice";
+import { incrementQty, decrementQty, removeFromCart,clearCart } from "../redux/CartSlice";
 import { MdDeleteOutline } from "react-icons/md";
 import { BASE_IMG_URL } from "../utils/Constants";
 
@@ -52,23 +52,35 @@ const Cart = () => {
                 </div>
               ) : (
                 <div className="cart-items-container">
+                    <div className="d-flex justify-end">
+                <button
+                              className=" mt-4 d-flex align-items-center inline-block bg-black text-white px-4 py-2  hover:bg-gray-900 transition"
+                              style={{fontSize:'14px'}}
+                              onClick={() => dispatch(clearCart())}
+                            >
+                             ClearCart   <MdDeleteOutline />
+                            </button>
+              </div>
                   {cartItems.map((item) => {
                     const imageArray = item.product_image?.split(",") || [];
                     const mainImage = BASE_IMG_URL + imageArray[0];
 
                     return (
+                      
                       <div
                         className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
                         data-aos="zoom-in" data-aos-delay='100' data-aos-duration="300" key={item.product_id}
                       >
                         <div className="cart-item-left d-flex gap-3">
-                          <div>
+                           <div>
+                          <Link to={`/product/${item.product_id}`}>
                             <img
                               src={mainImage}
                               alt={item.name}
                               width={70}
                               className="cart-item-image"
                             />
+                            </Link>
                           </div>
 
                           <div className="cart-item-header">
@@ -77,9 +89,11 @@ const Cart = () => {
                             </Link>
                             <p className="cart-item-variant">{item?.color}/{item?.size}</p>
                           </div>
+                          
+                         
                         </div>
 
-                        <div className="cart-item-right d-flex">
+                        <div className="cart-item-right d-flex justify-content-md-around">
 
                           <div>
                             <div className="qty-control">
@@ -96,21 +110,21 @@ const Cart = () => {
                               </button>
                             </div>
                           </div>
-                          <div className="cart-item-controls">
+                          <div className="cart-item-controls ">
                             <div className="cart-item-pricing">
                               <p className="price">₹{item.price.toFixed(2)}</p>
                               <p className="total">
                                 Total: ₹{(item.price * item.quantity).toFixed(2)}
                               </p>
                             </div>
-                            <button
+                          
+                          </div>
+  <button
                               className="remove-btn"
-                              onClick={() => dispatch(removeFromCart(item.product_id))}
+                              onClick={() => dispatch(removeFromCart({ product_id: item.product_id, size: item.size }))}
                             >
                               <MdDeleteOutline />
                             </button>
-                          </div>
-
 
                         </div>
                       </div>
@@ -119,6 +133,7 @@ const Cart = () => {
                   })}
                 </div>
               )}
+            
             </div>
           </div>
           <div className="col-md-4" data-aos="fade-up" data-aos-duration="500">

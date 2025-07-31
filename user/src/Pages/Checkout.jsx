@@ -71,6 +71,8 @@ const navigate= useNavigate();
       productName: item.product_title,
       quantity: item.quantity,
       price: item.selling_price,
+      color:item.color,
+      size:item.size
     })),
   };
 
@@ -86,7 +88,7 @@ const navigate= useNavigate();
       
       toast.success("✅ Order Placed Successfully!");
       dispatch(clearCart());
-      navigate("/order-success", { state: { orderId: data.orderID } });
+      navigate("/order-success", { state: { data } });
     } else {
       alert("❌ Failed to place order.");
     }
@@ -234,7 +236,7 @@ const navigate= useNavigate();
                             <p className="name text-sm fw-medium">
                               {item.product_title}
                             </p>
-                            <span className="variant">White / L</span>
+                            <span className="variant">{item?.color} / {item?.size}</span>
                           </div>
                           <span className="price text-sm fw-medium">
                             ₹{item.selling_price}

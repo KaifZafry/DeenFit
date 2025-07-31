@@ -15,8 +15,8 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [product, setProduct] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("M"); // Default can be "Regular" if not a tshirt
-
+  const [selectedSize, setSelectedSize] = useState("M");
+ const [showSizeChart, setShowSizeChart] = useState(false);
   // const [currentImage, setCurrentImage] = useState("");
 
   const [currentImage, setCurrentImage] = useState(product?.images?.[0] || "");
@@ -104,24 +104,34 @@ const ProductDetails = () => {
   }, [product]);
 
   const handleAddToCart = (item, e) => {
-    e.preventDefault();
-    const isExisting = cartItems.some(
-      (cartItem) => cartItem.product_id === item.product_id
-    );
+  e.preventDefault();
 
-    dispatch(addToCart(item));
-    if (isExisting) {
-      toast.info("Quantity increased in cart.");
-    } else {
-      toast.success("Product added to cart.");
-    }
+  const itemWithSize = {
+    ...item,
+    size: selectedSize, // 👈 Inject selected size
   };
+
+  const isExisting = cartItems.some(
+    (cartItem) =>
+      cartItem.product_id === item.product_id &&
+      cartItem.size === selectedSize // 👈 Check by size too
+  );
+
+  dispatch(addToCart(itemWithSize));
+
+  if (isExisting) {
+    toast.info("Quantity increased in cart.");
+  } else {
+    toast.success("Product added to cart.");
+  }
+};
+
 
   return (
     <>
       <div className="breadcrumb-sec">
         <div className="container-full">
-          <div className="breadcrumb-wrap">
+          <div className="breadcrumb-wrap ms-4 ml-4">
             <div className="breadcrumb-list">
               <Link className="breadcrumb-item" to="/">
                 Home
@@ -152,8 +162,9 @@ const ProductDetails = () => {
                         key={index}
                         src={img}
                         alt={`thumb-${index}`}
-                        className={`thumbnail ${currentImage === img ? "active" : ""
-                          }`}
+                        className={`thumbnail ${
+                          currentImage === img ? "active" : ""
+                        }`}
                         onClick={() => setCurrentImage(img)}
                       />
                     ))}
@@ -244,7 +255,9 @@ const ProductDetails = () => {
                           <span className="text-primary fw-medium">
                             HURRY UP!
                           </span>{" "}
-                          Only <span className="count">{product?.quantity}</span> items left!
+                          Only{" "}
+                          <span className="count">{product?.quantity}</span>{" "}
+                          items left!
                         </div>
                         <div className="progress-sold">
                           <div className="value"></div>
@@ -260,15 +273,22 @@ const ProductDetails = () => {
                                 {selectedSize}
                               </span>
                             </div>
-                            <a href="#sizeGuide" className="size-guide text-blue-500 underline">Size Guide</a>
-                            <Sizechart/>
+                            <a
+                              className="size-guide text-blue-500 underline cursor-pointer"
+                              onClick={() => setShowSizeChart(true)}
+                            >
+                              Size Guide
+                            </a>
                           </div>
                           <div className="variant-picker-values flex gap-2">
                             {["S", "M", "L", "XL"].map((size) => (
                               <span
                                 key={size}
-                                className={`size-btn px-3 py-1 border rounded cursor-pointer ${selectedSize === size ? "bg-black text-white" : "bg-white text-black"
-                                  }`}
+                                className={`size-btn px-3 py-1 border rounded cursor-pointer ${
+                                  selectedSize === size
+                                    ? "bg-black text-white"
+                                    : "bg-white text-black"
+                                }`}
                                 onClick={() => setSelectedSize(size)}
                               >
                                 {size}
@@ -281,12 +301,14 @@ const ProductDetails = () => {
                           <div className="variant-picker-label">
                             <div>
                               Size:
-                              <span className="variant-picker-label-value value-currentSize ml-1 font-semibold">Regular</span>
+                              <span className="variant-picker-label-value value-currentSize ml-1 font-semibold">
+                                Regular
+                              </span>
                             </div>
                           </div>
                         </div>
                       )}
-
+                       <Sizechart isVisible={showSizeChart} onClose={() => setShowSizeChart(false)} />
                     </div>
 
                     <div className="tf-product-total-quantity">
@@ -306,7 +328,10 @@ const ProductDetails = () => {
                         </Link>
                       </div>
 
-                      <Link to="/checkout" className="more-choose-payment mt-2 link">
+                      <Link
+                        to="/checkout"
+                        className="more-choose-payment mt-2 link"
+                      >
                         More payment options
                       </Link>
                     </div>
@@ -351,6 +376,26 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="description my-3 px-2">
+              <h5>Description</h5>
+              <p>{product?.description}</p>
+              {console.log(product)}
+            </div>
+            <div className="materials px-2">
+              <h5 className="my-3">Materials Care</h5>
+                      <ul className="care-list">
+                        <li>100% Cotton fabric</li>
+                        <li>Care: Hand wash</li>
+                        <li>Imported</li>
+                        <li>Machine wash max. 30ºC. Short spin.</li>
+                        <li>Iron maximum 110ºC.</li>
+                        <li>Do not bleach/bleach.</li>
+                        <li>Do not dry clean.</li>
+                        <li>Tumble dry, medium hear.</li>
+                        
+                      </ul>
             </div>
           </div>
         </div>

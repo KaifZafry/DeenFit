@@ -20,7 +20,7 @@ const AccountPage = () => {
     const fetchOrders = async () => {
      
       try {
-        const res = await fetch(`/api/Account/getAllorderbyuserID/${userId}`);
+        const res = await fetch(`/api/Account/getorderbyid/${userId}`);
         const json = await res.json();
         console.log(json?.orderItems)
         setLoading(false)
