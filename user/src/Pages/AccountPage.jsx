@@ -20,11 +20,11 @@ const AccountPage = () => {
     const fetchOrders = async () => {
      
       try {
-        const res = await fetch(`/api/Account/getorderbyid/${userId}`);
+        const res = await fetch(`/api/Account/getAllOrdersByUserId/${userId}`);
         const json = await res.json();
-        console.log(json?.orderItems)
+        console.log(json?.orders)
         setLoading(false)
-        setOrders(json?.orderItems || []);
+        setOrders(json?.orders|| []);
         setOrderdetails(json)
       } catch (error) {
         console.error("Failed to fetch orders", error);

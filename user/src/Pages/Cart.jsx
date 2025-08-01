@@ -88,6 +88,7 @@ const Cart = () => {
                               <h4 className="cart-item-name">{item.product_title}</h4>
                             </Link>
                             <p className="cart-item-variant">{item?.color}/{item?.size}</p>
+                          
                           </div>
                           
                          

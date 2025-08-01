@@ -9,6 +9,7 @@ import { addToCart } from "../redux/CartSlice";
 import { BASE_IMG_URL } from "../utils/Constants";
 import { toast } from "react-toastify";
 import Sizechart from "../components/Sizechart";
+import AccordionProducts from "../components/AccordionProducts";
 
 const ProductDetails = () => {
   const { id } = useParams(); // from URL: /product/:id
@@ -378,28 +379,13 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <div className="description my-3 px-2">
-              <h5>Description</h5>
-              <p>{product?.description}</p>
-              {console.log(product)}
-            </div>
-            <div className="materials px-2">
-              <h5 className="my-3">Materials Care</h5>
-                      <ul className="care-list">
-                        <li>100% Cotton fabric</li>
-                        <li>Care: Hand wash</li>
-                        <li>Imported</li>
-                        <li>Machine wash max. 30ºC. Short spin.</li>
-                        <li>Iron maximum 110ºC.</li>
-                        <li>Do not bleach/bleach.</li>
-                        <li>Do not dry clean.</li>
-                        <li>Tumble dry, medium hear.</li>
-                        
-                      </ul>
-            </div>
+          
+          
           </div>
         </div>
       </section>
+       
+        <AccordionProducts product={product}/>
     </>
   );
 };

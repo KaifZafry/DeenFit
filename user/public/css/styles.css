@@ -10634,7 +10634,7 @@ header.header-bg {
  ------------------------------------------------------------------------------ */
 /*--------- Abstracts variable ---------- */
 .flat-single-product {
-  padding: 0px 0px 100px;
+  padding: 0px 0px 10px;
 }
 
 .stagger-wrap .stagger-item {
