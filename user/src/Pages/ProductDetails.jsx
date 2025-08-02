@@ -193,7 +193,7 @@ const ProductDetails = () => {
                 <div className="tf-product-info-wrap other-image-zoom">
                   <div className="tf-product-info-list">
                     <div className="tf-product-heading">
-                      <span className="brand-product">Cotton</span>
+                      <span className="brand-product">Deenfit</span>
                       <h4 className="product-name fw-medium">
                         {product?.product_title}
                       </h4>

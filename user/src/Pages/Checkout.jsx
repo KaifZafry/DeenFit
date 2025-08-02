@@ -278,10 +278,10 @@ const navigate= useNavigate();
                     <button
                       onClick={openRazorpayCheckout}
                       disabled={isPlacingOrder}
-                      className={`w-full py-2 rounded-md ${
+                      className={`w-full py-2 animate-btn rounded-md ${
                         isPlacingOrder
                           ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-[#422515] hover:bg-[#422515de]"
+                          : "bg-[#382924] "
                       } text-white`}
                     >
                       {isPlacingOrder ? "Placing Order..." : "Place Order"}

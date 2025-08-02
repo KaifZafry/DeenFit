@@ -2657,10 +2657,7 @@ a:focus, a:hover {
 /*------------ Components ---------------- */
 /*------------ button ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+  
 
 	* Abstracts variable
 
@@ -3447,11 +3444,7 @@ button.animate-btn::after,
 
 /*------------ hover ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+  
 	* Abstracts variable
 
     * Reset css styles
@@ -3681,10 +3674,7 @@ button.animate-btn::after,
 
 /*------------ form ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+   
 
 	* Abstracts variable
 
@@ -4183,11 +4173,7 @@ button.animate-btn::after,
 
 /*------------ drop down ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -4643,11 +4629,7 @@ button.animate-btn::after,
 
 /*------------ carousel ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -5139,11 +5121,7 @@ button.animate-btn::after,
 
 /*------------ pop up ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -6761,11 +6739,7 @@ button.animate-btn::after,
 
 /*------------ box icon ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -7140,11 +7114,7 @@ button.animate-btn::after,
 
 /*------------ tabs ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -7516,11 +7486,7 @@ button.animate-btn::after,
 
 /*------------ header ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -8719,8 +8685,8 @@ header.header-bg {
   font-weight: 500 !important;
 }
 .bg-pink{
-  background: #ff6f61 !important;
-  border-color: #ff6f61 !important;
+  background: #382924 !important;
+  border-color: #382924 !important;
 }
 .nav-ul-mb .nav-mb-item:not(:last-child) {
   border-bottom: 1px solid var(--line);
@@ -8829,11 +8795,7 @@ header.header-bg {
 
 /*------------ footer ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -9173,363 +9135,6 @@ header.header-bg {
 .footer-cloud .footer-info .box-icon {
   background-color: transparent;
   border-color: var(--white);
-}
-
-/*------------ blog ---------------- */
-/* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
-	* Abstracts variable
-
-    * Reset css styles
-
-    * Components
-
-        * header
-        * footer
-        * tabs
-        * slider banner
-        * button
-        * form
-        * drop down
-        * carousel
-        * avatar
-        * pop up
-        * box icon
-        * hover
-        * collection
-        * product
-        * blog
-        * testimonial
-        * lookbook
-        * accordion
-        * brand
-        * zoom
-        * shop
-        * cart
-        * account
-
-    * section
-
-    * Responsive
-
-    * RTL
- ------------------------------------------------------------------------------ */
-/*--------- Abstracts variable ---------- */
-.blog-item {
-  display: grid;
-  gap: 24px;
-}
-.blog-item .entry_image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-.blog-item .entry_image a {
-  display: block;
-  height: 100%;
-}
-.blog-item .blog-content {
-  display: grid;
-  gap: 15px;
-}
-.blog-item .entry-meta {
-  display: flex;
-  gap: 10px 20px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.blog-item .br-line {
-  width: 1px;
-  height: 16px;
-  background-color: var(--line);
-}
-.blog-item .entry_author {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.blog-item .avatar {
-  max-width: 38px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.blog-item.style-2 {
-  display: flex;
-  gap: 24px;
-}
-.blog-item.style-2 .entry_image {
-  max-width: 342px;
-  flex-shrink: 0;
-  width: 100%;
-}
-.blog-item.style-2 .blog-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.entry-tag {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.entry-tag > p {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 25px;
-}
-.entry-tag .style-list {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.entry-tag .style-list a {
-  padding: 9px 23px;
-  display: inline-block;
-  border-radius: 22px;
-  border: 1px solid var(--line);
-  font-weight: 500;
-  line-height: 17px;
-  background-color: transparent;
-}
-.entry-tag .style-list a:hover {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  color: var(--white);
-}
-.entry-tag .style-list .type-life {
-  background-color: #ffe1e1;
-  border-color: #ffe1e1;
-}
-.entry-tag .style-list .type-design {
-  background-color: #ede2ff;
-  border-color: #ede2ff;
-}
-.entry-tag .style-list .type-bag {
-  background-color: #c5ffbb;
-  border-color: #c5ffbb;
-}
-.entry-tag .style-list .type-trick {
-  background-color: #c3dbff;
-  border-color: #c3dbff;
-}
-
-.recent-blog-list {
-  display: grid;
-  gap: 24px;
-}
-.recent-blog-list li {
-  display: flex;
-  gap: 20px;
-}
-.recent-blog-list .image {
-  border-radius: 8px;
-  max-width: 98px;
-  width: 100%;
-  overflow: hidden;
-}
-.recent-blog-list .post-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sidebar-blog {
-  display: grid;
-  gap: 32px;
-}
-.sidebar-blog .sb-title {
-  margin-bottom: 24px;
-}
-.sidebar-blog .sb-content {
-  padding-bottom: 32px;
-  border-bottom: 1px solid var(--line);
-}
-
-.sb-banner {
-  position: relative;
-}
-.sb-banner .image {
-  border-radius: 16px;
-  overflow: hidden;
-}
-.sb-banner .title {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 33.2px;
-  color: var(--white);
-  text-align: center;
-  margin-bottom: 16px;
-}
-.sb-banner .banner-content {
-  position: absolute;
-  bottom: 84px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.sb-banner .tf-btn {
-  font-family: "DM Sans", sans-serif;
-  font-weight: 600;
-  line-height: 19px;
-  letter-spacing: -0.03em;
-  padding: 12px 33px;
-  width: max-content;
-}
-
-.wg-pagination {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  grid-column: 1/-1;
-  width: 100%;
-  margin-top: 18px;
-}
-.wg-pagination .pagination-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--rgba-dark-3);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 19px;
-}
-.wg-pagination .pagination-item:hover {
-  background-color: var(--dark);
-  border-color: var(--dark);
-  color: var(--white);
-}
-.wg-pagination .active .pagination-item {
-  background-color: var(--dark);
-  border-color: var(--dark);
-  color: var(--white);
-}
-
-.category-blog-list {
-  display: grid;
-  gap: 5px;
-}
-
-.leave-comment-wrap .title {
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 38px;
-  color: var(--dark);
-  margin-bottom: 48px;
-  text-align: center;
-}
-
-.blog-item-v2 {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-}
-.blog-item-v2 .image-box {
-  display: block;
-}
-.blog-item-v2 .img-style {
-  display: block;
-}
-.blog-item-v2 .entry-image {
-  position: relative;
-}
-.blog-item-v2 .entry-tag {
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.blog-item-v2 .tag {
-  font-size: 14px;
-  line-height: 20px;
-  padding: 6px 10px;
-  background-color: var(--white);
-  border-radius: 4px;
-  color: var(--dark);
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-}
-.blog-item-v2 .tag:hover {
-  background-color: var(--primary);
-  color: var(--white);
-}
-.blog-item-v2 .entry-content {
-  padding: 15px;
-}
-.blog-item-v2 .entry-content .info-box {
-  margin-bottom: 20px;
-  display: grid;
-  gap: 10px;
-}
-.blog-item-v2 .entry-content .meta-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.blog-item-v2 .entry-content .meta-list .item {
-  padding: 4px 14px;
-  padding-right: 0;
-  position: relative;
-  color: var(--text);
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 20px;
-}
-.blog-item-v2 .entry-content .meta-list .item::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  display: block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--text);
-}
-.blog-item-v2 .entry-content .btn-readmore {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 15px;
-  line-height: 24px;
-  color: #404cb7;
-  font-weight: 500;
-}
-.blog-item-v2 .entry-content .btn-readmore .icon {
-  font-size: 15px;
-}
-
-.s-blog-single {
-  padding-top: 100px;
-  padding-bottom: 60px;
-}
-.s-blog-single .leave-comment-wrap {
-  max-width: 952px;
-  margin: auto;
-}
-
-.sec-blog {
-  padding-top: 80px;
-  padding-bottom: 176px;
-}
-.sec-blog.space-blog {
-  padding-top: 56px;
 }
 
 /*------------ slider banner ---------------- */
@@ -23150,7 +22755,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 12px;
-    opacity: 0.5;
+    opacity: 0.95;
 }
 
 .thumbnail.active {

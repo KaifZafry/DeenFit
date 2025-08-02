@@ -94,7 +94,7 @@ const Accordion = ({product}) => {
                 </tr>
                 <tr>
                   <td className="font-semibold pr-4">Brand:</td>
-                  <td>Vineta</td>
+                  <td>Deenfit</td>
                 </tr>
                 <tr>
                   <td className="font-semibold pr-4">Size:</td>
