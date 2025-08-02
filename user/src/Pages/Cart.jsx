@@ -45,7 +45,7 @@ const Cart = () => {
                   <p className="text-gray-500">Looks like you haven't added anything yet.</p>
                   <Link
                     to="/products"
-                    className="mt-4  inline-block bg-black text-white px-4 py-2  hover:bg-gray-900 transition"
+                    className="mt-4  inline-block bg-[#422515] animate-btn text-white px-4 py-2 animate-btn transition"
                   >
                     Continue Shopping
                   </Link>
@@ -54,7 +54,7 @@ const Cart = () => {
                 <div className="cart-items-container">
                     <div className="d-flex justify-end">
                 <button
-                              className=" mt-4 d-flex align-items-center inline-block bg-black text-white px-4 py-2  hover:bg-gray-900 transition"
+                              className=" mt-4 d-flex align-items-center text-lg font-bold animate-btn inline-block bg-[#422515] text-white px-4 py-2   transition"
                               style={{fontSize:'14px'}}
                               onClick={() => dispatch(clearCart())}
                             >
@@ -71,7 +71,7 @@ const Cart = () => {
                         className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
                         data-aos="zoom-in" data-aos-delay='100' data-aos-duration="300" key={item.product_id}
                       >
-                        <div className="cart-item-left d-flex gap-3">
+                        <div className="cart-item-left  d-flex gap-3">
                            <div>
                           <Link to={`/product/${item.product_id}`}>
                             <img

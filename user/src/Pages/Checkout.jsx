@@ -281,7 +281,7 @@ const navigate= useNavigate();
                       className={`w-full py-2 rounded-md ${
                         isPlacingOrder
                           ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-green-600 hover:bg-green-700"
+                          : "bg-[#422515] hover:bg-[#422515de]"
                       } text-white`}
                     >
                       {isPlacingOrder ? "Placing Order..." : "Place Order"}

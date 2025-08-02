@@ -7,12 +7,19 @@ import { LuUserRound } from "react-icons/lu";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ModelSearch from "./ModelSearch";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const categories = useSelector((state) => state.category.list);
   const dispatch = useDispatch();
+
+
+   const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
@@ -103,11 +110,14 @@ const Header = () => {
                 <li className="nav-search">
                   <a
                     href="#search"
-                    data-bs-toggle="modal"
+                    onClick={handleOpenModal}
                     className="nav-icon-item"
                   >
                     <IoSearch />
                   </a>
+                  {isModalOpen && (
+        <ModelSearch onClose={handleCloseModal} />
+      )}
                 </li>
                 <li className="nav-wishlist">
                   <Link to="/wishlist" className="nav-icon-item">

@@ -1,7 +1,7 @@
 
 @import url(bootstrap-select.min.css);
 :root {
-  --primary: #ff6f61;
+  --primary: #382924;
   --primary-2: #ff9a90;
   --primary-3: #ffc5c0;
   --primary-4: #fff1ef;
@@ -11,7 +11,7 @@
   --secondary-3: rgba(75, 77, 237, 0.5);
   --secondary-4: #efeffd;
   --dark: #000000;
-  --dark-2: #101828;
+  --dark-2: #422515;
   --dark-3: #282828;
   --dark-4: #1c1c1c;
   --white: #ffffff;
@@ -1271,7 +1271,7 @@ video {
 }
 
 .bg-dark-green-7 {
-  background-color: #000 !important;
+  background-color: #382924 !important;
 }
 
 .bg-dark-green-8 {
@@ -3016,7 +3016,7 @@ a:focus, a:hover {
   color: var(--white);
 }
 .tf-btn.btn-dark2 {
-  background-color: var(--dark-2);
+  background-color: #422515;
   color: var(--white);
   border: 1px solid var(--dark-2);
 }
@@ -7704,10 +7704,10 @@ button.animate-btn::after,
   background: linear-gradient(to left, #591399, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::before {
-  background: linear-gradient(to right, #000, transparent);
+  background: linear-gradient(to right, #382924, transparent);
 }
 .tf-topbar.bg-dark-green-7 .overflow-hidden::after {
-  background: linear-gradient(to left, #000, transparent);
+  background: linear-gradient(to left, #382924, transparent);
 }
 .tf-topbar.bg-dark-green-8 .overflow-hidden::before {
   background: linear-gradient(to right, #246B64, transparent);
@@ -8593,21 +8593,21 @@ header.header-bg {
   justify-content: space-between;
 }
 .canvas-mb .icon-close-popup {
-  position: absolute;
-  font-size: 16px;
-  z-index: 3;
-  top: 15px;
-  left: 15px;
-  background-color: transparent;
-  border: none;
-  height: 30px;
-  width: 30px;
-  padding: 7px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--dark);
+ position: absolute;
+    font-size: 63px;
+    z-index: 3;
+    top: 15px;
+    right: 28px;
+    background-color: transparent;
+    border: none;
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--dark);
 }
 .canvas-mb .mb-bottom .site-nav-icon {
   margin-bottom: 18px;
@@ -23186,6 +23186,11 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 .cart-item-left{
   align-items: center;
+}
+@media screen and (max-width:768px){
+  .cart-item-left{
+    width:100%;
+  }
 }
 
 .cart-item-right {

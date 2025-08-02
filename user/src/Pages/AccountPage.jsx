@@ -151,41 +151,44 @@ const AccountPage = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 tf-page-cart-sidebar" >
                   {orders.map((order) => (
                     <div
-                      key={order.orderItemID}
+                      key={order.orderID}
                       className="border p-4 rounded shadow-sm bg-white"
                     >
                       <div className="flex justify-between items-center">
                         <div>
-                          <h4 className="font-semibold">
-                            Order #{order?.orderItemID} - {new Date(orderdetails?.statusHistory?.updatedAt).toLocaleDateString()}
-                          </h4>
+                          <h5 className="font-semibold">
+                            Order #{order?.orderID} - {order?.orderDate}
+                          </h5>
                           <p className="text-sm text-gray-500">
                             Status: <span className={`inline-block px-2 py-1 text-xs rounded font-medium ${
-                              orderdetails?.statusHistory?.statusName === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
-                              orderdetails?.statusHistory?.statusName === 'Processing' ? 'bg-blue-100 text-blue-700' :
-                              orderdetails?.statusHistory?.statusName === 'Shipped' ? 'bg-indigo-100 text-indigo-700' :
-                              orderdetails?.statusHistory?.statusName === 'Delivered' ? 'bg-green-100 text-green-700' :
-                              orderdetails?.statusHistory?.statusName === 'Cancelled' ? 'bg-red-100 text-red-700' :
+                              order?.statusHistory?.statusName === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                              order?.statusHistory?.statusName === 'Processing' ? 'bg-blue-100 text-blue-700' :
+                              order?.statusHistory?.statusName === 'Shipped' ? 'bg-indigo-100 text-indigo-700' :
+                              order?.statusHistory?.statusName === 'Delivered' ? 'bg-green-100 text-green-700' :
+                              order?.statusHistory?.statusName === 'Cancelled' ? 'bg-red-100 text-red-700' :
                               'bg-gray-100 text-gray-600'
-                            }`}>{orderdetails?.statusHistory?.statusName}</span>
+                            }`}>{order?.statusHistory?.statusName}</span>
                           </p>
                         </div>
                         <div className="text-right">
-                          <p>Total: ₹{orderdetails.totalAmount}</p>
+                          <p>Total: ₹{order.totalAmount}</p>
                           <p className="text-xs text-gray-400">
-                            {orderdetails.paymentMethod}
+                            {order.paymentMethod}
                           </p>
                         </div>
                       </div>
                       <div className="mt-2 border-t pt-2">
-                        {orders.map((item) => (
+                        {order?.orderItems.map((item) => (
                           <div key={item.orderItemID} className="text-sm mb-1">
                             {item.productName} × {item.quantity} = ₹{item.subtotal}
                           </div>
                         ))}
+                      </div>
+                      <div className="mt-2">
+                        Address: {order?.shippingAddress}
                       </div>
                     </div>
                   ))}

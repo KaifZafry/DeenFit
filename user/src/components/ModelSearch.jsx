@@ -1,7 +1,7 @@
 import React from 'react'
 import { CgClose } from 'react-icons/cg'
 
-const ModelSearch = () => {
+const ModelSearch = ({onClose}) => {
   return (
     <div className="modal fade popup-search" id="search">
         <div className="modal-dialog modal-fullscreen">
@@ -19,8 +19,8 @@ const ModelSearch = () => {
                                 <div className="heading">What are you looking for?</div>
                                 <form className="form-search">
                                     <fieldset className="text">
-                                        <input type="text" placeholder="Search" className="" name="text" tabindex="0"
-                                            value="" aria-required="true" required=""/>
+                                        {/* <input type="text" placeholder="Search" className="" name="text" tabIndex="0"
+                                            value={""} aria-required="true" required=""/> */}
                                     </fieldset>
                                     <button type="submit">
                                         <i className="icon icon-search"></i>
