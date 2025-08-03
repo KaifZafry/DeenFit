@@ -5312,9 +5312,9 @@ button.animate-btn::after,
 .modal.fullBottom.show .modal-dialog {
   transform: translate(0, 0);
 }
-.modal.fade:not(.show) {
+/* .modal.fade:not(.show) {
   opacity: 0;
-}
+} */
 .modal .modal-content {
   cursor: default;
   border: 0;
@@ -9139,11 +9139,7 @@ header.header-bg {
 
 /*------------ slider banner ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -9586,11 +9582,7 @@ header.header-bg {
 
 /*------------ collection ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -10196,11 +10188,7 @@ header.header-bg {
 
 /*------------ product ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+  
 	* Abstracts variable
 
     * Reset css styles
@@ -12675,11 +12663,7 @@ header.header-bg {
 
 /*------------ testimonial ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -12990,11 +12974,7 @@ header.header-bg {
 
 /*------------ lookbook ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -13488,11 +13468,7 @@ header.header-bg {
 
 /*------------ brand ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -13657,11 +13633,7 @@ header.header-bg {
 
 /*------------ zoom ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+    
 	* Abstracts variable
 
     * Reset css styles
@@ -13777,11 +13749,7 @@ header.header-bg {
 
 /*------------ shop ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -14663,11 +14631,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 /*------------ shop ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+   
 	* Abstracts variable
 
     * Reset css styles
@@ -15882,11 +15846,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 /*------------ account ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+    
 	* Abstracts variable
 
     * Reset css styles
@@ -16180,11 +16140,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 /*------------ sections ---------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+    
 	* Abstracts variable
 
     * Reset css styles
@@ -17703,11 +17659,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 /*-------------- Responsive ----------------- */
 /* ---------------------------------------------------------
-    * Name: Vineta - Multipurpose eCommerce
-    * Version: 1.0.2
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
-
+ 
 	* Abstracts variable
 
     * Reset css styles
@@ -21553,7 +21505,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   .banner-about {
     height: 300px;
   }
-  #header .nav-icon .nav-search,
+  
   #header .nav-icon .nav-wishlist,
   #header .nav-icon .nav-compare {
     display: none;

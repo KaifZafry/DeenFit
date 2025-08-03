@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CgMenuLeftAlt } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
@@ -13,12 +13,20 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
   const categories = useSelector((state) => state.category.list);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-   const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -34,7 +42,12 @@ const Header = () => {
   );
   return (
     <>
-      <header id="header" className="header-default shadow-md">
+      <header
+        id="header"
+        className={`header-default fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isSticky ? "bg-white shadow-md" : "bg-transparent"
+        }`}
+      >
         <div className="container-full ">
           <div className="row wrapper-header px-2 align-items-center">
             <div className="col-md-4 col-3 d-xl-none">
@@ -108,16 +121,13 @@ const Header = () => {
                   )}
                 </li>
                 <li className="nav-search">
-                  <a
-                    href="#search"
+                  <span
                     onClick={handleOpenModal}
-                    className="nav-icon-item"
+                    className="nav-icon-item cursor-pointer"
                   >
                     <IoSearch />
-                  </a>
-                  {isModalOpen && (
-        <ModelSearch onClose={handleCloseModal} />
-      )}
+                  </span>
+                  {isModalOpen && <ModelSearch onClose={handleCloseModal} />}
                 </li>
                 <li className="nav-wishlist">
                   <Link to="/wishlist" className="nav-icon-item">

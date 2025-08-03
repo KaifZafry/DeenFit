@@ -10,16 +10,21 @@ import { motion } from "framer-motion";
 const Hero = () => {
 
   const settings = {
-    dots: false,
+  dots: false,
   infinite: true,
   autoplay: true,
   speed: 800,
-  fade: true, // ✅ This enables fade transition
+  fade: true,
   autoplaySpeed: 3000,
   slidesToShow: 1,
   slidesToScroll: 1,
   arrows: false,
-  };
+  beforeChange: () => {
+    if (document.activeElement) {
+      document.activeElement.blur();
+    }
+  },
+};
 
   const banners = [
      "/banner3.png",
