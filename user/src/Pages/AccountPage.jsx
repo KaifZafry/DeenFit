@@ -72,12 +72,12 @@ const AccountPage = () => {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 mb-5">
       <h2 className="text-3xl font-bold mb-8">My account</h2>
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col  gap-6">
         {/* Sidebar */}
-         <aside className="w-full md:w-1/4 my-5 me-4 border-r account-aside">
-          <ul className="space-y-2">
+         <aside className="w-full sticky-top  my-3 me-4 border-r account-aside">
+          <ul className="space-y-2 overflow-x-auto flex justify-between">
             <li>
               <button
                 onClick={() => setActiveTab("dashboard")}
@@ -86,7 +86,7 @@ const AccountPage = () => {
                 }`}
               >
                 <MdDashboard />
-                Dashboard
+               <p className="hidden md:block">Dashboard</p> 
               </button>
             </li>
             <li>
@@ -97,7 +97,7 @@ const AccountPage = () => {
                 }`}
               >
                 <IoBagHandleSharp />
-                Orders
+                <p className="hidden md:block">Orders</p>
               </button>
             </li>
             <li>
@@ -108,7 +108,7 @@ const AccountPage = () => {
                 }`}
               ><FaAddressCard />
 
-                Addresses
+               <p className="hidden md:block"> Addresses</p>
               </button>
             </li>
             <li>
@@ -118,7 +118,7 @@ const AccountPage = () => {
                   activeTab === "details" ? "bg-[#000] text-white" : "hover:bg-gray-100"
                 }`}
               ><MdAccountBox />
-                Account details
+                 <p className="hidden md:block">  Account details</p>
               </button>
             </li>
             <li>
@@ -127,7 +127,7 @@ const AccountPage = () => {
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
               >
                 <IoMdLogOut />
-                Log out
+                <p className="hidden md:block"> Log out</p>
               </button>
             </li>
           </ul>

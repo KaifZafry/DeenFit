@@ -1912,10 +1912,11 @@ a:focus, a:hover {
 }
 
 .sticky-top {
-  z-index: 50;
-  top: 15px;
-  position: sticky;
-  transition: 0.2s ease-out;
+  position: -webkit-sticky;
+    position: sticky;
+    top: 4rem !important;
+    z-index: 1020;
+    background:#fff !important;
 }
 
 .wmax {
