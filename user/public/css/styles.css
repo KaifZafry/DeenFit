@@ -22885,3 +22885,9 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   list-style: disc;
   margin-left: 0.5rem !important;
 }
+.product-padding{
+  padding:2px !important; 
+}
+.review-padding{
+  padding: 0 25px;
+}

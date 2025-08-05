@@ -80,10 +80,10 @@ const Hero = () => {
               data-aos="zoom-in"
               data-aos-duration="500"
             >
-              {Array(5)
+              {Array(3)
                 .fill(0)
                 .map((_, idx) => (
-                  <div className="col-2" key={idx}>
+                  <div className="col-4 col-md-2" key={idx}>
                   <div
                   style={{borderRadius:'100%'}}
                     
@@ -97,7 +97,7 @@ const Hero = () => {
           ) : (
             <div className="row overflow-x-scroll no-scrollbar flex-nowrap justify-center">
             {categories.map((category) => {
-              console.log(category)
+             
               return (
                 <div
                 key={category.category_id}

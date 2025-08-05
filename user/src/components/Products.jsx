@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartSlice";
 import { toast } from "react-toastify";
 
-const Products = () => {
+const Products = ({categoryId}) => {
   const [products, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true)
 
@@ -33,7 +33,9 @@ const Products = () => {
 
   useEffect(() => {
     const FetchAllProduct = async () => {
-      const res = await fetch("/api/Account/getallproducts");
+      const res = await fetch(categoryId
+        ? `api/Account/getproductsbycategory/${categoryId}`
+        : `/api/Account/getallproducts`);
       const data = await res.json();
       setAllProducts(data?.data);
       console.log(data);
@@ -41,6 +43,9 @@ const Products = () => {
     };
     FetchAllProduct();
   }, []);
+  useEffect(()=>{
+console.log(products)
+  },[products])
 
   return (
     <div className="container-full">
@@ -85,7 +90,7 @@ const Products = () => {
             return (
               <div
                 key={item.product_id}
-                className="col-md-3 col-6 mb-4"
+                className="col-md-3 col-6 mb-4 product-padding"
                 data-aos="fade-up"
                 data-aos-duration="500"
               >
@@ -162,5 +167,4 @@ const Products = () => {
     </div>
   );
 };
-
 export default Products;

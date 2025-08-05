@@ -1,11 +1,12 @@
 import React from "react";
 import Hero from "../components/Hero";
-import Products from "../components/Products";
 import BrandMarquee from "../components/MarqueeText";
 import CategorySection from "../components/CategorySection";
 import Facilities from "../components/Facilities";
 import BannerSection from "../components/BannerSection";
 import Seo from "../components/Seo";
+import ReviewShowcase from "../components/ReviewShowcase";
+import Products from "../components/Products";
 // import ScrollVelocity from "../components/ScrollText";
 
 const Home = () => {
@@ -18,15 +19,12 @@ const Home = () => {
         url="https://deenfit.store/"
       />
       <Hero />
-      <Products />
-      {/* <ScrollVelocity
-        texts={["DeenFit", "Free Shiping"]}
-       
-        className="custom-scroll-text"
-      /> */}
+       <Products categoryId={"2"}/>
+       <Products categoryId={"1"}/>
        <BrandMarquee/>
         <CategorySection/>
         <BannerSection/>
+        <ReviewShowcase/>
         <Facilities/>
     </div>
   );
