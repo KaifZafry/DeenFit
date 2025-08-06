@@ -19,8 +19,8 @@ const Home = () => {
         url="https://deenfit.store/"
       />
       <Hero />
-       <Products categoryId={"2"}/>
-       <Products categoryId={"1"}/>
+       <Products categoryId={"2"} title="Crown Your Deen"/>
+       <Products categoryId={"1"} title="Faith in Every Thread"/>
        <BrandMarquee/>
         <CategorySection/>
         <BannerSection/>

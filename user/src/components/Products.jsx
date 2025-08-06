@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartSlice";
 import { toast } from "react-toastify";
 
-const Products = ({categoryId}) => {
+const Products = ({categoryId,title}) => {
   const [products, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true)
 
@@ -54,7 +54,7 @@ console.log(products)
         data-aos-duration="500"
         className="flat-title my-4 wow fadeInUp"
       >
-        <h4 className="title font-7">Today’s Picks</h4>
+        <h4 className="title font-7">{title}</h4>
         <p className="desc text-main font-13 fs-16">
           Explore our most popular pieces that customers can't get enough of
         </p>

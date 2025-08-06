@@ -111,7 +111,7 @@ useEffect(() => {
 
                 <div
                   key={item.product_id}
-                  className="col-md-3 col-6 mb-4"
+                  className="col-md-3 product-padding col-6 mb-4"
                   data-aos="fade-up"
                   data-aos-duration="500"
                 >
