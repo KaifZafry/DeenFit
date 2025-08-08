@@ -30,7 +30,7 @@ const Sidebar = () => {
       <SidebarItem icon={<FiShoppingCart />} text="Manage Products" route="/products" active={currentPath === '/products'} />
       <SidebarItem icon={<FiUserPlus />} text="Manage Category" route="/category" active={currentPath === '/category'} />
       <SidebarItem icon={<FiPieChart />} text="Manage Subcategory" route="/subcategory" active={currentPath === '/subcategory'} />
-      <SidebarItem icon={<FiMail />} text="Messages" route="/messages" active={currentPath === '/messages'} />
+      <SidebarItem icon={<FiMail />} text="orderDetails" route="/orderdetails" active={currentPath === '/orderdetails'} />
       <SidebarItem icon={<FiCalendar />} text="Calendar" route="/calendar" active={currentPath === '/calendar'} />
       <SidebarItem icon={<FiSettings />} text="Settings" route="/settings" active={currentPath === '/settings'} />
 
