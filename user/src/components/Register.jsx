@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./Register.css"; 
+import "./Register.css";
 import { MdMarkEmailRead, MdTimer } from "react-icons/md";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { IoPersonAdd } from "react-icons/io5";
+import { GoogleLogin } from "@react-oauth/google";
+import {jwtDecode} from "jwt-decode";
 import { FaMobileRetro } from "react-icons/fa6";
 
 const Register = () => {
@@ -42,7 +44,7 @@ const Register = () => {
     if (isSending) {
       setSendingProgress(0);
       progressInterval = setInterval(() => {
-        setSendingProgress(prev => {
+        setSendingProgress((prev) => {
           if (prev >= 90) return prev; // Stop at 90%, complete when API responds
           return prev + Math.random() * 15;
         });
@@ -55,7 +57,7 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!name.trim()) {
       newErrors.name = "Full name is required";
     } else if (name.trim().length < 2) {
@@ -92,10 +94,10 @@ const Register = () => {
     if (isSending || !canResend) return;
 
     setIsSending(true);
-    
+
     // 🚀 OPTIMIZATION 1: Generate OTP and update UI immediately
     const otpCode = generateOtp();
-    
+
     // 🚀 OPTIMIZATION 2: Move to next step immediately for better UX
     setTimeout(() => {
       setStep(2);
@@ -120,7 +122,6 @@ const Register = () => {
   </div>
 `;
 
-
     try {
       // 🚀 OPTIMIZATION 3: Send email in background
       const emailPromise = fetch("/api/Email/send", {
@@ -136,11 +137,13 @@ const Register = () => {
       // Handle email response in background
       const res = await emailPromise;
       const result = await res.text();
-      
+
       if (res.ok && result.toLowerCase().includes("otp sent")) {
         toast.success("OTP sent to your email! 📧");
       } else {
-        toast.warn("Email sending delayed, but you can still enter OTP when received");
+        toast.warn(
+          "Email sending delayed, but you can still enter OTP when received"
+        );
       }
     } catch (err) {
       console.error("Email sending error:", err);
@@ -167,7 +170,7 @@ const Register = () => {
     if (otp === generatedOtp) {
       // Show success immediately
       toast.success("OTP verified! Completing registration...");
-      
+
       try {
         const res = await fetch("/api/Account/register", {
           method: "POST",
@@ -185,15 +188,17 @@ const Register = () => {
         if (res.ok && result.userId) {
           localStorage.setItem("userId", result.userId);
           localStorage.setItem("isLoggedIn", "true");
-          
+
           const storedRedirect = localStorage.getItem("redirectTo");
           const redirectTo = storedRedirect || "/";
           localStorage.removeItem("redirectTo");
-          
+
           toast.success("Welcome to DeenFit! 🎉");
           navigate(redirectTo);
         } else {
-          toast.error(result.message || "Registration failed. Please try again.");
+          toast.error(
+            result.message || "Registration failed. Please try again."
+          );
         }
       } catch (err) {
         console.error("Registration error:", err);
@@ -214,7 +219,43 @@ const Register = () => {
   const formatTimer = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      console.log("Google user:", decoded);
+
+      // Backend register/login call
+      const res = await fetch("/api/Account/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: decoded.name,
+          email: decoded.email,
+          mobile: "", // Google se mobile nahi milta, optional
+          googleId: decoded.sub, // Google unique ID
+        }),
+      });
+
+      const result = await res.json();
+      if (res.ok && result.userId) {
+        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("isLoggedIn", "true");
+        toast.success("Welcome to DeenFit! 🎉");
+        navigate("/");
+      } else {
+        toast.error(result.message || "Google registration failed");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Google login failed");
+    }
+  };
+
+  const handleGoogleError = () => {
+    toast.error("Google sign-in failed");
   };
 
   return (
@@ -229,12 +270,12 @@ const Register = () => {
       <div className="register-container">
         {/* Progress indicator */}
         <div className="progress-indicator">
-          <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>
+          <div className={`progress-step ${step >= 1 ? "active" : ""}`}>
             <div className="step-number">1</div>
             <span>Details</span>
           </div>
           <div className="progress-line"></div>
-          <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>
+          <div className={`progress-step ${step >= 2 ? "active" : ""}`}>
             <div className="step-number">2</div>
             <span>Verify</span>
           </div>
@@ -256,11 +297,15 @@ const Register = () => {
                   placeholder="Enter your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={errors.name ? 'error' : ''}
+                  className={errors.name ? "error" : ""}
                 />
-                <div className="input-icon"><IoPersonAdd /></div>
+                <div className="input-icon">
+                  <IoPersonAdd />
+                </div>
               </div>
-              {errors.name && <div className="error-message">{errors.name}</div>}
+              {errors.name && (
+                <div className="error-message">{errors.name}</div>
+              )}
             </div>
 
             <div className="form-group">
@@ -272,11 +317,15 @@ const Register = () => {
                   placeholder="Enter your mobile number"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
-                  className={errors.mobile ? 'error' : ''}
+                  className={errors.mobile ? "error" : ""}
                 />
-                <div className="input-icon"><FaMobileRetro /></div>
+                <div className="input-icon">
+                  <FaMobileRetro />
+                </div>
               </div>
-              {errors.mobile && <div className="error-message">{errors.mobile}</div>}
+              {errors.mobile && (
+                <div className="error-message">{errors.mobile}</div>
+              )}
             </div>
 
             <div className="form-group">
@@ -288,26 +337,32 @@ const Register = () => {
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={errors.email ? 'error' : ''}
+                  className={errors.email ? "error" : ""}
                 />
-                <div className="input-icon"><MdMarkEmailRead /></div>
+                <div className="input-icon">
+                  <MdMarkEmailRead />
+                </div>
               </div>
-              {errors.email && <div className="error-message">{errors.email}</div>}
+              {errors.email && (
+                <div className="error-message">{errors.email}</div>
+              )}
             </div>
 
             {/* Enhanced button with progress */}
             <button
               onClick={sendOtp}
               disabled={isSending || !canResend}
-              className={`btn-primary ${isSending || !canResend ? 'loading' : ''}`}
+              className={`btn-primary ${
+                isSending || !canResend ? "loading" : ""
+              }`}
             >
               {isSending ? (
                 <div className="sending-state">
                   <span className="spinner"></span>
                   <span>Preparing verification...</span>
                   <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
+                    <div
+                      className="progress-fill"
                       style={{ width: `${sendingProgress}%` }}
                     ></div>
                   </div>
@@ -318,12 +373,20 @@ const Register = () => {
                 "Send OTP"
               )}
             </button>
+            <div className="mt-4">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+              />
+            </div>
           </div>
         ) : (
           <div className="step-content">
             <div className="otp-info">
               <h3>Verify Your Email</h3>
-              <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+              <p>
+                We've sent a 6-digit code to <strong>{email}</strong>
+              </p>
               {/* <div className="otp-status">
                 {isSending ? (
                   <span className="sending-indicator">📤 Sending email...</span>
@@ -345,17 +408,23 @@ const Register = () => {
                   maxLength="6"
                   autoFocus // Auto focus for better UX
                 />
-                <div className="input-icon"><SiGnuprivacyguard /></div>
+                <div className="input-icon">
+                  <SiGnuprivacyguard />
+                </div>
               </div>
             </div>
 
             <div className="timer-section">
               <div className="timer-display">
-                <span className="timer-icon"><MdTimer /></span>
-                <span>Code expires in: <strong>{formatTimer(timer)}</strong></span>
+                <span className="timer-icon">
+                  <MdTimer />
+                </span>
+                <span>
+                  Code expires in: <strong>{formatTimer(timer)}</strong>
+                </span>
               </div>
               {(timer === 0 || timer < 30) && (
-                <button 
+                <button
                   onClick={resendOtp}
                   className="resend-btn"
                   disabled={isSending}
@@ -370,13 +439,10 @@ const Register = () => {
               className="btn-primary mt-2 verify-btn"
               disabled={!otp.trim() || otp.length !== 6}
             >
-              Verify 
+              Verify
             </button>
 
-            <button
-              onClick={() => setStep(1)}
-              className="btn-secondary"
-            >
+            <button onClick={() => setStep(1)} className="btn-secondary">
               ← Back to Details
             </button>
           </div>
