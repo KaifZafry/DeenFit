@@ -34,7 +34,7 @@ const WishlistPage = () => {
           <img
             src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
             alt="Empty Wishlist"
-            className="w-48 h-48 mb-6 opacity-80"
+            className="w-32 mb-6 opacity-80"
             data-aos="fade-up"
             data-aos-duration="600"
           />

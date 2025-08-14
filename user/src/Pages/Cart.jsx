@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { incrementQty, decrementQty, removeFromCart,clearCart } from "../redux/CartSlice";
+import { incrementQty, decrementQty, removeFromCart, clearCart } from "../redux/CartSlice";
 import { MdDeleteOutline } from "react-icons/md";
 import { BASE_IMG_URL } from "../utils/Constants";
 
@@ -35,11 +35,12 @@ const Cart = () => {
             <div className="cart-page py-3">
 
               {cartItems.length === 0 ? (
-                <div className="flex flex-col items-center justify-center text-center py-12">
+                <div className="flex flex-col items-center justify-center text-center py-12" data-aos="fade-up"
+                  data-aos-duration="600">
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
                     alt="Empty Cart"
-                    className="w-48 h-48 mb-6 opacity-80"
+                    className="w-32 mb-6 opacity-80"
                   />
                   <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
                   <p className="text-gray-500">Looks like you haven't added anything yet.</p>
@@ -52,34 +53,34 @@ const Cart = () => {
                 </div>
               ) : (
                 <div className="cart-items-container">
-                    <div className="d-flex justify-end">
-                <button
-                              className=" mt-4 d-flex align-items-center text-lg font-bold animate-btn inline-block bg-[#422515] text-white px-4 py-2   transition"
-                              style={{fontSize:'14px'}}
-                              onClick={() => dispatch(clearCart())}
-                            >
-                             ClearCart   <MdDeleteOutline />
-                            </button>
-              </div>
+                  <div className="d-flex justify-end">
+                    <button
+                      className=" mt-4 d-flex align-items-center text-lg font-bold animate-btn inline-block bg-[#422515] text-white px-4 py-2   transition"
+                      style={{ fontSize: '14px' }}
+                      onClick={() => dispatch(clearCart())}
+                    >
+                      ClearCart   <MdDeleteOutline />
+                    </button>
+                  </div>
                   {cartItems.map((item) => {
                     const imageArray = item.product_image?.split(",") || [];
                     const mainImage = BASE_IMG_URL + imageArray[0];
 
                     return (
-                      
+
                       <div
                         className="cart-item-card gap-3 position-relative flex-md-row flex-col d-flex"
                         data-aos="zoom-in" data-aos-delay='100' data-aos-duration="300" key={item.product_id}
                       >
                         <div className="cart-item-left  d-flex gap-3">
-                           <div>
-                          <Link to={`/product/${item.product_id}`}>
-                            <img
-                              src={mainImage}
-                              alt={item.name}
-                              width={70}
-                              className="cart-item-image"
-                            />
+                          <div>
+                            <Link to={`/product/${item.product_id}`}>
+                              <img
+                                src={mainImage}
+                                alt={item.name}
+                                width={70}
+                                className="cart-item-image"
+                              />
                             </Link>
                           </div>
 
@@ -88,10 +89,10 @@ const Cart = () => {
                               <h4 className="cart-item-name">{item.product_title}</h4>
                             </Link>
                             <p className="cart-item-variant">{item?.color}/{item?.size}</p>
-                          
+
                           </div>
-                          
-                         
+
+
                         </div>
 
                         <div className="cart-item-right d-flex justify-content-md-around">
@@ -118,14 +119,14 @@ const Cart = () => {
                                 Total: ₹{(item.price * item.quantity).toFixed(2)}
                               </p>
                             </div>
-                          
+
                           </div>
-  <button
-                              className="remove-btn"
-                              onClick={() => dispatch(removeFromCart({ product_id: item.product_id, size: item.size }))}
-                            >
-                              <MdDeleteOutline />
-                            </button>
+                          <button
+                            className="remove-btn"
+                            onClick={() => dispatch(removeFromCart({ product_id: item.product_id, size: item.size }))}
+                          >
+                            <MdDeleteOutline />
+                          </button>
 
                         </div>
                       </div>
@@ -134,7 +135,7 @@ const Cart = () => {
                   })}
                 </div>
               )}
-            
+
             </div>
           </div>
           <div className="col-md-4" data-aos="fade-up" data-aos-duration="500">
