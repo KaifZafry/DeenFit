@@ -217,18 +217,27 @@ const Header = () => {
             <div className="group-icon mt-4 d-flex gap-2">
               <Link
                 to="/wishlist"
-                onClick={() => setIsOpen(false)}
-                className="btn btn-light w-50"
+                onClick={() => setShow(false)}
+                className="btn d-flex justify-evenly items-center btn-light w-50"
               >
-                <i className="bi bi-heart me-1"></i> Wishlist
+                <FaRegHeart /> Wishlist
               </Link>
-              <Link
-                to="/"
-                onClick={() => setIsOpen(false)}
-                className="btn btn-light w-50"
+              {userId? <Link
+                to="/account"
+                onClick={() => setShow(false)}
+                className="btn d-flex align-items-center justify-evenly btn-light w-50"
               >
-                <i className="bi bi-person me-1"></i> Login
+                <LuUserRound/> Account
+              </Link>: <Link
+                to="/login"
+                onClick={() => setShow(false)}
+                className="btn d-flex justify-evenly items-center btn-light w-50"
+              >
+                <LuUserRound/>Login
               </Link>
+
+              }
+             
             </div>
 
             {/* Contact Info */}
