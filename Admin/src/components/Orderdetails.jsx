@@ -42,7 +42,7 @@ const OrderDetails = () => {
       />
 
       {/* Loading & Error */}
-      {loading && <p className="text-indigo-500 font-medium">Loading...</p>}
+      {loading && <BounceLoader color="#155DFC" />}
       {error && <p className="text-red-500 font-medium">{error}</p>}
 
       {/* Order Details */}

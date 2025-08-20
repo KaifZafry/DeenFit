@@ -98,13 +98,13 @@ const Header = () => {
             </div>
             <div className="col-xl-2 col-md-4 col-6">
               <Link to="/" className="logo-header">
-                <img src="/logo.png" alt="logo" className="logo" />
+                <img src="/calliwear.png" alt="logo" className="logo" />
               </Link>
             </div>
             <div className="col-xl-5 col-md-4 col-3">
               <ul className="nav-icon d-flex justify-content-end align-items-center">
                 <li className="nav-account">
-                  {userId ? (
+                  {userId ? ( 
                     // ✅ Show My Account or Logout if user is logged in
                     <Link to="/account" className="nav-icon-item">
                       <LuUserRound />

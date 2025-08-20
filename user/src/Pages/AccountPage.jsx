@@ -22,7 +22,7 @@ const AccountPage = () => {
       try {
         const res = await fetch(`/api/Account/getAllOrdersByUserId/${userId}`);
         const json = await res.json();
-        console.log(json?.orders)
+        console.log(json)
         setLoading(false)
         setOrders(json?.orders|| []);
         setOrderdetails(json)
