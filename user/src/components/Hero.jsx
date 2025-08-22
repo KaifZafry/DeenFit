@@ -46,8 +46,9 @@ const Hero = () => {
         dispatch(setCategories(json?.data));
       } catch (error) {
         console.error("Error fetching categories:", error);
+        setLoading(true);
       } finally {
-        setLoading(false);
+        setLoading(true);
       }
     };
 
@@ -72,8 +73,8 @@ const Hero = () => {
         </div>
         <div className="container-full">
           <h2 className="text-center my-5 title font-7 uppercase">Featured Categories</h2>
-         
-
+       
+       {console.log(loading)}
           {loading ? (
             <div
               className="row wow justify-center fadeInUp"

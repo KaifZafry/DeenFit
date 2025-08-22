@@ -60,6 +60,15 @@ const Header = () => {
               >
                 <CgMenuLeftAlt />
               </a>
+               <a className="nav-search">
+                  <span
+                    onClick={handleOpenModal}
+                    className="nav-icon-item cursor-pointer"
+                  >
+                    <IoSearch />
+                  </span>
+                  {isModalOpen && <ModelSearch onClose={handleCloseModal} />}
+                </a>
             </div>
 
             <div className="col-xl-5 d-none d-xl-block">

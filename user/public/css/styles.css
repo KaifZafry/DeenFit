@@ -58,6 +58,7 @@
 }
 a svg{
   color: #000;
+  font-size: 24px;
 }
 
 .primary-3 {
@@ -21508,8 +21509,10 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   }
   
   #header .nav-icon .nav-wishlist,
-  #header .nav-icon .nav-compare {
+  #header .nav-icon .nav-compare,
+  #header .nav-icon .nav-search {
     display: none;
+
   }
   .footer .footer-heading-mobile {
     display: block;
