@@ -39,8 +39,7 @@ const ReviewShowcase = () => {
         <div>
           <h2 className="text-4xl md:text-5xl font-semibold text-black leading-snug">
             <span className="text-yellow-500 font-bold">400+</span>{" "}
-            PEOPLE LOVE 
-            DEENFIT
+            PEOPLE LOVE  CalliWear
           </h2>
 
           <div className="mt-8 space-y-4">

@@ -256,7 +256,7 @@ const Header = () => {
                 Address: F-104/3, Shaheen Bagh, Okhla , New Delhi India (110025)
               </p>
               <p className="mb-1 small">
-                Email: <b>support.deenfit@gmail.com</b>
+                Email: <b>support.CalliWear@gmail.com</b>
               </p>
               <p className="small">
                 Phone: <b>+91 960824096</b>

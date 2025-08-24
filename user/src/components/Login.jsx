@@ -46,7 +46,7 @@ const Login = () => {
         const redirectTo = localStorage.getItem("redirectTo") || "/";
         localStorage.removeItem("redirectTo");
 
-        toast.success("Welcome back to DeenFit! 🎉");
+        toast.success("Welcome back to CalliWear! 🎉");
         navigate(redirectTo);
       }
     } catch (err) {
@@ -118,7 +118,7 @@ const Login = () => {
       <div className="login-container">
         <div className="logo">
           <h1>Welcome Back</h1>
-          <p>Sign in to continue your DeenFit journey</p>
+          <p>Sign in to continue your CalliWear journey</p>
         </div>
 
         <div className="login-form">
@@ -155,7 +155,7 @@ const Login = () => {
                 Signing In...
               </>
             ) : (
-              "Sign In to DeenFit"
+              "Sign In to CalliWear"
             )}
           </button>
 
@@ -184,12 +184,12 @@ const Login = () => {
         </div>
 
         <div className="divider">
-          <span>New to DeenFit?</span>
+          <span>New to CalliWear?</span>
         </div>
 
         <div className="register-prompt">
           <p className="my-3">
-            Join thousands of users on their Deenfit journey
+            Join thousands of users on their CalliWear journey
           </p>
           <Link to="/register" className="register-link">
             Create Your Account

@@ -90,7 +90,7 @@ const Footer = () => {
                                                         fill="#0D0D0D" />
                                                 </svg>
                                             </span>
-                                            <a href="mailto:support@deenfitgmail.com"  className="">support@deenfitgmail.com</a>
+                                            <a href="mailto:support@CalliWeargmail.com"  className="">support@CalliWeargmail.com</a>
                                         </li>
                                     </ul>
                                     <a href="https://maps.app.goo.gl/Z9NnvFUcxw18faZz9"
@@ -259,7 +259,7 @@ const Footer = () => {
             <div  className="footer-bottom">
                 <div  className="container-full">
                     <div  className="footer-bottom-wrap">
-                        <p  className="text-dark ">Copyright © 2025 by <span  className="fw-medium">Deenfit.</span> All
+                        <p  className="text-dark ">Copyright © 2025 by <span  className="fw-medium">CalliWear.</span> All
                             Rights
                             Reserved.</p>
                       

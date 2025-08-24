@@ -13,10 +13,10 @@ const Home = () => {
   return (
     <div>
         <Seo
-        title="DeenFit | Islamic Streetwear & Caps"
-        description="Welcome to DeenFit – where faith meets fashion. Shop Islamic calligraphy caps and more."
-        image="https://deenfit.store/banner2.png"
-        url="https://deenfit.store/"
+        title="CalliWear | Islamic Streetwear & Caps"
+        description="Welcome to CalliWear – where faith meets fashion. Shop Islamic calligraphy caps and more."
+        image="https://CalliWear.store/banner2.png"
+        url="https://CalliWear.store/"
       />
       <Hero />
        <Products categoryId={"2"} title="Crown Your Deen"/>
