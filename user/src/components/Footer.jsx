@@ -14,7 +14,7 @@ const Footer = () => {
                     <div  className="footer-top-wrap ">
                         <div  className="footer-logo">
                             <Link to='/' >
-                                <img src="/logo.png"  className="logo" alt="logo"/>
+                                <img src="/calliwear.png"  className="logo" alt="logo"/>
                             </Link>
                         </div>
                         <ul  className="tf-social-icon style-large">

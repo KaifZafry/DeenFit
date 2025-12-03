@@ -60,7 +60,7 @@ const Header = () => {
               >
                 <CgMenuLeftAlt />
               </a>
-               <a className="nav-search">
+               <a className="nav-search ms-2">
                   <span
                     onClick={handleOpenModal}
                     className="nav-icon-item cursor-pointer"

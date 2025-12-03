@@ -46,7 +46,7 @@ const Cart = () => {
                   <p className="text-gray-500">Looks like you haven't added anything yet.</p>
                   <Link
                     to="/products"
-                    className="mt-4  inline-block bg-[#422515] animate-btn text-white px-4 py-2 animate-btn transition"
+                    className="mt-4  inline-block bg-[#2b1e1a] animate-btn text-white px-4 py-2 animate-btn transition"
                   >
                     Continue Shopping
                   </Link>
@@ -55,7 +55,7 @@ const Cart = () => {
                 <div className="cart-items-container">
                   <div className="d-flex justify-end">
                     <button
-                      className=" mt-4 d-flex align-items-center text-lg font-bold animate-btn inline-block bg-[#422515] text-white px-4 py-2   transition"
+                      className=" mt-4 d-flex align-items-center text-lg font-bold animate-btn inline-block bg-[#2b1e1a] text-white px-4 py-2   transition"
                       style={{ fontSize: '14px' }}
                       onClick={() => dispatch(clearCart())}
                     >
