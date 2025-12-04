@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt= require('jsonwebtoken');
 const User = require('../models/User')
+const bcrypt= require('bcryptjs')
 
 
 const router= express.Router();
@@ -17,10 +18,13 @@ router.post('/register', async (req,res)=>{
 
         const exist= await User.findOne({email})
         if(exist) return res.status(400).json({msg: "email already exist"})
+        const hashedPassword= await bcrypt.hash(password,10);
 
-        const user = await User.create({userName,email,password});
-        const token = generateToken(user);
-        res.json({msg:"Registered", token,user})
+        const newUser = await User.create({userName,email,password:hashedPassword});
+        const token = generateToken(newUser);
+        newUser.save();
+        console.log("user saved successfully", newUser)
+        res.json({msg:"Registered", token,newUser})
     }
     catch(err){
         console.log(err.message)
@@ -33,9 +37,14 @@ router.post('/login', async(req,res)=>{
 
     try{
         const {email,password}= req.body;
-        const user = User.findOne({email});
+
+        //email check for exist
+        const user = await User.findOne({email});
         if(!user) return res.status(404).json({msg:'user not found'});
-        const isMatch= await User.comparePassword(password);
+
+
+        //validate password 
+        const isMatch= await user.validatePassword(password);
 
         if(isMatch){
             const token = generateToken(user);
@@ -44,10 +53,14 @@ router.post('/login', async(req,res)=>{
             res.status(400).send({ message: "Invalid password" });
         }
     }
-    catch{
+    catch(err){
          console.log(err.message)
     }
 
 })
 
+router.delete('/logout', async(req,res)=>{
+    res.clearCookie('token');
+    res.send({message:"logout successfull"})
+})
 module.exports= router;

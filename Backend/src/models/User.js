@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const bcrypt= require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     userName:{
@@ -23,18 +24,18 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.getJWT= function(){
-    user= this;
+    const user= this;
     const token= jwt.sign({id:user._id}, process.env.JWT_SECRET)
     console.log(token)
 
     return token
 }
 
-userSchema.methods.validatePassword= function(){
-    user = this
+userSchema.methods.validatePassword= function(inputPassword){
+   const user = this
     const hashedPassword= user.password;
 
-    const ispasswordValid= bcrypt.compare(userInputPassword,hashedPassword)
+    const ispasswordValid= bcrypt.compare(inputPassword,hashedPassword)
     return ispasswordValid
 }
 
