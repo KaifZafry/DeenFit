@@ -201,7 +201,7 @@ const Footer = () => {
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <input type="text" name="email_address_check" value=""
+                                                    <input type="text" name="email_address_check" defaultValue=""
                                                          className="input--hidden"/>
                                                     <input type="hidden" name="locale" value="en"/>
                                                 </form>

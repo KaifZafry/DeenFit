@@ -32,20 +32,26 @@ const Products = ({categoryId,title}) => {
 
 
   useEffect(() => {
+    setLoading(true);
     const FetchAllProduct = async () => {
-      const res = await fetch(categoryId
-        ? `api/Account/getproductsbycategory/${categoryId}`
-        : `/api/Account/getallproducts`);
-      const data = await res.json();
-      setAllProducts(data?.data);
-      console.log(data);
-      setLoading(false)
+      try {
+        const res = await fetch(
+          categoryId
+            ? `/api/Account/getproductsbycategory/${categoryId}`
+            : `/api/Account/getallproducts`
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setAllProducts(data?.data || []);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setAllProducts([]);
+      } finally {
+        setLoading(false);
+      }
     };
     FetchAllProduct();
-  }, []);
-  useEffect(()=>{
-console.log(products)
-  },[products])
+  }, [categoryId]);
 
   return (
     <div className="container-full">
@@ -73,6 +79,11 @@ console.log(products)
       ) : (
 
         <div className="row">
+          {products.length === 0 && (
+            <div className="col-12 text-center text-gray-500 py-4">
+              No products found.
+            </div>
+          )}
           {products.map((item) => {
             const imageArray = item.product_image?.split(",") || [];
             const mainImage = BASE_IMG_URL + imageArray[0];

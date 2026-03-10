@@ -21,11 +21,12 @@ const AccountPage = () => {
      
       try {
         const res = await fetch(`/api/Account/getAllOrdersByUserId/${userId}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         console.log(json)
-        setLoading(false)
-        setOrders(json?.orders|| []);
-        setOrderdetails(json)
+        setOrders(json?.data || []);
+        const first = json?.data?.[0];
+        if (first) setOrderdetails(first);
       } catch (error) {
         console.error("Failed to fetch orders", error);
       } finally {
@@ -35,9 +36,9 @@ const AccountPage = () => {
     fetchOrders();
   }, [userId]);
 
-  useEffect(()=>{
-    console.log(orders)
-  },[orders])
+  // useEffect(()=>{
+  //   console.log(orders)
+  // },[orders])
  
   const handleLogout = () => {
   localStorage.removeItem("userId");

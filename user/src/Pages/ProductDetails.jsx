@@ -74,7 +74,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          "http://deenfit-001-site1.qtempurl.com/api/Account/getallproducts"
+          "/api/Account/getallproducts"
         );
         const data = await res.json();
 

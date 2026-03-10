@@ -344,11 +344,18 @@ const AddProductForm = ({ productData, onClose }) => {
                 disabled={!form.cid} // disable until category is selected
               >
                 <option value="">Select SubCategory</option>
-                {subcategories.map((sub) => (
-                  <option key={sub.subCategoryId} value={sub.subCategoryId}>
-                    {sub.subCategoryTitle}
-                  </option>
-                ))}
+                {subcategories.map((sub) => {
+                  const subId =
+                    sub?.subcategory_id ?? sub?.subCategoryId ?? sub?.id ?? sub?._id;
+                  const subTitle =
+                    sub?.title ?? sub?.subCategoryTitle ?? sub?.subcategory_title ?? "Subcategory";
+                  if (subId === undefined || subId === null) return null;
+                  return (
+                    <option key={String(subId)} value={subId}>
+                      {subTitle}
+                    </option>
+                  );
+                })}
               </select>
            </div>
 

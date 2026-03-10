@@ -27,7 +27,7 @@ const Category = () => {
 
   const handleDelete = async (category_id) => {
     try {
-      const response = await fetch(`api/Account/deletecategory/${category_id}`, {
+      const response = await fetch(`/api/Account/deletecategory/${category_id}`, {
         method: "POST",
       });
 
@@ -52,7 +52,7 @@ const Category = () => {
     setShowAddForm(false);
     setEditingCategory(null);
     // Refresh product list
-    fetch("api/Account/getcategory")
+    fetch("/api/Account/getcategory")
       .then((res) => res.json())
       .then((data) => setCategories(data?.data))
       .catch((err) => setError(err.message));

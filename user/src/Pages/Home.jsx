@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Hero from "../components/Hero";
 import BrandMarquee from "../components/MarqueeText";
 import CategorySection from "../components/CategorySection";
@@ -10,6 +11,9 @@ import Products from "../components/Products";
 // import ScrollVelocity from "../components/ScrollText";
 
 const Home = () => {
+  const categories = useSelector((state) => state.category.list);
+  const featured = Array.isArray(categories) ? categories.slice(0, 2) : [];
+
   return (
     <div>
         <Seo
@@ -19,8 +23,19 @@ const Home = () => {
         url="https://CalliWear.store/"
       />
       <Hero />
-       <Products categoryId={"2"} title="Crown Your Deen"/>
-       <Products categoryId={"1"} title="Faith in Every Thread"/>
+      {featured.length > 0 ? (
+        featured.map((cat) => (
+          <Products
+            key={cat.category_id}
+            categoryId={String(cat.category_id)}
+            title={cat.category_title}
+          />
+        ))
+      ) : (
+        <div className="container-full py-4 text-center text-gray-500">
+          Loading products...
+        </div>
+      )}
        <BrandMarquee/>
         <CategorySection/>
         <BannerSection/>

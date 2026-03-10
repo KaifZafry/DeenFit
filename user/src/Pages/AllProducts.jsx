@@ -34,9 +34,10 @@ const categoryId = query.get("category");
   try {
     const res = await fetch(
       categoryId
-        ? `api/Account/getproductsbycategory/${categoryId}`
+        ? `/api/Account/getproductsbycategory/${categoryId}`
         : `/api/Account/getallproducts`
     );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     console.log(json?.data)
     setAllProducts(json?.data || []);

@@ -1,0 +1,17 @@
+[dotenv@17.2.3] injecting env (2) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+connected to db
+your database has been connected
+your app is listening on port 7000
+[0;36mMongoose:[0m users.createIndex({ email: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m subcategories.createIndex({ subcategory_id: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m categories.find({}, { sort: { category_id: [33m1[39m } })
+[0;36mMongoose:[0m products.createIndex({ product_id: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m customers.createIndex({ email: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m counters.createIndex({ name: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m categories.createIndex({ category_id: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m subcategories.createIndex({ cid: [33m1[39m }, {})
+[0;36mMongoose:[0m products.createIndex({ category_id: [33m1[39m }, {})
+[0;36mMongoose:[0m products.createIndex({ subCategoryId: [33m1[39m }, {})
+[0;36mMongoose:[0m orders.createIndex({ orderID: [33m1[39m }, { unique: [33mtrue[39m })
+[0;36mMongoose:[0m orders.createIndex({ userID: [33m1[39m }, {})

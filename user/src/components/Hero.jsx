@@ -41,14 +41,15 @@ const Hero = () => {
     const fetchCategories = async () => {
       try {
         const res = await fetch("/api/Account/getcategory");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         console.log(json?.data);
         dispatch(setCategories(json?.data));
       } catch (error) {
         console.error("Error fetching categories:", error);
-        setLoading(true);
+        setLoading(false);
       } finally {
-        setLoading(true);
+        setLoading(false);
       }
     };
 
@@ -73,8 +74,7 @@ const Hero = () => {
         </div>
         <div className="container-full">
           <h2 className="text-center my-5 title font-7 uppercase">Featured Categories</h2>
-       
-       {console.log(loading)}
+
           {loading ? (
             <div
               className="row wow justify-center fadeInUp"
@@ -97,6 +97,11 @@ const Hero = () => {
             </div>
           ) : (
             <div className="row overflow-x-scroll no-scrollbar flex-nowrap justify-center">
+            {categories.length === 0 && (
+              <div className="text-center text-gray-500 py-4">
+                No categories found.
+              </div>
+            )}
             {categories.map((category) => {
              
               return (

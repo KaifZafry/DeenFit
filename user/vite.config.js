@@ -10,7 +10,7 @@ export default defineConfig({
    server: {
     proxy: {
       '/api': {
-        target: 'http://deenfit-001-site1.qtempurl.com',
+        target: 'http://localhost:7000',
         changeOrigin: true,
         secure: false,
       },

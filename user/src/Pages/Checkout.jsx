@@ -5,6 +5,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearCart } from "../redux/CartSlice";
 
+const RAZORPAY_KEY_ID = "rzp_test_SPUyTHiBUK5rHI";
+
+const loadRazorpayScript = () =>
+  new Promise((resolve) => {
+    if (window.Razorpay) return resolve(true);
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+
 const Checkout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -55,13 +67,14 @@ const navigate= useNavigate();
   const customerName = form.customerName.value;
   const phone = form.phone.value;
   const paymentMethod = form.paymentMethod.value;
-
+  
   const shippingAddress = `${address.street}, ${
     address.apartment ? address.apartment + ", " : ""
   }${address.city}, ${address.state} - ${address.pin}, ${address.country}`;
 
   const orderPayload = {
-    userID: userId, // ✅ still included
+    userID: userId,// ✅ still included
+  
     customerName,
     phone,
     shippingAddress,
@@ -77,24 +90,96 @@ const navigate= useNavigate();
   };
 
   try {
-    const res = await fetch("/api/Account/placeorder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload),
-    });
+    // COD -> place order directly
+    if (paymentMethod === "COD") {
+      const res = await fetch("/api/Account/placeorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
 
-    if (res.ok) {
-      const data = await res.json();
-      
-      toast.success("✅ Order Placed Successfully!");
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.message || `HTTP ${res.status}`);
+
+      toast.success("Order placed successfully.");
       dispatch(clearCart());
       navigate("/order-success", { state: { data } });
-    } else {
-      alert("❌ Failed to place order.");
+      return;
     }
+
+    // Online payment (Razorpay)
+    const scriptOk = await loadRazorpayScript();
+    if (!scriptOk) throw new Error("Razorpay SDK failed to load.");
+
+    const createOrderRes = await fetch("/api/Payment/razorpay/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderPayload }),
+    });
+
+    const createOrderJson = await createOrderRes.json().catch(() => null);
+    if (!createOrderRes.ok) {
+      throw new Error(createOrderJson?.message || `HTTP ${createOrderRes.status}`);
+    }
+
+   
+    const { keyId, razorpayOrderId, amount, currency } = createOrderJson || {};
+    if (!razorpayOrderId) throw new Error("Failed to create Razorpay order.");
+
+    const options = {
+      key: keyId || RAZORPAY_KEY_ID,
+      amount,
+      currency: currency || "INR",
+      name: "DeenFit",
+      description: "Order Payment",
+      order_id: razorpayOrderId,
+      prefill: { name: customerName, contact: phone },
+      theme: { color: "#382924" },
+      handler: async function (response) {
+        try {
+          const verifyRes = await fetch("/api/Payment/razorpay/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              ...response,
+              orderPayload: { ...orderPayload, paymentMethod: "Razorpay" },
+            }),
+          });
+
+          const verifyJson = await verifyRes.json().catch(() => null);
+          if (!verifyRes.ok) {
+            throw new Error(verifyJson?.message || `HTTP ${verifyRes.status}`);
+          }
+
+          toast.success("Payment successful. Order placed.");
+          dispatch(clearCart());
+          navigate("/order-success", { state: { data: verifyJson } });
+        } catch (err) {
+          console.error(err);
+          toast.error(err.message || "Payment verification failed.");
+        } finally {
+          setIsPlacingOrder(false);
+        }
+      },
+      modal: {
+        ondismiss: () => {
+          setIsPlacingOrder(false);
+          toast.info("Payment cancelled.");
+        },
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.on("payment.failed", (resp) => {
+      console.error(resp);
+      toast.error(resp?.error?.description || "Payment failed.");
+      setIsPlacingOrder(false);
+    });
+    rzp.open();
   } catch (err) {
     console.error(err);
-    toast.error("⚠️ Something went wrong.");
+    toast.error(err?.message || "Something went wrong.");
+    setIsPlacingOrder(false);
   }
 };
 
@@ -204,9 +289,8 @@ const navigate= useNavigate();
                       name="paymentMethod"
                       className="w-full border border-gray-300 p-2 rounded"
                     >
-                      <option value="UPI">UPI</option>
+                      <option value="Razorpay">Online Payment (UPI/Card)</option>
                       <option value="COD">Cash on Delivery</option>
-                      <option value="Card">Credit/Debit Card</option>
                     </select>
                   </div>
                 </form>

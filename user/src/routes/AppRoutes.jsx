@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,6 +24,7 @@ import ThankYouPage from '../Pages/Thankyou';
 
 
 export default function AppRoutes() {
+  const location = useLocation();
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function AppRoutes() {
       <ScrollToTop />
 
       <AnimatePresence mode="wait">
-        <Routes>
+        <Routes location={location} key={location.pathname}>
 
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -47,8 +48,8 @@ export default function AppRoutes() {
           <Route path="/order-success" element={<ThankYouPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Routes>
-        <ToastContainer position="top-center" autoClose={2000} />
       </AnimatePresence>
+      <ToastContainer position="top-center" autoClose={2000} />
       <Footer />
     </>
   );

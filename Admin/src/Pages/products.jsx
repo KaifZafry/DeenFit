@@ -15,7 +15,7 @@ const ProductListPage = () => {
     setError(null); // Reset error state
 
     try {
-      const response = await fetch("api/Account/getallproducts");
+      const response = await fetch("/api/Account/getallproducts");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -42,7 +42,7 @@ const ProductListPage = () => {
   // Delete product
   const handleDelete = async (product_id) => {
     try {
-      const response = await fetch(`api/Account/deleteproduct/${product_id}`, {
+      const response = await fetch(`/api/Account/deleteproduct/${product_id}`, {
         method: "POST",
       });
 
@@ -68,7 +68,7 @@ const ProductListPage = () => {
     setShowAddForm(false);
     setEditingProduct(null);
     // Refresh product list
-    fetch("api/Account/getallproducts")
+    fetch("/api/Account/getallproducts")
       .then((res) => res.json())
       .then((data) => setProducts(data?.data))
       .catch((err) => setError(err.message));

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { BASE_IMG_URL } from '../utils/Constants';
 
 const ProductList = () => {
   const { categoryId } = useParams();
@@ -24,13 +25,13 @@ const ProductList = () => {
       <h2 className="text-xl font-bold mb-4">Products in Category {categoryId}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {products.map(product => (
-          <div key={product.id} className="border rounded p-2 shadow">
+          <div key={product.product_id} className="border rounded p-2 shadow">
             <img
-              src={`http://deenfit-001-site1.qtempurl.com/ServiceProduct/${product.image?.split(',')[0]}`}
-              alt={product.title}
+              src={BASE_IMG_URL + (product.product_image?.split(',')?.[0] || '')}
+              alt={product.product_title}
               className="w-full h-40 object-cover rounded"
             />
-            <h3 className="font-medium text-sm mt-2">{product.title}</h3>
+            <h3 className="font-medium text-sm mt-2">{product.product_title}</h3>
             <p className="text-xs text-gray-500">₹{product.selling_price}</p>
           </div>
         ))}
