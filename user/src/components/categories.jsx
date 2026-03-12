@@ -54,12 +54,9 @@ const CategoryCard = ({ category, index }) => {
           display: block;
           text-decoration: none;
         }
-        .cat-card-span {
-          min-height: 360px;
-        }
+       
         @media (min-width: 576px) {
           .cat-card       { min-height: 360px; }
-          .cat-card-span  { min-height: 440px; }
         }
         .cat-img {
           object-fit: cover;

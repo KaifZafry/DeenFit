@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleWishlistItem } from "../redux/wishlistSlice";
+import { toggleWishlistItem } from "../redux/WishListSlice";
 import { addToCart } from "../redux/CartSlice"; // If you want move to cart
 import { FaTrashAlt, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -53,7 +53,7 @@ const WishlistPage = () => {
             Start adding items you love!
           </p>
           <Link
-            tp="/products"
+            to="/products"
             className="mt-4 inline-block bg-black text-white px-4 py-2 hover:bg-gray-800 transition"
           >
             Continue Shopping
