@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { apiFetch } from "../utils/api";
 
 const OrderDetails = () => {
   const [orderId, setOrderId] = useState("");
@@ -15,7 +16,7 @@ const OrderDetails = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch(`/api/account/getorderbyid/${orderId}`);
+        const res = await apiFetch(`/api/Account/getorderbyid/${orderId}`);
         if (!res.ok) throw new Error("Failed to fetch order");
         const data = await res.json();
         setItem(data);

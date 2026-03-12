@@ -4,6 +4,7 @@ import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearCart } from "../redux/CartSlice";
+import { apiFetch } from "../utils/api";
 
 const RAZORPAY_KEY_ID = "rzp_test_SPUyTHiBUK5rHI";
 
@@ -92,7 +93,7 @@ const navigate= useNavigate();
   try {
     // COD -> place order directly
     if (paymentMethod === "COD") {
-      const res = await fetch("/api/Account/placeorder", {
+      const res = await apiFetch("/api/Account/placeorder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderPayload),
@@ -111,7 +112,7 @@ const navigate= useNavigate();
     const scriptOk = await loadRazorpayScript();
     if (!scriptOk) throw new Error("Razorpay SDK failed to load.");
 
-    const createOrderRes = await fetch("/api/Payment/razorpay/order", {
+    const createOrderRes = await apiFetch("/api/Payment/razorpay/order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderPayload }),
@@ -137,7 +138,7 @@ const navigate= useNavigate();
       theme: { color: "#382924" },
       handler: async function (response) {
         try {
-          const verifyRes = await fetch("/api/Payment/razorpay/verify", {
+          const verifyRes = await apiFetch("/api/Payment/razorpay/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

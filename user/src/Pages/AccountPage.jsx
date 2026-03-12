@@ -6,6 +6,7 @@ import { MdAccountBox, MdDashboard } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiFetch } from "../utils/api";
 
 const AccountPage = () => {
  // const user = useSelector((state) => state.auth.user);
@@ -20,7 +21,7 @@ const AccountPage = () => {
     const fetchOrders = async () => {
      
       try {
-        const res = await fetch(`/api/Account/getAllOrdersByUserId/${userId}`);
+        const res = await apiFetch(`/api/Account/getAllOrdersByUserId/${userId}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         console.log(json)

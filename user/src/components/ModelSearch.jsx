@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { IoClose, IoSearch } from "react-icons/io5";
 import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { Link } from "react-router-dom";
+import { apiFetch } from "../utils/api";
 
 const ModelSearch = ({ onClose }) => {
 
@@ -13,7 +14,7 @@ const [query, setQuery] = useState("");
 
   useEffect(() => {
      const FetchAllProduct = async () => {
-       const res = await fetch("/api/Account/getallproducts");
+       const res = await apiFetch("/api/Account/getallproducts");
        const data = await res.json();
        setProducts(data?.data);
        console.log(data?.data);

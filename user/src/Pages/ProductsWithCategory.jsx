@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { resolveImageUrl } from '../utils/resolveImageUrl';
+import { apiFetch } from "../utils/api";
 
 const ProductList = () => {
   const { categoryId } = useParams();
@@ -9,7 +10,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
-        const res = await fetch(`/api/Account/getproductbycategory?id=${categoryId}`);
+        const res = await apiFetch(`/api/Account/getproductbycategory?id=${categoryId}`);
         const data = await res.json();
         setProducts(data?.data || []);
       } catch (err) {

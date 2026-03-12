@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
+import { apiFetch } from "../utils/api";
 
 const AddCategoryForm = ({ categoryData, onclose }) => {
     const categorytoEdit = categoryData;
@@ -84,7 +85,7 @@ const AddCategoryForm = ({ categoryData, onclose }) => {
 
     const uploadFile = async (base64Data) => {
         try {
-            const response = await fetch('/api/Account/uploadfile', {
+            const response = await apiFetch('/api/Account/uploadfile', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -120,7 +121,7 @@ const AddCategoryForm = ({ categoryData, onclose }) => {
             console.log("Payload sent to API:", body);
 
         try {
-            const response = await fetch(endpoint, {
+            const response = await apiFetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartSlice";
 import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { toast } from "react-toastify";
+import { apiFetch } from "../utils/api";
 
 const AllProducts = () => {
   const [products, setAllProducts] = useState([]);
@@ -33,7 +34,7 @@ const categoryId = query.get("category");
   const fetchProducts = async () => {
   setLoading(true);
   try {
-    const res = await fetch(
+    const res = await apiFetch(
       categoryId
         ? `/api/Account/getproductsbycategory/${categoryId}`
         : `/api/Account/getallproducts`

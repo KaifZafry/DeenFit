@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiX, FiUpload, FiTrash2 } from 'react-icons/fi';
 import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
+import { apiFetch } from "../utils/api";
 
 const AddProductForm = ({ productData, onClose }) => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const AddProductForm = ({ productData, onClose }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch('/api/Account/getcategory');
+        const res = await apiFetch('/api/Account/getcategory');
         const json = await res.json();
         setCategories(json?.data || []);
       } catch (err) {
@@ -110,7 +111,7 @@ const AddProductForm = ({ productData, onClose }) => {
 
   useEffect(() => {
   const fetchCategories = async () => {
-    const res = await fetch("/api/Account/getcategory");
+    const res = await apiFetch("/api/Account/getcategory");
     const data = await res.json();
     setCategories(data?.data || []);
   };
@@ -136,7 +137,7 @@ const AddProductForm = ({ productData, onClose }) => {
     if (imagePreviews.length > 0) {
       const base64List = imagePreviews.map(img => img.split(',')[1]);
       
-      const uploadRes = await fetch('/api/Account/uploadfile', {
+      const uploadRes = await apiFetch('/api/Account/uploadfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ docBase64List: base64List }),
@@ -195,7 +196,7 @@ const AddProductForm = ({ productData, onClose }) => {
     const method = 'POST'; // Typically both add and update use POST
 
     // Submit to API
-    const res = await fetch(endpoint, {
+    const res = await apiFetch(endpoint, {
       method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(productData),
@@ -263,7 +264,7 @@ const AddProductForm = ({ productData, onClose }) => {
   if (name === "cid") {
     setForm((prev) => ({ ...prev, scid: "" })); // reset subcategory
     try {
-      const res = await fetch(`/api/Account/getsubcategory/${value}`);
+      const res = await apiFetch(`/api/Account/getsubcategory/${value}`);
       const data = await res.json();
       setSubcategories(data?.data || []);
     } catch (err) {

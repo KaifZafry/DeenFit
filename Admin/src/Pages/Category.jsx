@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddCategoryForm from "../components/AddCategory";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
 import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
+import { apiFetch } from "../utils/api";
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ const Category = () => {
 
 
   const FetchCategory= async()=>{
-    const response= await fetch('/api/account/getcategory')
+    const response= await apiFetch('/api/Account/getcategory')
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -27,7 +28,7 @@ const Category = () => {
 
   const handleDelete = async (category_id) => {
     try {
-      const response = await fetch(`/api/Account/deletecategory/${category_id}`, {
+      const response = await apiFetch(`/api/Account/deletecategory/${category_id}`, {
         method: "POST",
       });
 
@@ -52,7 +53,7 @@ const Category = () => {
     setShowAddForm(false);
     setEditingCategory(null);
     // Refresh product list
-    fetch("/api/Account/getcategory")
+    apiFetch("/api/Account/getcategory")
       .then((res) => res.json())
       .then((data) => setCategories(data?.data))
       .catch((err) => setError(err.message));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
 import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
+import { apiFetch } from "../utils/api";
 
 const SubCategory = () => {
   const [subcategories, setSubcategories] = useState([]);
@@ -11,13 +12,13 @@ const SubCategory = () => {
   const [editingSubcategory, setEditingSubcategory] = useState(null);
 
   const fetchSubcategories = async () => {
-    const res = await fetch("/api/account/getsubcategory");
+    const res = await apiFetch("/api/Account/getsubcategory");
     const data = await res.json();
     setSubcategories(data?.data || []);
   };
 
   const fetchCategories = async () => {
-    const res = await fetch("/api/account/getcategory");
+    const res = await apiFetch("/api/Account/getcategory");
     const data = await res.json();
     setCategories(data?.data || []);
   };
@@ -41,7 +42,7 @@ const SubCategory = () => {
 
   const uploadImage = async (base64Data) => {
     try {
-      const response = await fetch("/api/Account/uploadfile", {
+      const response = await apiFetch("/api/Account/uploadfile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ docBase64List: [base64Data] })
@@ -65,10 +66,10 @@ const SubCategory = () => {
     };
 
     const url = editingSubcategory
-      ? `/api/account/updatesubcategory/${editingSubcategory.subcategory_id}`
-      : "/api/account/addsubcategory";
+      ? `/api/Account/updatesubcategory/${editingSubcategory.subcategory_id}`
+      : "/api/Account/addsubcategory";
 
-    await fetch(url, {
+    await apiFetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -84,7 +85,7 @@ const SubCategory = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`/api/account/deletesubcategory/${id}`, {
+    await apiFetch(`/api/Account/deletesubcategory/${id}`, {
       method: "POST"
     });
     fetchSubcategories();

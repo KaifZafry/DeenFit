@@ -5,6 +5,7 @@ import cap2Img from "../assets/img/tshirt2.png";
 import cap4Img from "../assets/img/tshirt4.png";
 import Categories from "./categories";
 import { setCategories } from "../redux/categorySlice";
+import { apiFetch } from "../utils/api";
 
 const slides = [
  
@@ -59,7 +60,7 @@ export default function Hero() {
     const fetchCategories = async () => {
       setCategoriesLoading(true);
       try {
-        const res = await fetch("/api/Account/getcategory");
+        const res = await apiFetch("/api/Account/getcategory");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         if (!cancelled) dispatch(setCategories(json?.data || []));

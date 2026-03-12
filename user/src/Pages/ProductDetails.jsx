@@ -10,6 +10,7 @@ import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { toast } from "react-toastify";
 import Sizechart from "../components/Sizechart";
 import AccordionProducts from "../components/AccordionProducts";
+import { apiFetch } from "../utils/api";
 
 const ProductDetails = () => {
   const { id } = useParams(); // from URL: /product/:id
@@ -73,9 +74,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(
-          "/api/Account/getallproducts"
-        );
+        const res = await apiFetch("/api/Account/getallproducts");
         const data = await res.json();
 
         const found = data.data.find(

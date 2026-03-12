@@ -8,6 +8,7 @@ import { FaLock } from "react-icons/fa6";
 import { BsFillLightningFill } from "react-icons/bs";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { apiFetch } from "../utils/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/Account/login", {
+      const res = await apiFetch("/api/Account/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim() }),
@@ -82,7 +83,7 @@ const Login = () => {
       }
 
       // Send token to your backend for verification
-      const res = await fetch("/api/Account/login", {
+      const res = await apiFetch("/api/Account/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email}),

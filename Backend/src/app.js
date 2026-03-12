@@ -47,7 +47,8 @@ app.use((err, _req, res, _next) => {
 connectDB()
 .then(()=>{
     console.log('your database has been connected')
-    app.listen(7000, ()=> console.log('your app is listening on port 7000'))
+    const port = Number(process.env.PORT) || 7000;
+    app.listen(port, ()=> console.log(`your app is listening on port ${port}`))
 })
 .catch((err)=>{
     console.log('connection failed ' + err.message)

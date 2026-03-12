@@ -3,6 +3,7 @@ import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 import AddProductForm from "../components/addproductForm";
 import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../utils/api";
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ const ProductListPage = () => {
     setError(null); // Reset error state
 
     try {
-      const response = await fetch("/api/Account/getallproducts");
+      const response = await apiFetch("/api/Account/getallproducts");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -42,7 +43,7 @@ const ProductListPage = () => {
   // Delete product
   const handleDelete = async (product_id) => {
     try {
-      const response = await fetch(`/api/Account/deleteproduct/${product_id}`, {
+      const response = await apiFetch(`/api/Account/deleteproduct/${product_id}`, {
         method: "POST",
       });
 
@@ -68,7 +69,7 @@ const ProductListPage = () => {
     setShowAddForm(false);
     setEditingProduct(null);
     // Refresh product list
-    fetch("/api/Account/getallproducts")
+    apiFetch("/api/Account/getallproducts")
       .then((res) => res.json())
       .then((data) => setProducts(data?.data))
       .catch((err) => setError(err.message));

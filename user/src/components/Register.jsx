@@ -9,6 +9,7 @@ import { IoPersonAdd } from "react-icons/io5";
 import { GoogleLogin } from "@react-oauth/google";
 import {jwtDecode} from "jwt-decode";
 import { FaMobileRetro } from "react-icons/fa6";
+import { apiFetch } from "../utils/api";
 
 const Register = () => {
   const [step, setStep] = useState(1);
@@ -124,7 +125,7 @@ const Register = () => {
 
     try {
       // 🚀 OPTIMIZATION 3: Send email in background
-      const emailPromise = fetch("/api/Email/send", {
+      const emailPromise = apiFetch("/api/Email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, subject, body, isHtml: true }),
@@ -172,7 +173,7 @@ const Register = () => {
       toast.success("OTP verified! Completing registration...");
 
       try {
-        const res = await fetch("/api/Account/register", {
+        const res = await apiFetch("/api/Account/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -228,7 +229,7 @@ const Register = () => {
       console.log("Google user:", decoded);
 
       // Backend register/login call
-      const res = await fetch("/api/Account/register", {
+      const res = await apiFetch("/api/Account/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
