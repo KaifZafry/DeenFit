@@ -4,7 +4,7 @@ import { toggleWishlistItem } from "../redux/wishlistSlice";
 import { addToCart } from "../redux/CartSlice"; // If you want move to cart
 import { FaTrashAlt, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 
 const WishlistPage = () => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const WishlistPage = () => {
               >
                 <div className="flex justify-center">
                   <img
-                    src={BASE_IMG_URL + mainImage} // Adjust based on your product image key
+                    src={resolveImageUrl(mainImage)}
                     alt={item.product_title}
                     className="w-1/2 h-40 object-cover rounded mb-2"
                   />

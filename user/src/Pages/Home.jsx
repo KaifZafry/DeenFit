@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import BrandMarquee from "../components/MarqueeText";
 import CategorySection from "../components/CategorySection";
@@ -36,6 +37,14 @@ const Home = () => {
           Loading products...
         </div>
       )}
+
+      {featured.length > 0 ? (
+        <div className="container-full text-center my-4" data-aos="fade-up" data-aos-duration="500">
+          <Link to="/products" className="tf-btn btn-line-dark fw-normal">
+            All products
+          </Link>
+        </div>
+      ) : null}
        <BrandMarquee/>
         <CategorySection/>
         <BannerSection/>

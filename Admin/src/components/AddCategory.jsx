@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BASE_IMG_URL } from '../../../user/src/utils/Constants';
+import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 
 const AddCategoryForm = ({ categoryData, onclose }) => {
     const categorytoEdit = categoryData;
@@ -264,13 +264,8 @@ const AddCategoryForm = ({ categoryData, onclose }) => {
 
                             {imagePreview && (
                                 <div className="mt-4 text-center">
-                                    {/* <img
-                                        src={BASE_IMG_URL + imagePreview}
-                                        alt="Preview"
-                                        className="max-w-24 max-h-24 mx-auto rounded-xl shadow-lg object-cover"
-                                    /> */}
                                     <img className="max-w-24 max-h-24 mx-auto rounded-xl shadow-lg object-cover"
-  src={imagePreview.startsWith('data') ? imagePreview : BASE_IMG_URL + imagePreview}
+  src={resolveImageUrl(imagePreview)}
 />
 
                                 </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BASE_IMG_URL } from '../utils/Constants';
+import { resolveImageUrl } from '../utils/resolveImageUrl';
 
 const ProductList = () => {
   const { categoryId } = useParams();
@@ -27,7 +27,7 @@ const ProductList = () => {
         {products.map(product => (
           <div key={product.product_id} className="border rounded p-2 shadow">
             <img
-              src={BASE_IMG_URL + (product.product_image?.split(',')?.[0] || '')}
+              src={resolveImageUrl(product.product_image?.split(',')?.[0])}
               alt={product.product_title}
               className="w-full h-40 object-cover rounded"
             />

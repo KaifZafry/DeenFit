@@ -1,7 +1,7 @@
 
 @import url(bootstrap-select.min.css);
 :root {
-  --primary: #382924;
+  --primary: #C9A84C;
   --primary-2: #ff9a90;
   --primary-3: #ffc5c0;
   --primary-4: #fff1ef;
@@ -194,7 +194,6 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: "Assistant", sans-serif;
   font-size: 100%;
   font-style: inherit;
   font-weight: inherit;
@@ -2704,7 +2703,6 @@ a:focus, a:hover {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: var(--dark);
   border: 1px solid var(--dark);
   color: var(--white);
   padding: 8px 32px;
@@ -2917,7 +2915,7 @@ a:focus, a:hover {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.tf-btn.btn-line-dark {
+/* .tf-btn.btn-line-dark {
   border: none;
   background: transparent;
   padding: 0px;
@@ -2926,7 +2924,7 @@ a:focus, a:hover {
   width: max-content;
   position: relative;
   gap: 6px;
-}
+} */
 .tf-btn.btn-line-dark .icon {
   display: flex;
 }
@@ -2934,7 +2932,8 @@ a:focus, a:hover {
   font-size: 12px;
 }
 .tf-btn.btn-line-dark:hover {
-  color: var(--primary);
+  color: var(--primary) !important;
+  border-color: var(--primary);
 }
 .tf-btn.btn-line-dark:hover::after {
   background-color: var(--primary);
@@ -2947,7 +2946,7 @@ a:focus, a:hover {
   right: auto;
   width: 100%;
   height: 1px;
-  background-color: var(--dark);
+  /* background-color: var(--dark); */
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;

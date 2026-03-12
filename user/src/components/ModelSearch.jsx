@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { IoClose, IoSearch } from "react-icons/io5";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { Link } from "react-router-dom";
 
 const ModelSearch = ({ onClose }) => {
@@ -74,7 +74,7 @@ const [query, setQuery] = useState("");
           {filtered.map(product => (
             <Link to={`/product/${product.product_id}`} onClick={onClose} key={product.product_id}>
              <div  className="border d-flex gap-2 items-center p-4 rounded shadow-sm">
-              <img src={BASE_IMG_URL + product.product_image?.split(",")[0]} alt={product.product_title} className="w-12 h-12 object-cover rounded mb-2" />
+              <img src={resolveImageUrl(product.product_image?.split(",")?.[0])} alt={product.product_title} className="w-12 h-12 object-cover rounded mb-2" />
               <h3 className="text-lg font-medium">{product.product_title}</h3>
               <p className="text-gray-600">₹{product.price}</p>
             </div>

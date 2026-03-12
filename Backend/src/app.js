@@ -6,7 +6,9 @@ const path = require('path');
 const app = express();
 
 app.use(cors());
-app.use(express.json({ limit: '25mb' }));
+const bodyLimit = process.env.BODY_LIMIT || '100mb';
+app.use(express.json({ limit: bodyLimit }));
+app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
 app.use(cookieParser());
 
 app.get('/api/health', (_req, res) => {
@@ -34,6 +36,11 @@ app.use('/api/Payment', require('./routes/paymentRoutes'));
 // JSON error handler (prevents frontend "Unexpected end of JSON")
 app.use((err, _req, res, _next) => {
   console.error(err);
+  if (err && (err.type === 'entity.too.large' || err.status === 413)) {
+    return res
+      .status(413)
+      .json({ status: 'failed', message: `Payload too large (limit ${bodyLimit}). Upload fewer/smaller images.` });
+  }
   res.status(500).json({ status: 'failed', message: err.message || 'Internal Server Error' });
 });
 

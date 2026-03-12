@@ -6,7 +6,7 @@ import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementQty, decrementQty } from "../redux/CartSlice";
 import { addToCart } from "../redux/CartSlice";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { toast } from "react-toastify";
 import Sizechart from "../components/Sizechart";
 import AccordionProducts from "../components/AccordionProducts";
@@ -85,7 +85,7 @@ const ProductDetails = () => {
         if (found) {
           const images = found.product_image
             .split(",")
-            .map((img) => BASE_IMG_URL + img);
+            .map((img) => resolveImageUrl(img));
           setProduct({ ...found, images });
           setCurrentImage(images[0]);
         }

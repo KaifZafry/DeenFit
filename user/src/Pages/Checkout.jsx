@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearCart } from "../redux/CartSlice";
@@ -308,7 +308,7 @@ const navigate= useNavigate();
                         <figure className="img-product">
                           <img
                             src={
-                              BASE_IMG_URL + item?.product_image?.split(",")[0]
+                              resolveImageUrl(item?.product_image?.split(",")?.[0])
                             }
                             alt={item.product_title}
                             width={30}

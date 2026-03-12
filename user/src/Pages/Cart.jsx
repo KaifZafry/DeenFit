@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementQty, decrementQty, removeFromCart, clearCart } from "../redux/CartSlice";
 import { MdDeleteOutline } from "react-icons/md";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state?.cart?.cartItems);
@@ -64,7 +64,7 @@ const Cart = () => {
                   </div>
                   {cartItems.map((item) => {
                     const imageArray = item.product_image?.split(",") || [];
-                    const mainImage = BASE_IMG_URL + imageArray[0];
+                    const mainImage = resolveImageUrl(imageArray[0]);
 
                     return (
 

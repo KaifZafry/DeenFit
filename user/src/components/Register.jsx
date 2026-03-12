@@ -107,7 +107,7 @@ const Register = () => {
 
     const subject = "Your DeenFit OTP Code";
     const body = `
-  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; border: 1px solid #eee; border-radius: 10px; background-color: #f9f9f9;">
+  <div style="font-family: Montserrat, sans-serif; max-width: 600px; margin: auto; padding: 30px; border: 1px solid #eee; border-radius: 10px; background-color: #f9f9f9;">
     <div style="text-align: center; margin-bottom: 20px;">
       <img src="https://deenfit.store/logo.png" alt="DeenFit Logo" style="height: 60px;" />
     </div>

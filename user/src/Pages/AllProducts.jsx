@@ -4,7 +4,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartSlice";
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { toast } from "react-toastify";
 
 const AllProducts = () => {
@@ -31,6 +31,7 @@ const categoryId = query.get("category");
   };
      
   const fetchProducts = async () => {
+  setLoading(true);
   try {
     const res = await fetch(
       categoryId
@@ -43,6 +44,7 @@ const categoryId = query.get("category");
     setAllProducts(json?.data || []);
   } catch (err) {
     console.error("Error fetching products", err);
+    setAllProducts([]);
   } finally {
     setLoading(false); // ✅ Important
   }
@@ -93,20 +95,41 @@ useEffect(() => {
 
         {loading ? (
           <div className="grid-cls grid-cls-v6 wow fadeInUp" data-aos="zoom-in" data-aos-duration="500">
-            {Array(4).fill(0).map((_, idx) => (
-              <div
-                key={idx}
-                className="h-[300px] bg-gray-200 rounded-2xl animate-pulse"
-              ></div>
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <div key={idx} className="rounded-2xl overflow-hidden border border-black/5 bg-white">
+                <div className="w-full aspect-square skeleton" />
+                <div className="p-3">
+                  <div className="h-3 w-4/5 skeleton mb-2" />
+                  <div className="h-3 w-2/5 skeleton mb-3" />
+                  <div className="flex items-center justify-between">
+                    <div className="h-3 w-1/3 skeleton" />
+                    <div className="h-8 w-8 skeleton" style={{ borderRadius: 9999 }} />
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         ) : (
-
+          <>
           <div className="row">
+            {products.length === 0 ? (
+              <div className="col-12 text-center text-gray-500 py-4">
+                No products found.
+                {categoryId ? (
+                  <div className="mt-3">
+                    <Link to="/products" className="tf-btn btn-line-dark fw-normal">
+                      View all products
+                    </Link>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
             {products.map((item) => {
               const imageArray = item.product_image?.split(",") || [];
-              const mainImage = BASE_IMG_URL + imageArray[0];
-              const hoverImage = BASE_IMG_URL + (imageArray[1] || imageArray[0]);
+              const mainImage = resolveImageUrl(imageArray[0]);
+              const hoverImage = resolveImageUrl(imageArray[1] || imageArray[0]);
+              const sellingPrice = Number(item?.selling_price ?? 0);
+              const originalPrice = Number(item?.price ?? 0);
 
               return (
 
@@ -125,12 +148,12 @@ useEffect(() => {
                         <img
                           className="img-product"
                           src={mainImage}
-                          alt={item.name}
+                          alt={item.product_title}
                         />
                         <img
                           className="img-hover"
                           src={hoverImage}
-                          alt={item.name}
+                          alt={item.product_title}
                         />
                       </Link>
 
@@ -158,18 +181,18 @@ useEffect(() => {
 
                     <div className="card-product-info">
                       <a
-                        href={`/product/${item.id}`}
+                        href={`/product/${item.product_id}`}
                         className="name-product text-black link fw-medium text-sm"
                       >
                         {item.product_title}
                       </a>
                       <p className="price-wrap fw-medium mt-1">
                         <span className="price-new text-sm">
-                          ₹{item.selling_price.toFixed(2)}
+                          ₹{Number.isFinite(sellingPrice) ? sellingPrice.toFixed(2) : "0.00"}
                         </span>
-                        {item.price && (
+                        {Number.isFinite(originalPrice) && originalPrice > 0 && (
                           <span className="price-old text-xs ms-2">
-                            ₹{item.price.toFixed(2)}
+                            ₹{originalPrice.toFixed(2)}
                           </span>
                         )}
                       </p>
@@ -180,6 +203,15 @@ useEffect(() => {
             })}
 
           </div>
+
+          {/* {products.length > 0 && categoryId ? (
+            <div className="text-center mt-4">
+              <Link to="/products" className="tf-btn btn-line-dark fw-normal">
+                All products
+              </Link>
+            </div>
+          ) : null} */}
+          </>
         )}
       </div>
     </>

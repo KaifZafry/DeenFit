@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
-import { BASE_IMG_URL } from "../../../user/src/utils/Constants";
+import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 
 const SubCategory = () => {
   const [subcategories, setSubcategories] = useState([]);
@@ -147,7 +147,7 @@ const SubCategory = () => {
           />
           {image && (
             <img
-              src={image.startsWith("data") ? image : BASE_IMG_URL + image}
+              src={resolveImageUrl(image)}
               alt="Preview"
               className="h-20 mt-2 rounded"
             />
@@ -176,7 +176,7 @@ const SubCategory = () => {
               <tr key={sub.subcategory_id} className="border-t">
                 <td className="px-4 py-2">
                   <img
-                    src={sub.image.startsWith("data") ? sub.image : BASE_IMG_URL + sub.image}
+                    src={resolveImageUrl(sub.image)}
                     alt={sub.title}
                     className="h-12 w-12 object-cover rounded"
                   />

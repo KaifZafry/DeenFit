@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 import AddProductForm from "../components/addproductForm";
-import { BASE_IMG_URL } from "../../../user/src/utils/Constants";
+import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 import { useNavigate } from "react-router-dom";
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
@@ -117,7 +117,7 @@ const ProductListPage = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {products.map((product) => {
               const imageArray = product.product_image?.split(",") || [];
-              const mainImage = BASE_IMG_URL + imageArray[0];
+              const mainImage = resolveImageUrl(imageArray[0]);
               return (
                 <tr key={product.product_id}>
                   <td className="px-6 py-4 whitespace-nowrap">

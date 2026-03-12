@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddCategoryForm from "../components/AddCategory";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
-import { BASE_IMG_URL } from "../../../user/src/utils/Constants";
+import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -93,7 +93,7 @@ const Category = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {categories?.map((category) => {
               const imageArray = category.category_image?.split(",") || [];
-              const mainImage = BASE_IMG_URL + imageArray[0];
+              const mainImage = resolveImageUrl(imageArray[0]);
               return (
                 <tr key={category.category_id}>
                   <td className="px-6 py-4 whitespace-nowrap">

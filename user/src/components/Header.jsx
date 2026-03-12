@@ -107,7 +107,7 @@ const Header = () => {
             </div>
             <div className="col-xl-2 col-md-4 col-6">
               <Link to="/" className="logo-header">
-                <img src="/calliwear.png" alt="logo" className="logo" />
+                <img src="/deenfitlogo.png" alt="logo" className="logo" />
               </Link>
             </div>
             <div className="col-xl-5 col-md-4 col-3">

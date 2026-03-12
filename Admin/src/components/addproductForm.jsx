@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiX, FiUpload, FiTrash2 } from 'react-icons/fi';
-import { BASE_IMG_URL } from '../../../user/src/utils/Constants';
+import { resolveImageUrl } from "../../../user/src/utils/resolveImageUrl";
 
 const AddProductForm = ({ productData, onClose }) => {
   const navigate = useNavigate();
@@ -143,7 +143,12 @@ const AddProductForm = ({ productData, onClose }) => {
       });
 
       if (!uploadRes.ok) {
-        throw new Error('Failed to upload images');
+        let errMsg = `Failed to upload images (HTTP ${uploadRes.status})`;
+        try {
+          const errData = await uploadRes.json();
+          if (errData?.message) errMsg = errData.message;
+        } catch (_) {}
+        throw new Error(errMsg);
       }
 
       const uploadData = await uploadRes.json();
@@ -484,7 +489,7 @@ const AddProductForm = ({ productData, onClose }) => {
                   <div key={`existing-${index}`} className="relative group">
                     
                     <img
-                      src={`${BASE_IMG_URL}${img}`}
+                      src={resolveImageUrl(img)}
                       alt={`Product ${index}`}
                       className="w-24 h-24 object-cover rounded-md border"
                     />

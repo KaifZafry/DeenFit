@@ -2,3 +2,44 @@
 @import "tailwindcss";
 @import "slick-carousel/slick/slick.css"; 
 @import "slick-carousel/slick/slick-theme.css";
+
+@layer utilities {
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+  }
+
+  .skeleton-dark {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.55) 45%,
+      transparent 100%
+    );
+    animation: skeletonShimmer 1.25s ease-in-out infinite;
+  }
+
+  @keyframes skeletonShimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+      animation: none;
+      opacity: 0.25;
+      transform: none;
+    }
+  }
+}

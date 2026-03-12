@@ -3,7 +3,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toggleWishlistItem } from '../redux/WishListSlice';
-import { BASE_IMG_URL } from "../utils/Constants";
+import { resolveImageUrl } from "../utils/resolveImageUrl";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartSlice";
 import { toast } from "react-toastify";
@@ -53,6 +53,9 @@ const Products = ({categoryId,title}) => {
     FetchAllProduct();
   }, [categoryId]);
 
+  // Hide section entirely when there are no products (prevents empty blocks on Home)
+  if (!loading && products.length === 0) return null;
+
   return (
     <div className="container-full">
       <div
@@ -69,25 +72,29 @@ const Products = ({categoryId,title}) => {
 
       {loading ? (
         <div className="grid-cls grid-cls-v6 wow fadeInUp" data-aos="zoom-in" data-aos-duration="500">
-          {Array(4).fill(0).map((_, idx) => (
-            <div
-              key={idx}
-              className="h-[300px] bg-gray-200 rounded-2xl animate-pulse"
-            ></div>
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <div key={idx} className="rounded-2xl overflow-hidden border border-black/5 bg-white">
+              <div className="w-full aspect-square skeleton" />
+              <div className="p-3">
+                <div className="h-3 w-4/5 skeleton mb-2" />
+                <div className="h-3 w-2/5 skeleton mb-3" />
+                <div className="flex items-center justify-between">
+                  <div className="h-3 w-1/3 skeleton" />
+                  <div className="h-8 w-8 skeleton" style={{ borderRadius: 9999 }} />
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
 
         <div className="row">
-          {products.length === 0 && (
-            <div className="col-12 text-center text-gray-500 py-4">
-              No products found.
-            </div>
-          )}
           {products.map((item) => {
             const imageArray = item.product_image?.split(",") || [];
-            const mainImage = BASE_IMG_URL + imageArray[0];
-            const hoverImage = BASE_IMG_URL + (imageArray[1] || imageArray[0]); // fallback to main image
+            const mainImage = resolveImageUrl(imageArray[0]);
+            const hoverImage = resolveImageUrl(imageArray[1] || imageArray[0]); // fallback to main image
+            const sellingPrice = Number(item?.selling_price ?? 0);
+            const originalPrice = Number(item?.price ?? 0);
 
             const isInWishlist = wishlistItems.some(
               (wishlistItem) => wishlistItem.product_id === item.product_id
@@ -160,11 +167,11 @@ const Products = ({categoryId,title}) => {
                     </a>
                     <p className="price-wrap fw-large mt-1">
                       <span className="text-md text-black font-bold">
-                        ₹{item.selling_price.toFixed(2)}
+                        ₹{Number.isFinite(sellingPrice) ? sellingPrice.toFixed(2) : "0.00"}
                       </span>
-                      {item.price && (
+                      {Number.isFinite(originalPrice) && originalPrice > 0 && (
                         <span className="price-old text-xs ms-2">
-                          ${item.price.toFixed(2)}
+                          ₹{originalPrice.toFixed(2)}
                         </span>
                       )}
                     </p>

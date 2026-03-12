@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary').v2;
 
 const Counter = require('../models/Counter');
 const Category = require('../models/Category');
@@ -14,6 +15,23 @@ const { createOrderFromCheckoutPayload } = require('../services/orderService');
 const router = express.Router();
 
 const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
+
+function hasCloudinaryConfig() {
+  return (
+    Boolean(process.env.CLOUDINARY_CLOUD_NAME) &&
+    Boolean(process.env.CLOUDINARY_API_KEY) &&
+    Boolean(process.env.CLOUDINARY_API_SECRET)
+  );
+}
+
+function ensureCloudinaryConfigured() {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+}
 
 function ensureUploadsDir() {
   if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
@@ -52,11 +70,31 @@ function sniffExtension(buffer) {
 
 function saveBase64Image(base64Data) {
   ensureUploadsDir();
-  const buffer = Buffer.from(base64Data, 'base64');
+  const normalized = String(base64Data || '')
+    .replace(/^data:[^;]+;base64,/, '')
+    .trim();
+  const buffer = Buffer.from(normalized, 'base64');
   const ext = sniffExtension(buffer);
   const filename = `${Date.now()}-${crypto.randomBytes(8).toString('hex')}.${ext}`;
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
   return filename;
+}
+
+async function uploadBase64ToCloudinary(base64Data) {
+  ensureCloudinaryConfigured();
+  const normalized = String(base64Data || '')
+    .replace(/^data:[^;]+;base64,/, '')
+    .trim();
+  const buffer = Buffer.from(normalized, 'base64');
+  const ext = sniffExtension(buffer);
+  const dataUri = `data:image/${ext};base64,${normalized}`;
+
+  const result = await cloudinary.uploader.upload(dataUri, {
+    folder: process.env.CLOUDINARY_FOLDER || 'deenfit',
+    resource_type: 'image',
+  });
+
+  return result.secure_url;
 }
 
 // Upload (base64) -> returns filenames that frontends treat as "URLs"
@@ -67,15 +105,22 @@ router.post('/uploadfile', async (req, res) => {
       return res.status(400).json({ status: 'failed', message: 'docBase64List is required' });
     }
 
-    const filenames = docBase64List.map(saveBase64Image);
+    if (docBase64List.some((x) => typeof x !== 'string' || x.trim().length === 0)) {
+      return res.status(400).json({ status: 'failed', message: 'docBase64List must contain base64 strings' });
+    }
+
+    const urls = hasCloudinaryConfig()
+      ? await Promise.all(docBase64List.map(uploadBase64ToCloudinary))
+      : docBase64List.map(saveBase64Image);
+
     return res.json({
       status: 'succeed',
       message: 'Uploaded',
-      requestnumber: filenames.join(','),
-      urls: filenames,
+      requestnumber: urls.join(','),
+      urls,
     });
   } catch (err) {
-    return res.status(500).json({ status: 'failed', message: err.message });
+    return res.status(500).json({ status: 'failed', message: err.message || 'Upload failed' });
   }
 });
 
