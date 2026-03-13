@@ -3,12 +3,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import BrandMarquee from "../components/MarqueeText";
-import CategorySection from "../components/CategorySection";
 import Facilities from "../components/Facilities";
-import BannerSection from "../components/BannerSection";
 import Seo from "../components/Seo";
-import ReviewShowcase from "../components/ReviewShowcase";
 import Products from "../components/Products";
+import SaleBanner from "../components/SaleBanner";
 // import ScrollVelocity from "../components/ScrollText";
 
 const Home = () => {
@@ -46,9 +44,7 @@ const Home = () => {
         </div>
       ) : null}
        <BrandMarquee/>
-        <CategorySection/>
-        <BannerSection/>
-        <ReviewShowcase/>
+        <SaleBanner/>
         <Facilities/>
     </div>
   );

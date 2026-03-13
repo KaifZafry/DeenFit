@@ -2935,9 +2935,9 @@ a:focus, a:hover {
   color: var(--primary) !important;
   border-color: var(--primary);
 }
-.tf-btn.btn-line-dark:hover::after {
+/* .tf-btn.btn-line-dark:hover::after {
   background-color: var(--primary);
-}
+} */
 .tf-btn.btn-line-dark::after {
   content: "";
   position: absolute;
@@ -7007,10 +7007,7 @@ button.animate-btn::after,
   line-height: 24px;
   color: var(--text);
 }
-.tf-icon-box.style-2 {
-  padding: 0;
-  border: 0;
-}
+
 .tf-icon-box.style-2 .box-icon {
   width: 64px;
   height: 64px;
@@ -8886,9 +8883,9 @@ header.header-bg {
 .footer-default .btn-line-dark {
   color: #444444;
 }
-.footer-default .btn-line-dark::after {
+/* .footer-default .btn-line-dark::after {
   background-color: #444444;
-}
+} */
 .footer-default .form-newsletter .subscribe-button.h56 {
   height: 50px;
 }
